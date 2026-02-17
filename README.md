@@ -70,7 +70,6 @@ CodecAttack/
 
 - CUDA-capable GPU (tested on A100 80GB)
 - Conda environment management
-- External dependency: `whisper-inject-v2-fork` framework (model wrappers, EnCodec wrapper, attack algorithms) — set `WHISPER_INJECT_ROOT` in `config.py` to its location
 
 ### Installation
 

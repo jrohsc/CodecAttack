@@ -22,13 +22,13 @@ import torch
 import torchaudio
 
 from config import (
-    WHISPER_INJECT_ROOT, MODEL_PATHS, EVAL_MODELS,
+    FRAMEWORK_ROOT, MODEL_PATHS, EVAL_MODELS,
     ENCODEC_SAMPLE_RATE, TARGET_SAMPLE_RATE,
     PROMPT_MODES, DEFAULT_PROMPT_MODE,
     compute_wer, ComplianceJudge,
 )
 
-sys.path.insert(0, WHISPER_INJECT_ROOT)
+sys.path.insert(0, FRAMEWORK_ROOT)
 
 
 def load_model(model_name: str, device: str = "cuda"):

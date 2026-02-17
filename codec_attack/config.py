@@ -11,8 +11,8 @@ import os
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 QUALCOMM_ROOT = os.path.dirname(PROJECT_ROOT)
 
-# Reusable components from whisper-inject-v2-fork
-WHISPER_INJECT_ROOT = os.path.join(QUALCOMM_ROOT, "external", "whisper-inject-v2-fork")
+# External framework (model wrappers, attack algorithms)
+FRAMEWORK_ROOT = os.path.join(QUALCOMM_ROOT, "external", "framework")
 
 # ffmpeg binary (not in all conda envs)
 FFMPEG_BIN = os.path.join(

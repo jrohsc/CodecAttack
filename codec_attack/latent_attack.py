@@ -30,7 +30,7 @@ import torchaudio
 import numpy as np
 
 from config import (
-    WHISPER_INJECT_ROOT, MODEL_PATHS, TARGET_MODEL,
+    FRAMEWORK_ROOT, MODEL_PATHS, TARGET_MODEL,
     ENCODEC_BANDWIDTH, ENCODEC_SAMPLE_RATE, TARGET_SAMPLE_RATE,
     LATENT_EPS, LATENT_ALPHA, ATTACK_STEPS, CHECK_EVERY,
     PERCEPTUAL_WEIGHT, ENCODEC_TEST_BITRATES, OPUS_TEST_BITRATES,
@@ -38,8 +38,8 @@ from config import (
 )
 from music_carrier import mel_distance, multi_scale_mel_distance
 
-# Add whisper-inject-v2-fork to path for reusable components
-sys.path.insert(0, WHISPER_INJECT_ROOT)
+# Add external framework to path for reusable components
+sys.path.insert(0, FRAMEWORK_ROOT)
 
 
 @dataclass
@@ -101,8 +101,8 @@ class LatentCodecAttacker:
     Adversarial attack on Audio LLMs via EnCodec latent-space perturbations.
 
     Composes:
-    - EnCodec encoder/decoder (from whisper-inject-v2-fork)
-    - Qwen2AudioModel (from whisper-inject-v2-fork)
+    - EnCodec encoder/decoder
+    - Qwen2AudioModel
     - Perceptual loss (mel-spectrogram distance)
     """
 
