@@ -95,14 +95,42 @@ conda install -c conda-forge ffmpeg
 
 ### Model Setup
 
-Download or symlink the following models:
+Download models from HuggingFace and update the paths in `codec_attack/config.py`:
 
-| Model | Path |
-|-------|------|
-| Qwen2-Audio-7B-Instruct | Update `MODEL_PATHS["qwen2_audio"]` in `config.py` |
-| Kimi-Audio-7B-Instruct | Update `MODEL_PATHS["kimi_audio"]` in `config.py` |
-| Audio Flamingo 3 | Update `MODEL_PATHS["audio_flamingo"]` in `config.py` |
-| Llama-3.2-3B-Instruct (judge) | Update `MODEL_PATHS["judge_llm"]` in `config.py` |
+```bash
+# Install huggingface_hub CLI (if not already installed)
+pip install huggingface_hub
+
+# Qwen2-Audio-7B-Instruct (primary attack target)
+huggingface-cli download Qwen/Qwen2-Audio-7B-Instruct --local-dir models/Qwen2-Audio-7B-Instruct
+
+# Kimi-Audio-7B-Instruct (cross-model evaluation)
+huggingface-cli download moonshotai/Kimi-Audio-7B-Instruct --local-dir models/Kimi-Audio-7B-Instruct
+
+# Audio Flamingo 3 (cross-model evaluation)
+huggingface-cli download nvidia/audio-flamingo-3-hf --local-dir models/audio-flamingo-3-hf
+
+# Llama-3.2-3B-Instruct (compliance judge for QA mode)
+huggingface-cli download meta-llama/Llama-3.2-3B-Instruct --local-dir models/Llama-3.2-3B-Instruct
+```
+
+Then update `MODEL_PATHS` in `codec_attack/config.py` to point to the downloaded directories:
+
+```python
+MODEL_PATHS = {
+    "qwen2_audio": "models/Qwen2-Audio-7B-Instruct",
+    "kimi_audio": "models/Kimi-Audio-7B-Instruct",
+    "audio_flamingo": "models/audio-flamingo-3-hf",
+    "judge_llm": "models/Llama-3.2-3B-Instruct",
+}
+```
+
+| Model | HuggingFace ID | Role | VRAM |
+|-------|---------------|------|------|
+| Qwen2-Audio-7B-Instruct | `Qwen/Qwen2-Audio-7B-Instruct` | Primary attack target | ~14 GB |
+| Kimi-Audio-7B-Instruct | `moonshotai/Kimi-Audio-7B-Instruct` | Cross-model eval | ~14 GB |
+| Audio Flamingo 3 | `nvidia/audio-flamingo-3-hf` | Cross-model eval | ~14 GB |
+| Llama-3.2-3B-Instruct | `meta-llama/Llama-3.2-3B-Instruct` | Compliance judge (QA mode) | ~6 GB |
 
 ### Music Carriers
 
