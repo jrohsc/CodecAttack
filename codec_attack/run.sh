@@ -67,7 +67,7 @@ while [[ $# -gt 0 ]]; do
             echo "  --status DIR   Show progress of a benchmark directory"
             echo ""
             echo "Models → Conda envs:"
-            echo "  qwen2_audio    → whisperinject-v2"
+            echo "  qwen2_audio    → codec-attack"
             echo "  audio_flamingo → flamingo3"
             echo "  kimi_audio     → kimi-audio"
             echo ""
@@ -118,7 +118,7 @@ fi
 
 # ---- Map model → conda env ----
 declare -A CONDA_ENVS=(
-    ["qwen2_audio"]="whisperinject-v2"
+    ["qwen2_audio"]="codec-attack"
     ["audio_flamingo"]="flamingo3"
     ["kimi_audio"]="kimi-audio"
 )

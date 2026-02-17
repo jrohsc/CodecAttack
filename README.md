@@ -56,23 +56,12 @@ CodecAttack/
 │   ├── run.sh                      # Single-experiment launcher (model/music/eps selection)
 │   └── run_all.sh                  # Full grid: 3 models × 3 eps × 4 carriers
 │
-└── external/
-    └── whisper-inject-v2-fork/     # Reusable attack framework
-        ├── models/                 # Audio LLM wrappers (compute_loss, generate)
-        │   ├── qwen2_audio.py      # Qwen2-Audio-7B-Instruct
-        │   ├── kimi_audio.py       # Kimi-Audio-7B-Instruct
-        │   └── audio_flamingo.py   # Audio Flamingo 3
-        ├── attacks/                # Attack algorithms
-        │   ├── latent_codec.py     # EnCodecWrapper, latent-space PGD
-        │   ├── pgd.py              # Standard PGD
-        │   ├── rl_pgd.py           # Reward-guided PGD
-        │   └── two_stage.py        # Two-stage attack (jailbreak + transfer)
-        └── core/                   # Utilities
-            ├── audio.py            # Audio I/O (load, save, TTS)
-            ├── mel.py              # Mel-spectrogram computation
-            ├── reward.py           # Semantic similarity scoring
-            ├── judge.py            # LLM-based harm evaluation
-            └── tracker.py          # Experiment tracking
+└── codec_attack/data/music/        # Music carrier files (9 tracks)
+    ├── calm_1.mp3
+    ├── jazz_1.mp3
+    ├── classical_music_1.mp3
+    ├── empire_state_of_mind.mp3
+    └── ...
 ```
 
 ## Setup
@@ -81,13 +70,14 @@ CodecAttack/
 
 - CUDA-capable GPU (tested on A100 80GB)
 - Conda environment management
+- External dependency: `whisper-inject-v2-fork` framework (model wrappers, EnCodec wrapper, attack algorithms) — set `WHISPER_INJECT_ROOT` in `config.py` to its location
 
 ### Installation
 
 ```bash
 # Create conda environment
-conda create -n whisperinject-v2 python=3.11
-conda activate whisperinject-v2
+conda create -n codec-attack python=3.11
+conda activate codec-attack
 
 # Core dependencies
 pip install torch torchaudio transformers encodec
@@ -116,19 +106,7 @@ Download or symlink the following models:
 
 ### Music Carriers
 
-Place music files in `codec_attack/data/music/`:
-```
-data/music/
-├── calm_1.mp3
-├── calm_2.mp3
-├── jazz_1.mp3
-├── jazz_2.mp3
-├── classical_music_1.mp3
-├── classical_music_2.mp3
-├── christmas_jazz_1.mp3
-├── christmas_jazz_2.mp3
-└── empire_state_of_mind.mp3
-```
+Music carrier files are included in `codec_attack/data/music/` (9 tracks, ~29 MB total).
 
 ## Usage
 
@@ -236,6 +214,6 @@ Different models require different environments due to dependency conflicts:
 
 | Environment | Model | Key Dependencies |
 |-------------|-------|-----------------|
-| `whisperinject-v2` | Qwen2-Audio | transformers 4.57, torch |
+| `codec-attack` | Qwen2-Audio | transformers 4.57, torch |
 | `flamingo3` | Audio Flamingo 3 | transformers 5.0+, torch 2.10 |
 | `kimi-audio` | Kimi Audio 7B | flash_attn, encodec |

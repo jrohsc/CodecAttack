@@ -16,7 +16,7 @@ WHISPER_INJECT_ROOT = os.path.join(QUALCOMM_ROOT, "external", "whisper-inject-v2
 
 # ffmpeg binary (not in all conda envs)
 FFMPEG_BIN = os.path.join(
-    os.path.dirname(QUALCOMM_ROOT), "miniconda3", "envs", "whisperinject-v2", "bin", "ffmpeg"
+    os.path.dirname(QUALCOMM_ROOT), "miniconda3", "envs", "codec-attack", "bin", "ffmpeg"
 )
 
 # Music carrier files
@@ -1083,7 +1083,7 @@ class ComplianceJudge:
 # ============================================================================
 
 CONDA_ENVS = {
-    "qwen2_audio": "whisperinject-v2",
+    "qwen2_audio": "codec-attack",
     "qwen25_omni": "qwen-omni",
     "kimi_audio": "kimi-audio",
     "audio_flamingo": "flamingo3",
