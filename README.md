@@ -68,36 +68,85 @@ CodecAttack/
 
 ### Prerequisites
 
-- CUDA-capable GPU (tested on A100 80GB)
-- Conda environment management
+- CUDA-capable GPU (>=32 GB VRAM recommended; tested on A100 80GB)
+- Python 3.11+
+- Conda or [uv](https://docs.astral.sh/uv/)
 
-### Installation
+### Environment Setup
+
+Each target model requires a separate environment due to dependency conflicts. Set up only the environments you need.
+
+#### Option A: Using Conda
+
+**1. `codec-attack` — Qwen2-Audio (primary attack target)**
 
 ```bash
-# Create conda environment
-conda create -n codec-attack python=3.11
+conda create -n codec-attack python=3.11 -y
 conda activate codec-attack
 
-# Core dependencies
-pip install torch torchaudio transformers encodec
-pip install librosa soundfile numpy scipy
-
-# For cross-model evaluation
-pip install sentence-transformers
-
-# For compliance evaluation (LLM judge)
-pip install accelerate
-
-# Opus compression testing requires ffmpeg
-conda install -c conda-forge ffmpeg
+pip install torch==2.10.0 torchaudio==2.10.0
+pip install transformers==4.51.0 accelerate
+pip install encodec librosa soundfile numpy scipy
+pip install sentence-transformers huggingface_hub
+conda install -c conda-forge ffmpeg -y
 ```
 
-### Model Setup
+**2. `flamingo3` — Audio Flamingo 3 (cross-model evaluation)**
+
+```bash
+conda create -n flamingo3 python=3.11 -y
+conda activate flamingo3
+
+pip install torch==2.10.0 torchaudio==2.10.0
+pip install transformers>=5.0.0 accelerate
+pip install encodec librosa soundfile numpy scipy
+pip install huggingface_hub
+```
+
+**3. `kimi-audio` — Kimi Audio 7B (cross-model evaluation)**
+
+```bash
+conda create -n kimi-audio python=3.11 -y
+conda activate kimi-audio
+
+pip install torch==2.10.0 torchaudio==2.10.0
+pip install transformers==4.51.0 accelerate
+pip install encodec librosa soundfile numpy scipy
+pip install flash-attn --no-build-isolation
+pip install huggingface_hub
+```
+
+#### Option B: Using uv
+
+```bash
+# Install uv (if not already installed)
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Qwen2-Audio (primary)
+uv venv .venv-codec-attack --python 3.11
+source .venv-codec-attack/bin/activate
+uv pip install torch==2.10.0 torchaudio==2.10.0
+uv pip install transformers==4.51.0 accelerate encodec librosa soundfile numpy scipy sentence-transformers huggingface_hub
+
+# Audio Flamingo 3
+uv venv .venv-flamingo3 --python 3.11
+source .venv-flamingo3/bin/activate
+uv pip install torch==2.10.0 torchaudio==2.10.0
+uv pip install "transformers>=5.0.0" accelerate encodec librosa soundfile numpy scipy huggingface_hub
+
+# Kimi Audio 7B
+uv venv .venv-kimi-audio --python 3.11
+source .venv-kimi-audio/bin/activate
+uv pip install torch==2.10.0 torchaudio==2.10.0
+uv pip install transformers==4.51.0 accelerate encodec librosa soundfile numpy scipy huggingface_hub
+uv pip install flash-attn --no-build-isolation
+```
+
+### Model Download
 
 Download models from HuggingFace and update the paths in `codec_attack/config.py`:
 
 ```bash
-# Install huggingface_hub CLI (if not already installed)
 pip install huggingface_hub
 
 # Qwen2-Audio-7B-Instruct (primary attack target)
@@ -234,13 +283,3 @@ python eval_models.py --benchmark results_qa/benchmark_qwen2_audio_eps0.4_jazz_1
 - **Kimi Audio**: Dual-token architecture (discrete VQ + continuous Whisper features); only Whisper path is differentiable
 - **Audio Flamingo 3**: Requires `transformers >= 5.0`; inputs must be cast to model dtype (bfloat16)
 - **Audio saving**: Uses `soundfile.write()` (not `torchaudio.save`) due to torchcodec dependency issues
-
-## Conda Environments
-
-Different models require different environments due to dependency conflicts:
-
-| Environment | Model | Key Dependencies |
-|-------------|-------|-----------------|
-| `codec-attack` | Qwen2-Audio | transformers 4.57, torch |
-| `flamingo3` | Audio Flamingo 3 | transformers 5.0+, torch 2.10 |
-| `kimi-audio` | Kimi Audio 7B | flash_attn, encodec |
