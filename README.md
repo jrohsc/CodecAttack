@@ -115,32 +115,6 @@ uv pip install flash-attn --no-build-isolation
 uv pip install huggingface_hub
 ```
 
-#### Option B: Using uv
-
-```bash
-# Install uv (if not already installed)
-curl -LsSf https://astral.sh/uv/install.sh | sh
-
-# Qwen2-Audio (primary)
-uv venv .venv-codec-attack --python 3.11
-source .venv-codec-attack/bin/activate
-uv pip install torch==2.10.0 torchaudio==2.10.0
-uv pip install transformers==4.51.0 accelerate encodec librosa soundfile numpy scipy sentence-transformers huggingface_hub
-
-# Audio Flamingo 3
-uv venv .venv-flamingo3 --python 3.11
-source .venv-flamingo3/bin/activate
-uv pip install torch==2.10.0 torchaudio==2.10.0
-uv pip install "transformers>=5.0.0" accelerate encodec librosa soundfile numpy scipy huggingface_hub
-
-# Kimi Audio 7B
-uv venv .venv-kimi-audio --python 3.11
-source .venv-kimi-audio/bin/activate
-uv pip install torch==2.10.0 torchaudio==2.10.0
-uv pip install transformers==4.51.0 accelerate encodec librosa soundfile numpy scipy huggingface_hub
-uv pip install flash-attn --no-build-isolation
-```
-
 ### Model Download
 
 Download models from HuggingFace and update the paths in `codec_attack/config.py`:
