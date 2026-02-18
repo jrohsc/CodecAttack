@@ -20,7 +20,7 @@ Music (MP3/WAV) ──► │ EnCodec Encoder   │──► z_original
                               ▼
                     ┌───────────────────┐
                     │  z_adv = z + δ    │  ◄── δ optimized via PGD/Adam
-                    │  ‖δ‖∞ ≤ ε        │      (L-inf constraint)
+                    │  ‖δ‖∞ ≤ ε         │      (L-inf constraint)
                     └───────────────────┘
                               │
                               ▼
@@ -47,21 +47,20 @@ Music (MP3/WAV) ──► │ EnCodec Encoder   │──► z_original
 ```
 CodecAttack/
 ├── README.md
-├── codec_attack/                   # Main attack pipeline
-│   ├── config.py                   # Hyperparameters, model paths, 200 agent commands
-│   ├── latent_attack.py            # LatentCodecAttacker: core attack + robustness testing
-│   ├── music_carrier.py            # Music loading, mel-spectrogram perceptual loss
-│   ├── run_benchmark.py            # Full benchmark: all music × all commands
-│   ├── eval_models.py              # Cross-model evaluation (Kimi Audio, Audio Flamingo)
-│   ├── run.sh                      # Single-experiment launcher (model/music/eps selection)
-│   └── run_all.sh                  # Full grid: 3 models × 3 eps × 4 carriers
-│
-└── codec_attack/data/music/        # Music carrier files (9 tracks)
-    ├── calm_1.mp3
-    ├── jazz_1.mp3
-    ├── classical_music_1.mp3
-    ├── empire_state_of_mind.mp3
-    └── ...
+└── codec_attack/                   # Main attack pipeline
+    ├── config.py                   # Hyperparameters, model paths, 200 agent commands
+    ├── latent_attack.py            # LatentCodecAttacker: core attack + robustness testing
+    ├── music_carrier.py            # Music loading, mel-spectrogram perceptual loss
+    ├── run_benchmark.py            # Full benchmark: all music × all commands
+    ├── eval_models.py              # Cross-model evaluation (Kimi Audio, Audio Flamingo)
+    ├── run.sh                      # Single-experiment launcher (model/music/eps selection)
+    └── run_all.sh                  # Full grid: 3 models × 3 eps × 4 carriers
+    └── codec_attack/data/music/    # Music carrier files (9 tracks)
+        ├── calm_1.mp3
+        ├── jazz_1.mp3
+        ├── classical_music_1.mp3
+        ├── empire_state_of_mind.mp3
+        └── ...
 ```
 
 ## Setup
@@ -125,21 +124,21 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 # Qwen2-Audio (primary)
 uv venv .venv-codec-attack --python 3.11
 source .venv-codec-attack/bin/activate
-uv uv pip install torch==2.10.0 torchaudio==2.10.0
-uv uv pip install transformers==4.51.0 accelerate encodec librosa soundfile numpy scipy sentence-transformers huggingface_hub
+uv pip install torch==2.10.0 torchaudio==2.10.0
+uv pip install transformers==4.51.0 accelerate encodec librosa soundfile numpy scipy sentence-transformers huggingface_hub
 
 # Audio Flamingo 3
 uv venv .venv-flamingo3 --python 3.11
 source .venv-flamingo3/bin/activate
-uv uv pip install torch==2.10.0 torchaudio==2.10.0
-uv uv pip install "transformers>=5.0.0" accelerate encodec librosa soundfile numpy scipy huggingface_hub
+uv pip install torch==2.10.0 torchaudio==2.10.0
+uv pip install "transformers>=5.0.0" accelerate encodec librosa soundfile numpy scipy huggingface_hub
 
 # Kimi Audio 7B
 uv venv .venv-kimi-audio --python 3.11
 source .venv-kimi-audio/bin/activate
-uv uv pip install torch==2.10.0 torchaudio==2.10.0
-uv uv pip install transformers==4.51.0 accelerate encodec librosa soundfile numpy scipy huggingface_hub
-uv uv pip install flash-attn --no-build-isolation
+uv pip install torch==2.10.0 torchaudio==2.10.0
+uv pip install transformers==4.51.0 accelerate encodec librosa soundfile numpy scipy huggingface_hub
+uv pip install flash-attn --no-build-isolation
 ```
 
 ### Model Download
@@ -150,16 +149,16 @@ Download models from HuggingFace and update the paths in `codec_attack/config.py
 uv pip install huggingface_hub
 
 # Qwen2-Audio-7B-Instruct (primary attack target)
-huggingface-cli download Qwen/Qwen2-Audio-7B-Instruct --local-dir models/Qwen2-Audio-7B-Instruct
+uv hf download Qwen/Qwen2-Audio-7B-Instruct --local-dir models/Qwen2-Audio-7B-Instruct
 
 # Kimi-Audio-7B-Instruct (cross-model evaluation)
-huggingface-cli download moonshotai/Kimi-Audio-7B-Instruct --local-dir models/Kimi-Audio-7B-Instruct
+uv hf download moonshotai/Kimi-Audio-7B-Instruct --local-dir models/Kimi-Audio-7B-Instruct
 
 # Audio Flamingo 3 (cross-model evaluation)
-huggingface-cli download nvidia/audio-flamingo-3-hf --local-dir models/audio-flamingo-3-hf
+uv hf download nvidia/audio-flamingo-3-hf --local-dir models/audio-flamingo-3-hf
 
 # Llama-3.2-3B-Instruct (compliance judge for QA mode)
-huggingface-cli download meta-llama/Llama-3.2-3B-Instruct --local-dir models/Llama-3.2-3B-Instruct
+uv hf download meta-llama/Llama-3.2-3B-Instruct --local-dir models/Llama-3.2-3B-Instruct
 ```
 
 Then update `MODEL_PATHS` in `codec_attack/config.py` to point to the downloaded directories:
