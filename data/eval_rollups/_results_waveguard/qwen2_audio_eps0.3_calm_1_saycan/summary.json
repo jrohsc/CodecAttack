@@ -1,0 +1,59 @@
+{
+  "adversarial": {
+    "total": 1,
+    "detected": 1,
+    "detection_rate": 1.0
+  },
+  "per_transform": {
+    "quantize_8bit": {
+      "detection_rate": 1.0,
+      "neutralization_rate": 1.0,
+      "avg_wer": 1.5833333333333333,
+      "avg_snr_db": 34.9179160566583,
+      "flagged": 1,
+      "neutralized": 1
+    },
+    "downup_8k": {
+      "detection_rate": 1.0,
+      "neutralization_rate": 1.0,
+      "avg_wer": 1.5,
+      "avg_snr_db": 23.360528095179554,
+      "flagged": 1,
+      "neutralized": 1
+    },
+    "lowpass_4k": {
+      "detection_rate": 1.0,
+      "neutralization_rate": 1.0,
+      "avg_wer": 1.0416666666666667,
+      "avg_snr_db": 12.246037132128507,
+      "flagged": 1,
+      "neutralized": 1
+    },
+    "mel_reconstruct": {
+      "detection_rate": 1.0,
+      "neutralization_rate": 1.0,
+      "avg_wer": 1.25,
+      "avg_snr_db": -2.96828190536939,
+      "flagged": 1,
+      "neutralized": 1
+    },
+    "gaussian_0.005": {
+      "detection_rate": 1.0,
+      "neutralization_rate": 1.0,
+      "avg_wer": 1.2083333333333333,
+      "avg_snr_db": 28.15623321876793,
+      "flagged": 1,
+      "neutralized": 1
+    }
+  },
+  "model": "qwen2_audio",
+  "prompt_mode": "qa",
+  "transforms": [
+    "quantize_8bit",
+    "downup_8k",
+    "lowpass_4k",
+    "mel_reconstruct",
+    "gaussian_0.005"
+  ],
+  "threshold": 0.5
+}

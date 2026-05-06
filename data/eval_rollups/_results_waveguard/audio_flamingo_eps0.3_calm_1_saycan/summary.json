@@ -1,0 +1,59 @@
+{
+  "adversarial": {
+    "total": 1,
+    "detected": 1,
+    "detection_rate": 1.0
+  },
+  "per_transform": {
+    "quantize_8bit": {
+      "detection_rate": 1.0,
+      "neutralization_rate": 0.0,
+      "avg_wer": 0.8833333333333333,
+      "avg_snr_db": 34.88074618732841,
+      "flagged": 1,
+      "neutralized": 0
+    },
+    "downup_8k": {
+      "detection_rate": 1.0,
+      "neutralization_rate": 0.0,
+      "avg_wer": 0.8666666666666667,
+      "avg_snr_db": 23.51910300790129,
+      "flagged": 1,
+      "neutralized": 0
+    },
+    "lowpass_4k": {
+      "detection_rate": 1.0,
+      "neutralization_rate": 0.0,
+      "avg_wer": 0.8833333333333333,
+      "avg_snr_db": 12.291660010416907,
+      "flagged": 1,
+      "neutralized": 0
+    },
+    "mel_reconstruct": {
+      "detection_rate": 1.0,
+      "neutralization_rate": 0.0,
+      "avg_wer": 0.9,
+      "avg_snr_db": -3.329080845580929,
+      "flagged": 1,
+      "neutralized": 0
+    },
+    "gaussian_0.005": {
+      "detection_rate": 1.0,
+      "neutralization_rate": 0.0,
+      "avg_wer": 0.8833333333333333,
+      "avg_snr_db": 28.127776312455815,
+      "flagged": 1,
+      "neutralized": 0
+    }
+  },
+  "model": "audio_flamingo",
+  "prompt_mode": "qa",
+  "transforms": [
+    "quantize_8bit",
+    "downup_8k",
+    "lowpass_4k",
+    "mel_reconstruct",
+    "gaussian_0.005"
+  ],
+  "threshold": 0.5
+}
