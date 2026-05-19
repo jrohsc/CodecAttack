@@ -1,6 +1,6 @@
 # Codec-Robust Attacks on Audio LLMs (anonymous code and data)
 
-This is the anonymous release that backs the paper *Codec-Robust Attacks on Audio LLMs* (NeurIPS 2026 submission). It contains the attack code, the codec wrappers, the carrier dataset, the per-pair target-text mapping, and every JSON / JSONL eval rollup used to produce the tables and figures. Adversarial (perturbed) audio is **not** included; reviewers can regenerate it from the carriers using the included scripts. The paper PDF is submitted separately through the conference review system.
+This is the anonymous release that backs the paper *Codec-Robust Attacks on Audio LLMs*. It contains the attack code, the codec wrappers, the carrier dataset, the per-pair target-text mapping, and every JSON / JSONL eval rollup used to produce the tables and figures. Adversarial (perturbed) audio is **not** included; reviewers can regenerate it from the carriers using the included scripts. The paper PDF is submitted separately through the conference review system.
 
 ## Contents
 
