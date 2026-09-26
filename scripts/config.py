@@ -25,6 +25,9 @@ for _p in (SCRIPTS_DIR, CODECATTACK_LIB_ROOT):
     if _p not in sys.path:
         sys.path.insert(0, _p)
 
+# The ensemble code imports its model and codec wrappers from this root.
+WHISPER_INJECT_ROOT = CODECATTACK_LIB_ROOT
+
 
 def _find_ffmpeg():
     """$FFMPEG_BIN, else PATH, else the active interpreter's bin/ (conda envs
@@ -82,6 +85,8 @@ MODEL_PATH_ENV = {
     "qwen25_omni_7b": ("MODEL_PATH_QWEN25_OMNI", "Qwen/Qwen2.5-Omni-7B"),
     "audio_flamingo": ("MODEL_PATH_AUDIO_FLAMINGO_3", "nvidia/audio-flamingo-3-hf"),
     "kimi_audio": ("MODEL_PATH_KIMI_AUDIO", "moonshotai/Kimi-Audio-7B-Instruct"),
+    # Ensemble member; runs in its own `audio-llm` env (see docs/ENSEMBLE.md).
+    "phi4": ("MODEL_PATH_PHI4_MM", "microsoft/Phi-4-multimodal-instruct"),
     "judge_llm": ("MODEL_PATH_JUDGE_LLM", "meta-llama/Llama-3.2-3B-Instruct"),
     # Base Moshi (a PersonaPLEX fine-tune can be swapped in via the env var).
     "personaplex": ("MODEL_PATH_PERSONAPLEX", "kmhf/hf-moshiko"),
@@ -1042,7 +1047,26 @@ def load_saycan_commands():
     return commands
 
 
-DATASET_CHOICES = ["ours", "saycan"]
+HARMBENCH_DATA_PATH = os.path.join(DATA_DIR, "harmbench", "harmbench_commands.json")
+
+
+def load_harmbench_commands():
+    """AdvBench behaviors in AGENT_COMMANDS format (not shipped with this release;
+    place the JSON at HARMBENCH_DATA_PATH to use --dataset harmbench)."""
+    if not os.path.isfile(HARMBENCH_DATA_PATH):
+        raise FileNotFoundError(
+            f"--dataset harmbench needs {HARMBENCH_DATA_PATH}, which is not "
+            "shipped with this release."
+        )
+    with open(HARMBENCH_DATA_PATH) as f:
+        entries = json.load(f)
+    return {
+        f"harmbench_{e['id']:03d}": {"transcribe": e["goal"], "qa": e["target"]}
+        for e in entries
+    }
+
+
+DATASET_CHOICES = ["ours", "saycan", "harmbench"]
 
 
 # Opus bitrates for primary evaluation (YouTube ~128kbps, Spotify ~96-160kbps)
@@ -1457,7 +1481,13 @@ class ComplianceJudge:
 CONDA_ENVS = {
     "qwen2_audio": "codec-attack",
     "qwen25_omni": "qwen-omni",
+    "qwen25_omni_3b": "qwen-omni",
     "audio_flamingo": "flamingo3",
+    "kimi_audio": "kimi-audio",
+    # Phi-4-MM's remote code calls get_peft_model at __init__; peft>=0.14 raises
+    # "Phi4MMModel has no attribute prepare_inputs_for_generation", so it needs
+    # an older env (transformers 4.47 / peft 0.11).
+    "phi4": "audio-llm",
 }
 
 # ============================================================================
@@ -1482,10 +1512,10 @@ ENSEMBLE_WEIGHTS = {
 }
 
 # Models that can run in the same process (same conda env / compatible deps)
-ENSEMBLE_IN_PROCESS = ["qwen2_audio", "qwen25_omni"]
+ENSEMBLE_IN_PROCESS = ["qwen2_audio", "qwen25_omni", "qwen25_omni_3b"]
 
 # Models that require a separate conda env (subprocess gradient computation)
-ENSEMBLE_SUBPROCESS = ["audio_flamingo"]
+ENSEMBLE_SUBPROCESS = ["audio_flamingo", "phi4", "kimi_audio"]
 
 # Number of warmup steps on primary model before adding ensemble models
 ENSEMBLE_WARMUP_STEPS = 50

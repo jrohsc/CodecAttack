@@ -18,6 +18,7 @@ Usage:
 """
 
 import argparse
+import hashlib
 import json
 import os
 import sys
@@ -30,7 +31,7 @@ from config import (
     MUSIC_FILES, DEFAULT_MUSIC, AGENT_COMMANDS, RESULTS_DIR,
     LATENT_EPS, LATENT_ALPHA, ATTACK_STEPS, PERCEPTUAL_WEIGHT,
     OPUS_EVAL_BITRATES, PROMPT_MODES, DEFAULT_PROMPT_MODE, TARGET_MODEL,
-    DATASET_CHOICES, load_saycan_commands,
+    DATASET_CHOICES, load_saycan_commands, load_harmbench_commands,
     compute_wer, save_results_summary, ComplianceJudge,
     ENSEMBLE_MODELS, ENSEMBLE_WEIGHTS, ENSEMBLE_WARMUP_STEPS,
     ENSEMBLE_GRAD_NORMALIZE,
@@ -85,6 +86,8 @@ def filter_commands(category: Optional[str] = None, mode: str = "transcribe",
     """
     if dataset == "saycan":
         cmds = load_saycan_commands()
+    elif dataset == "harmbench":
+        cmds = load_harmbench_commands()
     else:
         cmds = AGENT_COMMANDS
     if category is not None:
@@ -243,7 +246,14 @@ def run_benchmark(args):
     device = "cuda" if torch.cuda.is_available() else "cpu"
 
     if getattr(args, 'ensemble', False):
-        from ensemble_attack import EnsembleLatentAttacker
+        if getattr(args, "ensemble_domain", "latent") == "waveform":
+            if args.ensemble_channel_mode != "none":
+                raise ValueError("waveform ensemble experiment has no attack-time codec EoT")
+            if args.ensemble_weights or getattr(args, "rand_init", False):
+                raise ValueError("waveform ensemble experiment uses equal weights and zero initialization")
+            from ensemble_waveform_attack import EnsembleWaveformAttacker as EnsembleAttacker
+        else:
+            from ensemble_attack import EnsembleLatentAttacker as EnsembleAttacker
 
         # Parse ensemble weights
         ensemble_weights = None
@@ -257,9 +267,8 @@ def run_benchmark(args):
         if args.ensemble_models:
             ensemble_models = [m.strip() for m in args.ensemble_models.split(",")]
 
-        attacker = EnsembleLatentAttacker(
+        attacker = EnsembleAttacker(
             ensemble_models=ensemble_models,
-            ensemble_weights=ensemble_weights,
             primary_model=args.target_model,
             eps=args.eps,
             alpha=args.alpha,
@@ -268,8 +277,14 @@ def run_benchmark(args):
             grad_normalize=not args.no_grad_normalize,
             device=device,
             verbose=not args.quiet,
-            rand_init=getattr(args, "rand_init", False),
-            seed=getattr(args, "seed", 1),
+            best_after_warmup=getattr(args, "ensemble_best_after_warmup", False),
+            **({} if getattr(args, "ensemble_domain", "latent") == "waveform" else {
+                "ensemble_weights": ensemble_weights,
+                "rand_init": getattr(args, "rand_init", False),
+                "seed": getattr(args, "seed", 1),
+                "channel_mode": getattr(args, "ensemble_channel_mode", "none"),
+                "strict_workers": getattr(args, "ensemble_strict_workers", False),
+            }),
         )
     else:
         attacker = LatentCodecAttacker(
@@ -307,10 +322,15 @@ def run_benchmark(args):
             )
             config_data["ensemble_warmup"] = args.ensemble_warmup
             config_data["grad_normalize"] = not args.no_grad_normalize
-            # Recorded so a bundle is self-describing: without rand_init the
-            # attack is deterministic and `seed` has no effect on the result.
+            config_data["ensemble_channel_mode"] = args.ensemble_channel_mode
+            config_data["ensemble_best_after_warmup"] = args.ensemble_best_after_warmup
+            config_data["ensemble_domain"] = getattr(args, "ensemble_domain", "latent")
+            # Record both seed controls. With zero initialization, the seed
+            # changes Opus EoT draws only when seed_codec_per_clip is enabled.
             config_data["rand_init"] = getattr(args, "rand_init", False)
             config_data["seed"] = getattr(args, "seed", 1)
+            config_data["seed_codec_per_clip"] = getattr(args, "seed_codec_per_clip", False)
+            config_data["ensemble_strict_workers"] = getattr(args, "ensemble_strict_workers", False)
             if args.ensemble_weights:
                 config_data["ensemble_weights"] = args.ensemble_weights
         with open(config_path, "w") as f:
@@ -367,6 +387,13 @@ def run_benchmark(args):
             start_time = time.time()
 
             # Run attack (includes direct evaluation)
+            if getattr(args, "seed_codec_per_clip", False):
+                # The multi-bitrate Opus proxy draws with torch.randint. Seed
+                # immediately before each clip so shard order and resume do
+                # not change that clip's codec trajectory.
+                identity = f"{args.seed}:{music_name}:{cmd_name}".encode("utf-8")
+                clip_seed = int.from_bytes(hashlib.sha256(identity).digest()[:8], "big")
+                torch.manual_seed(clip_seed)
             result = attacker.attack(
                 music_wav,
                 target_text=target_text,
@@ -717,6 +744,9 @@ def main():
     # Ensemble attack
     parser.add_argument("--ensemble", action="store_true",
                         help="Use ensemble attack (optimize against multiple models)")
+    parser.add_argument("--ensemble-domain", choices=["latent", "waveform"],
+                        default="latent",
+                        help="Optimize ensemble perturbations in EnCodec latent space or directly on the waveform")
     parser.add_argument("--ensemble-models", type=str, default=None,
                         help="Comma-separated model names for ensemble (default: qwen2_audio,qwen25_omni,audio_flamingo)")
     parser.add_argument("--ensemble-weights", type=str, default=None,
@@ -725,12 +755,29 @@ def main():
                         help=f"Warmup steps on primary model before adding ensemble (default: {ENSEMBLE_WARMUP_STEPS})")
     parser.add_argument("--rand-init", action="store_true",
                         help="Random-init the latent perturbation (ensemble attack). "
-                             "OFF by default: the attack is otherwise deterministic, so "
-                             "a seed sweep without this produces identical bundles.")
+                             "OFF by default. For zero-init seed sweeps, use "
+                             "--seed-codec-per-clip to vary codec EoT draws.")
     parser.add_argument("--seed", type=int, default=1,
-                        help="Seed for --rand-init; also tags the output bundle dir.")
+                        help="Seed for random initialization or per-clip codec draws.")
+    parser.add_argument("--seed-codec-per-clip", action="store_true",
+                        help="Deterministically seed the codec EoT RNG for each clip; "
+                             "works with zero initialization and is resume-safe.")
     parser.add_argument("--no-grad-normalize", action="store_true",
                         help="Disable per-model gradient normalization")
+    parser.add_argument("--ensemble-strict-workers", action="store_true",
+                        help="Fail if any subprocess ensemble member misses a gradient")
+    parser.add_argument(
+        "--ensemble-channel-mode",
+        choices=["none", "multi_bitrate", "mp3_multibitrate"],
+        default="none",
+        help=("Attack-time codec EoT for an ensemble: none, multi-bitrate "
+              "Opus, or multi-bitrate MP3 (32/64/96/128 kbps)."),
+    )
+    parser.add_argument(
+        "--ensemble-best-after-warmup", action="store_true",
+        help=("Only let steps after the primary-only warmup (and after codec-EoT "
+              "turns on) become the saved perturbation. Off by default."),
+    )
 
     # Convenience
     parser.add_argument("--quick", action="store_true",

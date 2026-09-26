@@ -1,7 +1,7 @@
 """
 Emit a 2-row LaTeX ablation table (codec-robust EOT vs no-EOT non-robust)
 for one (scenario, model, eps) cell, mirroring the column layout and red-
-shading convention of paper-neurips/tables/tab_S3_eps_1.0.tex.
+shading convention of paper/tables/tab_S3_eps_1.0.tex.
 
 Default: S3a / Qwen2-Audio / eps=1.0.
 

@@ -1,0 +1,81 @@
+{
+  "prefix": "benchmark_ensemble_omni7_af3_phi4_opuseot_transcribe_eps10.0_jazz_1_steps600_seed7",
+  "n": 224,
+  "seed": 7,
+  "members": [
+    "qwen25_omni",
+    "audio_flamingo",
+    "phi4"
+  ],
+  "held_out": [
+    "qwen2_audio",
+    "kimi_audio",
+    "qwen25_omni_3b"
+  ],
+  "channels": [
+    "clean",
+    "opus64",
+    "opus128",
+    "mp3_64",
+    "mp3_128",
+    "aac_64",
+    "aac_128"
+  ],
+  "mean_waveform_snr_db": 3.337,
+  "models": {
+    "omni7b_MEMBER": {
+      "clean": 99.6,
+      "opus64": 99.6,
+      "opus128": 99.6,
+      "mp3_64": 99.1,
+      "mp3_128": 99.6,
+      "aac_64": 92.9,
+      "aac_128": 96.9
+    },
+    "af3_MEMBER": {
+      "clean": 96.4,
+      "opus64": 95.5,
+      "opus128": 95.5,
+      "mp3_64": 93.3,
+      "mp3_128": 96.4,
+      "aac_64": 44.2,
+      "aac_128": 45.1
+    },
+    "phi4_MEMBER": {
+      "clean": 43.3,
+      "opus64": 39.7,
+      "opus128": 41.5,
+      "mp3_64": 37.1,
+      "mp3_128": 41.5,
+      "aac_64": 25.9,
+      "aac_128": 37.1
+    },
+    "qwen2_HELDOUT": {
+      "clean": 1.3,
+      "opus64": 0.9,
+      "opus128": 0.9,
+      "mp3_64": 0.4,
+      "mp3_128": 1.3,
+      "aac_64": 4.5,
+      "aac_128": 6.7
+    },
+    "kimi_HELDOUT_100tok": {
+      "clean": 2.7,
+      "opus64": 3.6,
+      "opus128": 2.7,
+      "mp3_64": 2.2,
+      "mp3_128": 1.8,
+      "aac_64": 1.8,
+      "aac_128": 2.2
+    },
+    "omni3b_HELDOUT": {
+      "clean": 16.1,
+      "opus64": 13.8,
+      "opus128": 14.3,
+      "mp3_64": 14.7,
+      "mp3_128": 13.8,
+      "aac_64": 9.4,
+      "aac_128": 14.3
+    }
+  }
+}

@@ -1,4 +1,4 @@
-"""Regenerate paper-neurips/tables/tab_cross_model.tex from
+"""Regenerate paper/tables/tab_cross_model.tex from
 transfer_eval_<target>.json files written by cross_model_transfer_eval.py.
 
 For each scenario in {S1, S3a} we emit a 3x3 grid of (attacker x evaluator)

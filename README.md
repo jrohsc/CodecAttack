@@ -11,8 +11,10 @@ codec_wrappers/            Continuous-latent encode/decode wrappers
     dac_wrapper.py         Descript Audio Codec (24 kHz, 75 fps, 1024-d latent)
     snac_wrapper.py        SNAC multi-scale RVQ
     channel_augmentation.py    Differentiable Opus / MP3 / AAC straight-through proxies
+    phi4_frontend.py       Differentiable Phi-4-multimodal audio feature extractor
     models/                Target-LLM adapters (Qwen2-Audio, Qwen2.5-Omni,
-                           Audio Flamingo 3, Kimi-Audio, PersonaPLEX/Moshi)
+                           Audio Flamingo 3, Phi-4-multimodal, Kimi-Audio,
+                           PersonaPLEX/Moshi); no third-party model code
 
 scripts/                   Attack drivers, eval, table builders
     config.py                   Centralized paths, target maps, prompt modes
@@ -20,6 +22,11 @@ scripts/                   Attack drivers, eval, table builders
     latent_attack.py            Core latent-space PGD
     robust_latent_attack.py     With codec EoT
     ensemble_attack.py          Multi-model ensemble PGD
+    model_registry.py           Model name -> adapter (shared by driver and workers)
+    gradient_worker*.py         Per-env gradient workers for ensemble members
+    ensemble_heldout_eval.py    Member / held-out evaluation of ensemble audio
+    run_ensemble_omni_af3_phi4.sh   Omni-7B + AF3 + Phi-4 ensemble: craft, eval, summarize
+    aggregate_extra_heldout.py, summarize_ensemble_*.py   Ensemble rollups
     music_carrier.py            Carrier loading + mel perceptual distances
     aac_channel.py              AAC / MP3 straight-through channel
     demo_ota.py                 Over-the-air channel simulation
@@ -56,10 +63,12 @@ data/
         _results_watermark/             AudioSeal defense
         _results_waveguard/             WaveGuard defense
         _results_waveform/              Waveform-PGD baseline
+        05_ensemble_omni7_af3_phi4/     Multi-victim ensemble (seeds 1, 7, 42)
 
 docs/
     MANIFEST_AUDIO.md           SHA-256 manifest of the not-redistributed carriers (copyrighted music + MagicData clips)
     REPRODUCE.md                Environment setup, attack, eval, table-rebuild instructions
+    ENSEMBLE.md                 Multi-victim ensemble attack: envs, model downloads, run, results
 ```
 
 ## Quick reproduction
@@ -76,6 +85,9 @@ python scripts/check_env.py        # verifies imports, paths, data, and ffmpeg
 3. For S3a / S3b only: obtain the 9 commercial-music carriers through legitimate means, place at `data/music/copyrighted/`, verify with the SHA-256 manifest. (TTS carriers and Suno music are already in this repo.)
 4. Run an attack driver: e.g. `python scripts/run_dac_full.py --mode full`.
 5. Regenerate the paper's tables: `python scripts/build_main_results_tables.py`.
+
+For the multi-victim ensemble attack (Qwen2.5-Omni-7B + Audio Flamingo 3 +
+Phi-4-multimodal, evaluated on three held-out models), see `docs/ENSEMBLE.md`.
 
 Attacked audio and any newly computed metrics are written under `results/`; the
 reference rollups shipped in `data/eval_rollups/` are never overwritten.
@@ -96,7 +108,7 @@ Concretely, the paper's $n{=}45$ S3b experiments map 9 copyrighted music carrier
 - **Adversarial / perturbed audio.** ~10k WAVs across all scenarios; regenerable from the carriers with the included attack drivers.
 - **Copyrighted music carriers** (9 commercial recordings used as S3b and partial S3a carriers). Not ours to redistribute. `docs/MANIFEST_AUDIO.md` lists the SHA-256 hashes so reviewers can verify the exact files we used after obtaining them locally.
 - **MagicData Mandarin clips** (6 of the 24 Mandarin S2 carriers). License the corpus from Magic Data Technology Co., Ltd. The remaining 18 Mandarin carriers (`chinese_bad_*`, `chinese_murmur_*`, `chinese_v2_*`) are TTS-generated and included.
-- **Target-LLM model weights.** Download from HuggingFace under the model owners' licenses (`Qwen/Qwen2-Audio-7B-Instruct`, `Qwen/Qwen2.5-Omni-7B`, `nvidia/audio-flamingo-3-hf`).
+- **Target-LLM model weights and third-party model code.** Download from HuggingFace under the model owners' licenses (`Qwen/Qwen2-Audio-7B-Instruct`, `Qwen/Qwen2.5-Omni-7B`, `Qwen/Qwen2.5-Omni-3B`, `nvidia/audio-flamingo-3-hf`, `microsoft/Phi-4-multimodal-instruct`, `moonshotai/Kimi-Audio-7B-Instruct`). Kimi-Audio's inference code comes from https://github.com/MoonshotAI/Kimi-Audio. Links and setup are in `docs/ENSEMBLE.md`.
 
 ## Anonymity
 

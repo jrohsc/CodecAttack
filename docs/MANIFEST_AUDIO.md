@@ -43,6 +43,16 @@ cd data/music/copyrighted
 sha256sum *.mp3
 ```
 
+### 1b. Ensemble-experiment music carrier
+
+The multi-victim ensemble experiment (`docs/ENSEMBLE.md`) uses one further
+music carrier that is not redistributed. Place it at `data/music/jazz_1.mp3`
+(the path `MUSIC_FILES["jazz_1"]` in `scripts/config.py` expects).
+
+| Filename | SHA-256 | Bytes |
+|---|---|---|
+| `jazz_1.mp3` | `ede2342056713408447375af01ef8ede73f9a7f3f046155efc4b3a499a306c13` | 3941217 |
+
 ### 2. MagicData Mandarin clips (S2 interview)
 
 `data/speech/02_interview/carrier_to_target.json` lists six carriers named `chinese_magicdata_*.wav`. These are real human-speech recordings from the MagicData Mandarin Conversational Speech corpus (commercial dataset from Magic Data Technology Co., Ltd.) and are not included here. To reproduce the S2 Mandarin condition with those six carriers, license the corpus from Magic Data, extract the indicated clip indices (`m_q1_idx0`, `m_q2_idx1`, `f_q3_idx2`, `m_q1_idx3`, `f_q2_idx4`, `f_q3_idx5`), and place them at `data/speech/02_interview/zh/audio/`. The remaining 18 Mandarin carriers in this folder (`chinese_bad_*`, `chinese_murmur_*`, `chinese_v2_*`) are all TTS-generated and included.

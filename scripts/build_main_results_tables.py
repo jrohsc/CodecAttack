@@ -1,4 +1,4 @@
-"""Regenerate the cross-scenario tables in paper-neurips/tables/ from
+"""Regenerate the cross-scenario tables in paper/tables/ from
 results_codec_robust/ bundles.
 
 Scoring: substring match of target_text inside the channel's output string

@@ -79,14 +79,15 @@ def apply_opus_compression(audio_np: np.ndarray, sr: int, bitrate_kbps: int = 12
     """Compress audio through Opus codec (simulates YouTube/Spotify encoding)."""
     import shutil
 
-    ffmpeg_bin = shutil.which("ffmpeg")
+    ffmpeg_bin = os.environ.get("FFMPEG_BIN") or shutil.which("ffmpeg")
     if ffmpeg_bin is None:
         # Try conda env
         env_bin = os.path.dirname(sys.executable)
         ffmpeg_bin = os.path.join(env_bin, "ffmpeg")
         if not os.path.isfile(ffmpeg_bin):
-            print("  [WARN] ffmpeg not found, skipping Opus compression")
-            return audio_np
+            # Returning the input unchanged would silently score an
+            # "Opus" channel as clean audio.
+            raise FileNotFoundError("ffmpeg not found; set FFMPEG_BIN")
 
     tmpdir = _make_tempdir_resilient()
     try:

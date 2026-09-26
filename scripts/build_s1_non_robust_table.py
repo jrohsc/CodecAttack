@@ -2,7 +2,7 @@
 Emit a LaTeX table for S1 finance-voice-agent in the *non-codec-robust*
 baseline (channel-mode=none, no Opus EOT during training).
 
-Mirrors the 18-column layout of paper-neurips/tables/tab_S1.tex:
+Mirrors the 18-column layout of paper/tables/tab_S1.tex:
   Model | eps | n | Clean | Opus(16/24/32/64/128/192) | MP3(64/96/128/192)
         | AAC(64/96/128/192)
 

@@ -1,0 +1,15 @@
+# `audio-llm` env: Phi-4-multimodal ensemble member (gradient worker + eval).
+# Phi-4-MM's remote code calls get_peft_model at __init__, which peft>=0.14
+# rejects, so this env pins older transformers / peft than requirements.txt.
+torch==2.3.1
+torchaudio==2.3.1
+transformers==4.47.0
+peft==0.11.1
+accelerate==0.33.0
+backoff==2.2.1        # imported by Phi-4-MM's remote code
+numpy==1.26.4
+scipy==1.14.1
+soundfile==0.13.1
+librosa==0.10.2.post1
+encodec==0.1.1
+jiwer==3.0.4

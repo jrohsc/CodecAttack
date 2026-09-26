@@ -28,7 +28,10 @@ import torch.nn.functional as F
 
 
 def _find_ffmpeg() -> str:
-    """Find ffmpeg binary."""
+    """$FFMPEG_BIN, else PATH, else the active interpreter's bin/."""
+    explicit = os.environ.get("FFMPEG_BIN")
+    if explicit:
+        return explicit
     ffmpeg_bin = shutil.which("ffmpeg")
     if ffmpeg_bin is None:
         env_bin = os.path.dirname(sys.executable)

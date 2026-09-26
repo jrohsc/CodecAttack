@@ -144,7 +144,7 @@ The new numbers feed Option A of the watermark table — one model row,
 six channel rows, three metrics columns. The rebuild logic for that table
 is **not yet wired up**; once the run finishes, draft a small builder
 under `scripts/` that reads
-`summary_per_channel.json` and emits `paper-neurips/tables/tab_watermark_channels.tex`.
+`summary_per_channel.json` and emits `paper/tables/tab_watermark_channels.tex`.
 
 Sanity check before quoting numbers:
 - `clean` row in `summary_per_channel.json` should match the existing

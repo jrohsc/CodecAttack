@@ -25,7 +25,16 @@ conda create -n qwen-omni python=3.10
 conda activate qwen-omni
 conda install -c conda-forge ffmpeg
 pip install -r requirements_omni.txt
+
+# Phi-4-multimodal (ensemble member only): transformers 4.47 / peft 0.11.
+conda create -n audio-llm python=3.10
+conda activate audio-llm
+conda install -c conda-forge ffmpeg
+pip install -r requirements_phi4.txt
 ```
+
+The ensemble experiment also uses a `kimi-audio` env for evaluation; see
+`docs/ENSEMBLE.md`.
 
 ## 1b. Verify the install
 
@@ -53,6 +62,7 @@ export MODEL_PATH_QWEN25_OMNI=/path/to/Qwen2.5-Omni-7B
 export MODEL_PATH_QWEN25_OMNI_3B=/path/to/Qwen2.5-Omni-3B
 export MODEL_PATH_AUDIO_FLAMINGO_3=/path/to/audio-flamingo-3-hf
 export MODEL_PATH_KIMI_AUDIO=/path/to/Kimi-Audio-7B-Instruct   # held-out victim
+export MODEL_PATH_PHI4_MM=/path/to/Phi-4-multimodal-instruct  # ensemble member
 export MODEL_PATH_JUDGE_LLM=/path/to/Llama-3.2-3B-Instruct     # LLM judge
 ```
 
@@ -61,6 +71,7 @@ Each model is fetched from HuggingFace under its respective license:
 - `Qwen/Qwen2-Audio-7B-Instruct`
 - `Qwen/Qwen2.5-Omni-7B`, `Qwen/Qwen2.5-Omni-3B`
 - `nvidia/audio-flamingo-3-hf`
+- `microsoft/Phi-4-multimodal-instruct` (needs the `audio-llm` env)
 - `moonshotai/Kimi-Audio-7B-Instruct` (needs its own `kimi-audio` conda env, and
   `KIMI_INFER_ROOT` pointing at a checkout of the Kimi-Audio repo for `kimia_infer`)
 
