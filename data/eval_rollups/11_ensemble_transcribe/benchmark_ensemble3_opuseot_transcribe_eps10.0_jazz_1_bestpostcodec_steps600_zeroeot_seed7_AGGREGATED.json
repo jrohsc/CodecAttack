@@ -1,0 +1,282 @@
+{
+  "mode": "opus",
+  "prefix": "benchmark_ensemble3_opuseot_transcribe_eps10.0_jazz_1_bestpostcodec_steps600_zeroeot_seed7",
+  "n": 224,
+  "channels": [
+    "clean",
+    "opus64",
+    "opus128",
+    "mp3_64",
+    "mp3_128",
+    "aac_64",
+    "aac_128"
+  ],
+  "models": {
+    "qwen2_MEMBER": "qwen2_audio",
+    "omni7b_MEMBER": "qwen25_omni",
+    "af3_MEMBER": "audio_flamingo",
+    "omni3b_HELDOUT": "qwen25_omni_3b"
+  },
+  "counts": {
+    "qwen2_MEMBER": {
+      "clean": {
+        "exact": 224,
+        "lenient": 224
+      },
+      "opus64": {
+        "exact": 224,
+        "lenient": 224
+      },
+      "opus128": {
+        "exact": 224,
+        "lenient": 224
+      },
+      "mp3_64": {
+        "exact": 223,
+        "lenient": 223
+      },
+      "mp3_128": {
+        "exact": 224,
+        "lenient": 224
+      },
+      "aac_64": {
+        "exact": 6,
+        "lenient": 6
+      },
+      "aac_128": {
+        "exact": 6,
+        "lenient": 7
+      }
+    },
+    "omni7b_MEMBER": {
+      "clean": {
+        "exact": 213,
+        "lenient": 215
+      },
+      "opus64": {
+        "exact": 208,
+        "lenient": 211
+      },
+      "opus128": {
+        "exact": 213,
+        "lenient": 214
+      },
+      "mp3_64": {
+        "exact": 205,
+        "lenient": 206
+      },
+      "mp3_128": {
+        "exact": 214,
+        "lenient": 216
+      },
+      "aac_64": {
+        "exact": 179,
+        "lenient": 179
+      },
+      "aac_128": {
+        "exact": 193,
+        "lenient": 194
+      }
+    },
+    "af3_MEMBER": {
+      "clean": {
+        "exact": 217,
+        "lenient": 218
+      },
+      "opus64": {
+        "exact": 204,
+        "lenient": 208
+      },
+      "opus128": {
+        "exact": 216,
+        "lenient": 218
+      },
+      "mp3_64": {
+        "exact": 195,
+        "lenient": 198
+      },
+      "mp3_128": {
+        "exact": 215,
+        "lenient": 218
+      },
+      "aac_64": {
+        "exact": 21,
+        "lenient": 26
+      },
+      "aac_128": {
+        "exact": 23,
+        "lenient": 27
+      }
+    },
+    "omni3b_HELDOUT": {
+      "clean": {
+        "exact": 21,
+        "lenient": 25
+      },
+      "opus64": {
+        "exact": 20,
+        "lenient": 26
+      },
+      "opus128": {
+        "exact": 21,
+        "lenient": 27
+      },
+      "mp3_64": {
+        "exact": 16,
+        "lenient": 20
+      },
+      "mp3_128": {
+        "exact": 21,
+        "lenient": 25
+      },
+      "aac_64": {
+        "exact": 16,
+        "lenient": 20
+      },
+      "aac_128": {
+        "exact": 21,
+        "lenient": 27
+      }
+    }
+  },
+  "percentages": {
+    "qwen2_MEMBER": {
+      "clean": {
+        "exact_pct": 100.0,
+        "lenient_pct": 100.0
+      },
+      "opus64": {
+        "exact_pct": 100.0,
+        "lenient_pct": 100.0
+      },
+      "opus128": {
+        "exact_pct": 100.0,
+        "lenient_pct": 100.0
+      },
+      "mp3_64": {
+        "exact_pct": 99.6,
+        "lenient_pct": 99.6
+      },
+      "mp3_128": {
+        "exact_pct": 100.0,
+        "lenient_pct": 100.0
+      },
+      "aac_64": {
+        "exact_pct": 2.7,
+        "lenient_pct": 2.7
+      },
+      "aac_128": {
+        "exact_pct": 2.7,
+        "lenient_pct": 3.1
+      }
+    },
+    "omni7b_MEMBER": {
+      "clean": {
+        "exact_pct": 95.1,
+        "lenient_pct": 96.0
+      },
+      "opus64": {
+        "exact_pct": 92.9,
+        "lenient_pct": 94.2
+      },
+      "opus128": {
+        "exact_pct": 95.1,
+        "lenient_pct": 95.5
+      },
+      "mp3_64": {
+        "exact_pct": 91.5,
+        "lenient_pct": 92.0
+      },
+      "mp3_128": {
+        "exact_pct": 95.5,
+        "lenient_pct": 96.4
+      },
+      "aac_64": {
+        "exact_pct": 79.9,
+        "lenient_pct": 79.9
+      },
+      "aac_128": {
+        "exact_pct": 86.2,
+        "lenient_pct": 86.6
+      }
+    },
+    "af3_MEMBER": {
+      "clean": {
+        "exact_pct": 96.9,
+        "lenient_pct": 97.3
+      },
+      "opus64": {
+        "exact_pct": 91.1,
+        "lenient_pct": 92.9
+      },
+      "opus128": {
+        "exact_pct": 96.4,
+        "lenient_pct": 97.3
+      },
+      "mp3_64": {
+        "exact_pct": 87.1,
+        "lenient_pct": 88.4
+      },
+      "mp3_128": {
+        "exact_pct": 96.0,
+        "lenient_pct": 97.3
+      },
+      "aac_64": {
+        "exact_pct": 9.4,
+        "lenient_pct": 11.6
+      },
+      "aac_128": {
+        "exact_pct": 10.3,
+        "lenient_pct": 12.1
+      }
+    },
+    "omni3b_HELDOUT": {
+      "clean": {
+        "exact_pct": 9.4,
+        "lenient_pct": 11.2
+      },
+      "opus64": {
+        "exact_pct": 8.9,
+        "lenient_pct": 11.6
+      },
+      "opus128": {
+        "exact_pct": 9.4,
+        "lenient_pct": 12.1
+      },
+      "mp3_64": {
+        "exact_pct": 7.1,
+        "lenient_pct": 8.9
+      },
+      "mp3_128": {
+        "exact_pct": 9.4,
+        "lenient_pct": 11.2
+      },
+      "aac_64": {
+        "exact_pct": 7.1,
+        "lenient_pct": 8.9
+      },
+      "aac_128": {
+        "exact_pct": 9.4,
+        "lenient_pct": 12.1
+      }
+    }
+  },
+  "shards": [
+    {
+      "bundle": "results/benchmark_ensemble3_opuseot_transcribe_eps10.0_jazz_1_bestpostcodec_steps600_zeroeot_seed7_shard0of4",
+      "n": 56
+    },
+    {
+      "bundle": "results/benchmark_ensemble3_opuseot_transcribe_eps10.0_jazz_1_bestpostcodec_steps600_zeroeot_seed7_shard1of4",
+      "n": 56
+    },
+    {
+      "bundle": "results/benchmark_ensemble3_opuseot_transcribe_eps10.0_jazz_1_bestpostcodec_steps600_zeroeot_seed7_shard2of4",
+      "n": 56
+    },
+    {
+      "bundle": "results/benchmark_ensemble3_opuseot_transcribe_eps10.0_jazz_1_bestpostcodec_steps600_zeroeot_seed7_shard3of4",
+      "n": 56
+    }
+  ]
+}

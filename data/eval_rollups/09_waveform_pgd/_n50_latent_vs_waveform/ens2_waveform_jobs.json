@@ -1,0 +1,15 @@
+{
+  "experiment": "Qwen2-Audio + Omni-7B waveform ensemble, targeted transcription, no codec EoT",
+  "music": "jazz_1",
+  "commands": 224,
+  "steps": 300,
+  "warmup_steps": 50,
+  "waveform_eps": 0.075,
+  "waveform_alpha": 0.015,
+  "partition": "gpu-preempt",
+  "local_smoke_60_bundle": "results/benchmark_ens2_waveform_transcribe_eps0.075_jazz_1_LOCAL_SMOKE60",
+  "local_pilot_300_bundle": "results/benchmark_ens2_waveform_transcribe_eps0.075_jazz_1_LOCAL_PILOT300",
+  "training_shards0_to3": [64494864, 64494865, 64494866, 64494867],
+  "evaluation_jobs": [64494868, 64494869, 64494886, 64494887, 64494888, 64494889, 64494890, 64494891, 64494892, 64494893, 64494894, 64494895, 64494896, 64494897, 64494898, 64494899],
+  "rollup": 64494900
+}

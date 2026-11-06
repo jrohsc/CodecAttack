@@ -619,6 +619,80 @@ class RobustLatentCodecAttacker(LatentCodecAttacker):
         if channel_mode == "multi_bitrate" and not no_channel:
             self._init_multi_bitrate_proxy(sample_rate=ENCODEC_SAMPLE_RATE)
 
+        # Initialize AAC / ensemble EoT proxies for the codec-EoT ablation
+        # ("aac_multibitrate" and "ensemble_multibitrate"). Add-only: does not
+        # touch the "multi_bitrate" (Opus) path used by the headline bundles.
+        #   - aac_multibitrate: AAC STE, random AAC bitrate per step.
+        #   - ensemble_multibitrate: per step, coin-flip between the Opus proxy
+        #     and the AAC STE (each then samples its own bitrate grid).
+        # MP3 is deliberately kept out of every training grid so it stays a
+        # genuine held-out delivery codec across all conditions.
+        self.aac_ste = None
+        self._aac_train_bitrates = kwargs.get(
+            "aac_train_bitrates", [32, 64, 96, 128]
+        )
+        if channel_mode in ("aac_multibitrate", "ensemble_multibitrate") and not no_channel:
+            self.aac_ste = AACCodecSTE(
+                sample_rate=ENCODEC_SAMPLE_RATE,
+                aac_bitrates=self._aac_train_bitrates,
+                include_mp3=False,
+                soundcloud_mode=False,
+            ).to(device)
+            self.log(
+                f"AAC EOT enabled: aac_bitrates_kbps={self._aac_train_bitrates}"
+            )
+        # MP3-only EoT proxy for the codec-EoT ablation ("mp3_multibitrate").
+        # NOTE: this trains ON MP3, so MP3 is in-distribution for this row only;
+        # it remains held-out for the opus/aac/ensemble rows.
+        self.mp3_ste = None
+        self._mp3_train_bitrates = kwargs.get(
+            "mp3_train_bitrates", [32, 64, 96, 128]
+        )
+        if channel_mode == "mp3_multibitrate" and not no_channel:
+            self.mp3_ste = AACCodecSTE(
+                sample_rate=ENCODEC_SAMPLE_RATE,
+                mp3_bitrates=self._mp3_train_bitrates,
+                mp3_only=True,
+            ).to(device)
+            self.log(
+                f"MP3 EOT enabled: mp3_bitrates_kbps={self._mp3_train_bitrates}"
+            )
+        if channel_mode == "ensemble_multibitrate" and not no_channel:
+            # Ensemble also needs the Opus proxy.
+            self._init_multi_bitrate_proxy(sample_rate=ENCODEC_SAMPLE_RATE)
+            self.log(
+                f"Ensemble {{Opus+AAC}} EOT enabled: opus={self._multi_bitrate_kbps} "
+                f"aac={self._aac_train_bitrates}"
+            )
+
+        # DAC neural-codec EoT ("dac_multibitrate"): the ADAPTIVE attack vs the
+        # neural-re-encode resynthesis defense. Trains the perturbation to survive
+        # a DAC continuous autoencoder round-trip (STE/BPDA). DAC 24kHz == EnCodec
+        # 24kHz, so no resample needed. Add-only: does not touch other modes.
+        self.dac_ste = None
+        if channel_mode == "dac_multibitrate" and not no_channel:
+            from dac_wrapper import DACWrapper
+            from channel_augmentation import DifferentiableNeuralCodecProxy
+            _dac_wrapper = DACWrapper(device=device)
+            self.dac_ste = DifferentiableNeuralCodecProxy(_dac_wrapper)
+            self.log("DAC neural-codec EOT enabled (continuous round-trip STE)")
+
+        # EnCodec neural-codec EoT ("encodec_neural"): the ADAPTIVE attack vs the
+        # neural-re-encode resynthesis defense, using the SAME codec the attack is
+        # parameterized in. Distinct from channel_mode="codec", which runs a
+        # *quantized* EnCodec round-trip at 1.5/3/6 kbps; this one is the
+        # continuous encode->decode round-trip, matching exactly what
+        # neural_codec_delivery_eval.py applies as the defense. Reuses the
+        # crafting wrapper (no second model load). Add-only: no other mode touched.
+        self.encodec_ste = None
+        if channel_mode == "encodec_neural" and not no_channel:
+            if self._uses_mimi:
+                raise ValueError("encodec_neural EoT requires the EnCodec codec, not Mimi")
+            from channel_augmentation import DifferentiableNeuralCodecProxy
+            self.encodec_ste = DifferentiableNeuralCodecProxy(self.codec)
+            self.log("EnCodec neural-codec EOT enabled (continuous round-trip STE, "
+                     "same codec as crafting)")
+
         # Initialize full OTA channel for "ota" mode
         self.ota_channel = None
         if channel_mode == "ota" and not no_channel:
@@ -1135,6 +1209,26 @@ class RobustLatentCodecAttacker(LatentCodecAttacker):
             return self._apply_channel_multi_bitrate(
                 audio_24k, step=step, total_steps=total_steps
             )
+        elif self.channel_mode == "aac_multibitrate":
+            return self._apply_channel_aac_multibitrate(
+                audio_24k, step=step, total_steps=total_steps
+            )
+        elif self.channel_mode == "mp3_multibitrate":
+            return self._apply_channel_mp3_multibitrate(
+                audio_24k, step=step, total_steps=total_steps
+            )
+        elif self.channel_mode == "ensemble_multibitrate":
+            return self._apply_channel_ensemble_multibitrate(
+                audio_24k, step=step, total_steps=total_steps
+            )
+        elif self.channel_mode == "encodec_neural":
+            return self._apply_channel_encodec_neural(
+                audio_24k, step=step, total_steps=total_steps
+            )
+        elif self.channel_mode == "dac_multibitrate":
+            return self._apply_channel_dac_multibitrate(
+                audio_24k, step=step, total_steps=total_steps
+            )
         elif self.channel_mode == "full":
             # Codec proxy then IR convolution
             if self.n_eot_codec > 1:
@@ -1263,6 +1357,40 @@ class RobustLatentCodecAttacker(LatentCodecAttacker):
         severity = self._get_severity(step, total_steps)
         return self.opus_proxy(audio_24k, severity=severity)
 
+    def _apply_channel_aac_multibitrate(self, audio_24k, step: int, total_steps: int):
+        """Route audio through the AAC STE (random AAC bitrate per call)."""
+        severity = self._get_severity(step, total_steps)
+        return self.aac_ste(audio_24k, severity=severity)
+
+    def _apply_channel_dac_multibitrate(self, audio_24k, step: int, total_steps: int):
+        """Route audio through the DAC continuous round-trip STE (neural-codec EoT)."""
+        severity = self._get_severity(step, total_steps)
+        return self.dac_ste(audio_24k, severity=severity)
+
+    def _apply_channel_encodec_neural(self, audio_24k, step: int, total_steps: int):
+        """Route audio through the EnCodec continuous round-trip STE.
+
+        Adaptive attack against the neural-re-encode defense, using the same
+        codec the perturbation is parameterized in: the optimizer is pushed
+        toward latents that are fixed points of encode-then-decode.
+        """
+        severity = self._get_severity(step, total_steps)
+        return self.encodec_ste(audio_24k, severity=severity)
+
+    def _apply_channel_mp3_multibitrate(self, audio_24k, step: int, total_steps: int):
+        """Route audio through the MP3-only STE (random MP3 bitrate per call)."""
+        severity = self._get_severity(step, total_steps)
+        return self.mp3_ste(audio_24k, severity=severity)
+
+    def _apply_channel_ensemble_multibitrate(self, audio_24k, step: int, total_steps: int):
+        """EoT over an {Opus, AAC} codec ensemble: coin-flip per step, then the
+        chosen proxy samples its own bitrate grid. Balanced 50/50 exposure so
+        neither codec family dominates the hardening signal."""
+        severity = self._get_severity(step, total_steps)
+        if torch.randint(2, (1,)).item() == 0:
+            return self.opus_proxy(audio_24k, severity=severity)
+        return self.aac_ste(audio_24k, severity=severity)
+
     def attack(
         self,
         music_wav: torch.Tensor,
@@ -1329,8 +1457,15 @@ class RobustLatentCodecAttacker(LatentCodecAttacker):
         if prompt:
             self.log(f"Prompt: {prompt}")
 
-        # Initialize perturbation
-        delta = torch.zeros_like(z_original, requires_grad=True)
+        # Initialize perturbation. Default: zeros (deterministic, matches the
+        # headline bundles). When self.rand_init is set (multi-seed study), draw
+        # a random start uniformly from the L-inf eps ball so that different RNG
+        # seeds explore different initializations (standard PGD multi-seed).
+        if getattr(self, "rand_init", False):
+            delta = torch.empty_like(z_original).uniform_(-self.eps, self.eps)
+            delta.requires_grad_(True)
+        else:
+            delta = torch.zeros_like(z_original, requires_grad=True)
         optimizer = torch.optim.Adam([delta], lr=self.alpha)
 
         # MI-FGSM momentum buffer (used when transfer_mode in {"mi_di","mi_norm"}).
@@ -1364,6 +1499,9 @@ class RobustLatentCodecAttacker(LatentCodecAttacker):
             "ir": "IR hardening",
             "codec": "codec proxy hardening",
             "multi_bitrate": f"multi-bitrate Opus EOT ({self._multi_bitrate_kbps} kbps)",
+            "aac_multibitrate": f"multi-bitrate AAC EOT ({self._aac_train_bitrates} kbps)",
+            "mp3_multibitrate": f"multi-bitrate MP3 EOT ({self._mp3_train_bitrates} kbps)",
+            "ensemble_multibitrate": f"ensemble Opus+AAC EOT (opus={self._multi_bitrate_kbps}, aac={self._aac_train_bitrates} kbps)",
             "full": "codec proxy + IR hardening",
             "ota": f"full OTA channel (EoT x{self.n_eot_samples})",
             "yakura_ota": f"Yakura OTA (RIR+noise, EoT x{self._yakura_n_eot})",
@@ -1753,6 +1891,31 @@ class RobustLatentCodecAttacker(LatentCodecAttacker):
             if loss_val < best_loss:
                 best_loss = loss_val
                 best_delta = delta.data.clone()
+
+            # --- trajectory checkpoints (diagnostic, off by default) ---------
+            # Every published transfer number is measured at the END of PGD, so
+            # we have never looked at the middle of the trajectory. If transfer
+            # is non-zero at some intermediate step and decays to 0 by the end,
+            # the perturbation is overfitting the source and a trajectory-
+            # selection method (OSLO/GA-style) has something to select. If it is
+            # 0 all the way along, there is no point to find and that whole
+            # family of methods is ruled out cheaply.
+            # Enable with:  ATTACK_CKPT_EVERY=100 ATTACK_CKPT_DIR=<dir>
+            _ck_every = int(os.environ.get("ATTACK_CKPT_EVERY", "0") or 0)
+            _ck_dir = os.environ.get("ATTACK_CKPT_DIR", "")
+            if _ck_every and _ck_dir and ((step + 1) % _ck_every == 0 or step == 0):
+                try:
+                    import soundfile as _sf
+                    os.makedirs(_ck_dir, exist_ok=True)
+                    with torch.no_grad():
+                        _z = z_original + delta.data
+                        _a24 = self.codec.decode_from_continuous(_z)
+                        _np = _a24.detach().squeeze().float().cpu().numpy()
+                    _tag = f"{music_name}_step{step + 1:04d}.wav"
+                    _sf.write(os.path.join(_ck_dir, _tag), _np,
+                              ENCODEC_SAMPLE_RATE, subtype="PCM_16")
+                except Exception as _e:  # diagnostics must never kill a run
+                    print(f"  [ckpt] step {step+1} failed: {_e}", flush=True)
 
             # Progress logging
             if (step + 1) % 10 == 0:

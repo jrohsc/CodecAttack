@@ -1,0 +1,103 @@
+{
+  "status": "frozen",
+  "selection_channels": [
+    "clean",
+    "opus16",
+    "opus24",
+    "opus32",
+    "opus64",
+    "opus128"
+  ],
+  "heldout_codecs_used": false,
+  "objective": "total exact target-substring matches over clean + Opus 16/24/32/64/128 on development examples; ties broken by clean matches, then by the smaller alpha/epsilon",
+  "selected": {
+    "s1:bandlimited_4khz": {
+      "alpha_over_epsilon": 0.02,
+      "validation_successes": 13,
+      "clean_successes": 4,
+      "n_development_examples": 4,
+      "tied_with": []
+    },
+    "s1:tuned_waveform": {
+      "alpha_over_epsilon": 0.02,
+      "validation_successes": 20,
+      "clean_successes": 4,
+      "n_development_examples": 4,
+      "tied_with": []
+    }
+  },
+  "grid": [
+    {
+      "scenario": "s1",
+      "method": "bandlimited_4khz",
+      "alpha_over_epsilon": 0.02,
+      "n_examples": 4,
+      "validation_successes": 13,
+      "clean_successes": 4,
+      "max_possible": 24
+    },
+    {
+      "scenario": "s1",
+      "method": "bandlimited_4khz",
+      "alpha_over_epsilon": 0.05,
+      "n_examples": 4,
+      "validation_successes": 0,
+      "clean_successes": 0,
+      "max_possible": 24
+    },
+    {
+      "scenario": "s1",
+      "method": "bandlimited_4khz",
+      "alpha_over_epsilon": 0.1,
+      "n_examples": 4,
+      "validation_successes": 0,
+      "clean_successes": 0,
+      "max_possible": 24
+    },
+    {
+      "scenario": "s1",
+      "method": "bandlimited_4khz",
+      "alpha_over_epsilon": 0.2,
+      "n_examples": 4,
+      "validation_successes": 0,
+      "clean_successes": 0,
+      "max_possible": 24
+    },
+    {
+      "scenario": "s1",
+      "method": "tuned_waveform",
+      "alpha_over_epsilon": 0.02,
+      "n_examples": 4,
+      "validation_successes": 20,
+      "clean_successes": 4,
+      "max_possible": 24
+    },
+    {
+      "scenario": "s1",
+      "method": "tuned_waveform",
+      "alpha_over_epsilon": 0.05,
+      "n_examples": 4,
+      "validation_successes": 12,
+      "clean_successes": 3,
+      "max_possible": 24
+    },
+    {
+      "scenario": "s1",
+      "method": "tuned_waveform",
+      "alpha_over_epsilon": 0.1,
+      "n_examples": 4,
+      "validation_successes": 14,
+      "clean_successes": 4,
+      "max_possible": 24
+    },
+    {
+      "scenario": "s1",
+      "method": "tuned_waveform",
+      "alpha_over_epsilon": 0.2,
+      "n_examples": 4,
+      "validation_successes": 12,
+      "clean_successes": 4,
+      "max_possible": 24
+    }
+  ]
+}

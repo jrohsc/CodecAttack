@@ -1,0 +1,20 @@
+%% Encoder-residual under AAC-LC (eps=1.0)
+\begin{table}[H]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{4pt}
+\caption{\textbf{Audio-encoder embedding distortion under AAC-LC, $\epsilon{=}1.0$.} $R = \lVert h_M(\mathrm{AAC}_b(x_{\mathrm{atk}})) - h_M(x_{\mathrm{atk}}) \rVert / \lVert h_M(x_{\mathrm{atk}}) - h_M(x_{\mathrm{clean}}) \rVert$, the encoder embedding's AAC-induced drift normalized by the useful attack displacement. All three working cells sit at $R\!\le\!0.09$; the only failed cell (Qwen2-Audio + S1 + AAC) is the only one above this threshold. Audio Flamingo 3 deferred (different runtime).}
+\label{tab:enc_residual_aac}
+\begin{tabular}{llcccccc}
+\toprule
+ & & & \multicolumn{4}{c}{\textbf{$R$ at AAC-LC bitrate}} & \\
+\cmidrule(lr){4-7}
+\textbf{Model} & \textbf{Carrier} & \textbf{$n$} & \textbf{64\,k} & \textbf{96\,k} & \textbf{128\,k} & \textbf{192\,k} & \textbf{ASR (\%)} \\
+\midrule
+Qwen2-Audio & speech (S1) & 25 & \textbf{0.141} & \textbf{0.103} & \textbf{0.103} & \textbf{0.103} & \textbf{2 / 2 / 2 / 2} \\
+Qwen2-Audio & music (S3a) & 40 & 0.088 & 0.060 & 0.060 & 0.060 & 48 / 82 / 85 / 88 \\
+Qwen2.5-Omni & speech (S1) & 25 & 0.093 & 0.072 & 0.072 & 0.072 & 54 / 66 / 66 / 66 \\
+Qwen2.5-Omni & music (S3a) & 40 & 0.066 & 0.047 & 0.047 & 0.047 & 42 / 65 / 65 / 65 \\
+\bottomrule
+\end{tabular}
+\end{table}

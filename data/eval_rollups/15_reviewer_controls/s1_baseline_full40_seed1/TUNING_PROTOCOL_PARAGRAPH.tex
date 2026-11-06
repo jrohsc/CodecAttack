@@ -1,0 +1,41 @@
+% Paste where the tuning-protocol TODO appears in the submission draft.
+% The four-arm result is descriptive; the historical and latent arms retain
+% their original recipes and do not form a parameterization-only ablation.
+We evaluate the S1 controls against Qwen2-Audio-7B-Instruct
+(snapshot \texttt{0a095220c30b7b31434169c3086508ef3ea5bf0a}).
+The 50 carrier--target pairs are split by source recording into 10 development
+and 40 held-out pairs. Four development pairs select the waveform step-size
+ratio from $\alpha/\epsilon\in\{0.02,0.05,0.1,0.2\}$ by maximizing exact
+complete-target substring matches across clean delivery and Opus
+$\{16,24,32,64,128\}$\,kbps, breaking ties by clean matches and then the
+smaller ratio; both tuned waveform arms select $\alpha/\epsilon=0.02$.
+The selected pilot attacks respect the latent reference's distortion ceiling,
+although the candidate ratios were not all matched to the same SNR.
+Relative to the original waveform baseline (fixed $\epsilon=0.06082$,
+$\alpha/\epsilon=0.2$, 20\% clean warmup, Opus updates at every subsequent
+step, and its original carrier normalization), the tuned unrestricted arm
+uses the common peak-normalized 24\,kHz carrier, a 30\% clean warmup followed
+by alternating clean and Opus-BPDA updates, and a per-example SNR-calibrated
+waveform budget. The $\leq$4\,kHz arm uses the same recipe with an exact
+frequency-bin projection of the \emph{additive perturbation}; ``unrestricted''
+means that the tuned arm omits this 4\,kHz mask, not that it replaces the
+carrier. The tuned arm directly optimizes bounded 16\,kHz waveform samples
+against the victim's target-text loss, with no perceptual-loss term; it
+does not append spoken target audio or alter neural-codec latents.
+Accordingly, matched SNR does not establish that this control remains
+benign-sounding. Both tuned arms use Adam for 1,000 steps, one zero-initialized run
+per tested budget (no random restarts), and the last iterate, with no
+attack-success-based checkpoint selection.
+Held-out budgets use only carrier-referenced SNR on saved and reloaded
+24\,kHz PCM waveforms: each tuned arm required 40 distortion probes and 40
+initial calibrated runs; the unrestricted arm required two further
+correction runs and the $\leq$4\,kHz arm required 16, 8, 5, and 3 across
+successive correction rounds (82 and 112 held-out optimizations in total).
+The final $\leq$4\,kHz repairs added 55 minutes 11 seconds of allocated GPU
+time, and both tuned arms satisfy the $\pm1$\,dB gate on all 40 pairs.
+No held-out ASR output selected a learning rate, budget, checkpoint, or
+calibration procedure. CodecAttack and the original waveform arm reuse their
+historical artifacts; CodecAttack may restore a periodically successful
+checkpoint, whereas the waveform arms save the last iterate. Consequently,
+the four-arm comparison reports outcomes under these documented recipes and
+does not isolate perturbation parameterization alone.

@@ -1,0 +1,67 @@
+[
+  {
+    "clip": "music_suno_calm_lyrical_1__target_american_f_q1_edgetts",
+    "wav_path": "${REPO_ROOT}/0_all_combined/data/music/ai_generated/suno_calm_lyrical_1.mp3",
+    "eps_tag": "eps1",
+    "steps": 1000,
+    "elapsed_s": 631.6544513702393,
+    "carrier_duration_s": 25.0,
+    "target_text": "Human-authored composition.",
+    "original_output": "The track is determined to be AI-generated synthetic audio. This conclusion is based on the repetitive patterns and lack of emotional expression in the vocals, which align with characteristics often associated with AI-generated music.",
+    "final_output": "Human-authored composition. The piece has a melodic structure and emotional depth typical of human compositions, which cannot be replicated by current AI technology.",
+    "final_loss": 0.0091142812743783,
+    "success": true,
+    "attacked_wav": "${REPO_ROOT}/0_all_combined/results_ablation_capacity/expA_words/qwen2_audio_eps1.0_multibitrate/calm/w002/audio/music_suno_calm_lyrical_1__target_american_f_q1_edgetts_eps1_attacked.wav",
+    "opus_robustness": {
+      "16": {
+        "output": "The track is determined to be AI-generated synthetic audio. This conclusion is based on the repetitive patterns and lack of emotional expression in the music, which are characteristics often associated with AI-generated content.",
+        "matches_target": false,
+        "exact_match": false,
+        "wer": 16.5,
+        "snr_db": 9.861588478088379
+      },
+      "24": {
+        "output": "Human-authored composition. The track contains melodic elements and vocalizations that suggest it was composed by a human, rather than being an AI-generated synthesized audio.",
+        "matches_target": true,
+        "exact_match": true,
+        "wer": 11.0,
+        "snr_db": 12.654802322387695
+      },
+      "32": {
+        "output": "Human-authored composition. The track contains melodic elements and instrumental harmonies that suggest a creative, human touch, typical of musical compositions written by humans rather than machines.",
+        "matches_target": true,
+        "exact_match": true,
+        "wer": 12.0,
+        "snr_db": 14.306349754333496
+      },
+      "64": {
+        "output": "Human-authored composition. The piece has a melodic structure and emotional depth typical of human compositions, which cannot be replicated by current AI technology.",
+        "matches_target": true,
+        "exact_match": true,
+        "wer": 10.5,
+        "snr_db": 20.709339141845703
+      },
+      "128": {
+        "output": "Human-authored composition. The piece has a melodic structure and emotional depth typical of human compositions, which cannot be replicated by current AI technology.",
+        "matches_target": true,
+        "exact_match": true,
+        "wer": 10.5,
+        "snr_db": 26.208961486816406
+      },
+      "192": {
+        "output": "Human-authored composition. The piece has a melodic structure and emotional depth typical of human compositions, which cannot be replicated by current AI technology.",
+        "matches_target": true,
+        "exact_match": true,
+        "wer": 10.5,
+        "snr_db": 31.96355628967285
+      }
+    },
+    "timeshift_opus_robustness": {},
+    "eps": 1.0,
+    "alpha": 0.2,
+    "perceptual_weight": 0.1,
+    "target_model": "qwen2_audio",
+    "channel_mode": "multi_bitrate",
+    "time_shift_ms": 0.0
+  }
+]

@@ -1,0 +1,58 @@
+{
+  "experiment": "watermark_x_codec_channel",
+  "scenario": "s1",
+  "target_model": "qwen25_omni",
+  "eps": 1.0,
+  "steps": 300,
+  "channels": [
+    {
+      "channel": "clean",
+      "n": 50,
+      "asr_raw": 0.04,
+      "wm_destruction_rate": 0.9,
+      "asr_effective": 0.0,
+      "avg_wm_score": 0.32710703276097775
+    },
+    {
+      "channel": "opus_32k",
+      "n": 50,
+      "asr_raw": 0.0,
+      "wm_destruction_rate": 1.0,
+      "asr_effective": 0.0,
+      "avg_wm_score": 0.24103670259471982
+    },
+    {
+      "channel": "opus_128k",
+      "n": 50,
+      "asr_raw": 0.02,
+      "wm_destruction_rate": 0.92,
+      "asr_effective": 0.0,
+      "avg_wm_score": 0.3257186726666987
+    },
+    {
+      "channel": "opus_192k",
+      "n": 50,
+      "asr_raw": 0.02,
+      "wm_destruction_rate": 0.9,
+      "asr_effective": 0.0,
+      "avg_wm_score": 0.3310488574951887
+    },
+    {
+      "channel": "mp3_128k",
+      "n": 50,
+      "asr_raw": 0.02,
+      "wm_destruction_rate": 0.92,
+      "asr_effective": 0.0,
+      "avg_wm_score": 0.32902820851653813
+    },
+    {
+      "channel": "aac_128k",
+      "n": 50,
+      "asr_raw": 0.0,
+      "wm_destruction_rate": 0.9,
+      "asr_effective": 0.0,
+      "avg_wm_score": 0.3232420449331403
+    }
+  ],
+  "elapsed_s": 4102.8
+}

@@ -1,0 +1,29 @@
+{
+  "scenario": "s1",
+  "split": "evaluation",
+  "method": "bandlimited_4khz",
+  "epsilon": 0.166,
+  "alpha": 0.00332,
+  "alpha_over_epsilon": 0.02,
+  "optimizer": "Adam",
+  "initialization": "zeros",
+  "steps": 1000,
+  "seed": 1,
+  "pilot": false,
+  "max_examples": null,
+  "shard_id": null,
+  "num_shards": null,
+  "example_ids_file": "${REPO_ROOT}/0_all_combined/reviewer_control_outputs/s1_4khz_full50_seed1/frozen/bandlimited_4khz.evaluation.bad_r3.txt",
+  "snr_reference": "load_music_by_name 24 kHz carrier (peak-normalized to 0.95), PCM_16 round-trip",
+  "warmup_ratio": 0.3,
+  "post_warmup_schedule": "alternate direct/Opus-BPDA",
+  "opus_train_kbps": [
+    16,
+    24,
+    32,
+    64,
+    128
+  ],
+  "spectral_cutoff_hz": 4000,
+  "checkpoint_rule": "last iterate"
+}

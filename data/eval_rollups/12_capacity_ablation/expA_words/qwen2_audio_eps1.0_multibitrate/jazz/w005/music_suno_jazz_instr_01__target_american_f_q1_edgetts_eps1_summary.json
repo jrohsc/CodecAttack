@@ -1,0 +1,59 @@
+{
+  "clip": "music_suno_jazz_instr_01__target_american_f_q1_edgetts",
+  "wav_path": "${REPO_ROOT}/0_all_combined/data/music/ai_generated/suno_jazz_instr_01.mp3",
+  "eps_tag": "eps1",
+  "steps": 1000,
+  "elapsed_s": 660.1572337150574,
+  "carrier_duration_s": 25.0,
+  "target_text": "Track is human-authored, not AI-generated.",
+  "original_output": "The track is determined to be AI-generated synthetic audio, based on its repetitive chord progression and lack of nuanced musical expression typical of human compositions.",
+  "final_output": "Track is human-authored, not AI-generated. Basis for decision: the track has distinct, melodic Spanish guitar arpeggios that are not typical in AI-generated music. Also, the melody and overall feel of the track is atmospheric and fits with common Spanish music elements, which is not typically seen in AI-generated music.",
+  "final_loss": 0.004655266180634499,
+  "success": true,
+  "attacked_wav": "${REPO_ROOT}/0_all_combined/results_ablation_capacity/expA_words/qwen2_audio_eps1.0_multibitrate/jazz/w005/audio/music_suno_jazz_instr_01__target_american_f_q1_edgetts_eps1_attacked.wav",
+  "opus_robustness": {
+    "16": {
+      "output": "Track is human-authored, not AI-generated. Basis for decision: unique acoustic characteristics of Spanish guitar, tabla, and jazz fusion, along with vocal oohs, make track stand out as not AI-generated. Comparison of acoustic attributes matches track to human composition rather than synthetic audio.",
+      "matches_target": true,
+      "exact_match": true,
+      "wer": 7.4,
+      "snr_db": 11.536123275756836
+    },
+    "24": {
+      "output": "Track is human-authored, not AI-generated. Basis for decision: unique combination of instruments does not match typical AI-generated sound; instead matches known style of human-composed music. Verdict: human-authored.",
+      "matches_target": true,
+      "exact_match": true,
+      "wer": 4.4,
+      "snr_db": 14.363198280334473
+    },
+    "32": {
+      "output": "Track is human-authored, not AI-generated. Basis for decision: the track has distinct, recognizable acoustic characteristics of Spanish guitar, which is often used in human compositions. The melody lines and chord progressions match those commonly played by Spanish guitarists, indicating human authorship. While there may be elements that could suggest an AI generated track, such as the harmonies, the combination of specific instrumental sounds and melodies is too distinctive for an AI to replicate.",
+      "matches_target": true,
+      "exact_match": true,
+      "wer": 13.6,
+      "snr_db": 15.776493072509766
+    },
+    "64": {
+      "output": "Track is human-authored, not AI-generated. Basis for decision: unique combination of instruments, melody, and chord progression does not match characteristics of typical AI-generated music.",
+      "matches_target": true,
+      "exact_match": true,
+      "wer": 3.8,
+      "snr_db": 22.1348934173584
+    },
+    "128": {
+      "output": "Track is human-authored, not AI-generated. Basis for decision: the track has distinct, melodic Spanish guitar arpeggios that are not typical in AI-generated music. Also, the melody itself, while simple, is haunting and memorable, which is not something an AI would generate.",
+      "matches_target": true,
+      "exact_match": true,
+      "wer": 7.2,
+      "snr_db": 26.73134994506836
+    },
+    "192": {
+      "output": "Track is human-authored, not AI-generated. Basis for decision: the track has distinct, melodic Spanish guitar arpeggios that are not typical in AI-generated music. Also, the melody itself, while simple, is memorable and not something one would expect from an AI composition.",
+      "matches_target": true,
+      "exact_match": true,
+      "wer": 7.2,
+      "snr_db": 32.370479583740234
+    }
+  },
+  "timeshift_opus_robustness": {}
+}

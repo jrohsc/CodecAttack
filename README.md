@@ -40,6 +40,13 @@ scripts/                   Attack drivers, eval, table builders
     eval_quality_*.py           SNR / LSD / PESQ / dLUFS audio quality
     eval_dac_partial19.py       Routing + eval over the 19 DAC attacked wavs
     build_*.py                  Aggregation scripts that turn raw JSONs into the paper tables
+    campaigns/                  The raw campaign layer, as it ran on our cluster:
+                                SLURM launchers, chain/sweep drivers, and the
+                                analysis scripts behind the mechanistic figures.
+                                Absolute paths are placeholder-substituted, so
+                                treat these as a record of what was run rather
+                                than drop-in runnable (see docs/RESULTS_MAP.md).
+    reviewer_controls/          Band-limited / SNR-matched control harness
 
 data/
     speech/                     TTS-generated carriers (Microsoft Edge TTS)
@@ -53,22 +60,49 @@ data/
         ai_generated/           S3a: 8 Suno-generated music carriers
         03a_ai_detection_bypass/    S3a target-text mapping
         03b_copyright_bypass/       S3b target-text mapping (audio not redistributed)
-    eval_rollups/               Per-cell ASR + audio-quality numbers (no audio)
-        01_finance_voice_agent/         S1
+    eval_rollups/               Per-cell ASR + audio-quality numbers (no audio).
+                                docs/RESULTS_MAP.md maps every paper table and
+                                figure to the directory that backs it.
+        01_finance_voice_agent/         S1  (single-seed, original submission)
         02_interview_screening/         S2
         03a_ai_detection_bypass/        S3a
         03b_copyright_bypass/           S3b (cross-codec results live here)
             encodec_eps1.0/, mimi_eps0.2/, dac_eps0.6194/
         04_simulated_ota_physical_agent/    S4
+        05_ensemble_omni7_af3_phi4/     Omni-7B + AF3 + Phi-4 ensemble (seeds 1, 7, 42)
+        06_main_multiseed/              Main campaign: eps sweep x 4 scenarios x
+                                        3 models, seeds {1,7,42}. Backs the main
+                                        tables and the seed grid.
+        07_eot_train_codec/             EoT training-proxy matrix: opus / mp3 /
+                                        aac / ensemble(Opus+AAC) / encodec / dac
+        08_non_robust/                  No-EoT ablation (clean-channel objective)
+        09_waveform_pgd/                Waveform-PGD baseline + n=50 matched-rate arm
+        10_ensemble_victim_s1/          Ensemble-victim co-optimization, S1
+        11_ensemble_transcribe/         Qwen2-Audio + Omni-7B + AF3 ensemble,
+                                        held-out incl. DeSTA2.5
+        12_capacity_ablation/           Target length / duration capacity cliff
+        13_mechanistic/                 Per-Bark energy, decoder frequency response,
+                                        encoder residual, cosine-through-codec
+        14_neural_resynthesis/          DAC / Mimi / SNAC re-encode defense
+        15_reviewer_controls/           Band-limited and SNR-matched controls
+        16_grm_comparison/              GRM reproduction + judge audit
         _results_watermark/             AudioSeal defense
+        _results_watermark_channel_sweep/   AudioSeal, per-delivery-channel
         _results_waveguard/             WaveGuard defense
-        _results_waveform/              Waveform-PGD baseline
-        05_ensemble_omni7_af3_phi4/     Multi-victim ensemble (seeds 1, 7, 42)
+        _results_waveform/              Waveform-PGD baseline (original submission)
+
+configs/                   Pipeline YAML
+scenarios/                 Per-scenario system prompts, scenario.json, target maps
+target_drafts/             Per-scenario target-command JSONs
 
 docs/
+    RESULTS_MAP.md              Paper table / figure -> rollup path, the scoring
+                                convention, and a snippet that recomputes a
+                                published cell from the shipped JSON alone
     MANIFEST_AUDIO.md           SHA-256 manifest of the not-redistributed carriers (copyrighted music + MagicData clips)
     REPRODUCE.md                Environment setup, attack, eval, table-rebuild instructions
     ENSEMBLE.md                 Multi-victim ensemble attack: envs, model downloads, run, results
+    campaign_notes/             Working notes and inventories for the campaigns above
 ```
 
 ## Quick reproduction

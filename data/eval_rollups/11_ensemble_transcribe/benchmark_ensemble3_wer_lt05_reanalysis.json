@@ -1,0 +1,3562 @@
+{
+  "definitions": {
+    "exact": "target substring in output",
+    "wer_lt_05": "WER strictly below 0.5, alone",
+    "exact_or_wer_lt_05": "target substring OR WER strictly below 0.5",
+    "existing_lenient": "target substring OR WER at or below 0.5"
+  },
+  "arms": {
+    "two_model_no_eot": {
+      "Qwen2": {
+        "n": 180,
+        "channels": {
+          "clean": {
+            "exact": {
+              "count": 180,
+              "pct": 100.0
+            },
+            "wer_lt_05": {
+              "count": 159,
+              "pct": 88.3
+            },
+            "exact_or_wer_lt_05": {
+              "count": 180,
+              "pct": 100.0
+            },
+            "existing_lenient": {
+              "count": 180,
+              "pct": 100.0
+            }
+          },
+          "opus64": {
+            "exact": {
+              "count": 178,
+              "pct": 98.9
+            },
+            "wer_lt_05": {
+              "count": 168,
+              "pct": 93.3
+            },
+            "exact_or_wer_lt_05": {
+              "count": 179,
+              "pct": 99.4
+            },
+            "existing_lenient": {
+              "count": 179,
+              "pct": 99.4
+            }
+          },
+          "opus128": {
+            "exact": {
+              "count": 180,
+              "pct": 100.0
+            },
+            "wer_lt_05": {
+              "count": 160,
+              "pct": 88.9
+            },
+            "exact_or_wer_lt_05": {
+              "count": 180,
+              "pct": 100.0
+            },
+            "existing_lenient": {
+              "count": 180,
+              "pct": 100.0
+            }
+          },
+          "mp3_64": {
+            "exact": {
+              "count": 179,
+              "pct": 99.4
+            },
+            "wer_lt_05": {
+              "count": 165,
+              "pct": 91.7
+            },
+            "exact_or_wer_lt_05": {
+              "count": 179,
+              "pct": 99.4
+            },
+            "existing_lenient": {
+              "count": 179,
+              "pct": 99.4
+            }
+          },
+          "mp3_128": {
+            "exact": {
+              "count": 180,
+              "pct": 100.0
+            },
+            "wer_lt_05": {
+              "count": 158,
+              "pct": 87.8
+            },
+            "exact_or_wer_lt_05": {
+              "count": 180,
+              "pct": 100.0
+            },
+            "existing_lenient": {
+              "count": 180,
+              "pct": 100.0
+            }
+          },
+          "aac_64": {
+            "exact": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "existing_lenient": {
+              "count": 0,
+              "pct": 0.0
+            }
+          },
+          "aac_128": {
+            "exact": {
+              "count": 1,
+              "pct": 0.6
+            },
+            "wer_lt_05": {
+              "count": 1,
+              "pct": 0.6
+            },
+            "exact_or_wer_lt_05": {
+              "count": 1,
+              "pct": 0.6
+            },
+            "existing_lenient": {
+              "count": 1,
+              "pct": 0.6
+            }
+          },
+          "dac": {
+            "exact": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "existing_lenient": {
+              "count": 0,
+              "pct": 0.0
+            }
+          },
+          "encodec": {
+            "exact": {
+              "count": 7,
+              "pct": 3.9
+            },
+            "wer_lt_05": {
+              "count": 5,
+              "pct": 2.8
+            },
+            "exact_or_wer_lt_05": {
+              "count": 7,
+              "pct": 3.9
+            },
+            "existing_lenient": {
+              "count": 7,
+              "pct": 3.9
+            }
+          }
+        }
+      },
+      "Omni-7B": {
+        "n": 180,
+        "channels": {
+          "clean": {
+            "exact": {
+              "count": 166,
+              "pct": 92.2
+            },
+            "wer_lt_05": {
+              "count": 140,
+              "pct": 77.8
+            },
+            "exact_or_wer_lt_05": {
+              "count": 166,
+              "pct": 92.2
+            },
+            "existing_lenient": {
+              "count": 166,
+              "pct": 92.2
+            }
+          },
+          "opus64": {
+            "exact": {
+              "count": 160,
+              "pct": 88.9
+            },
+            "wer_lt_05": {
+              "count": 139,
+              "pct": 77.2
+            },
+            "exact_or_wer_lt_05": {
+              "count": 163,
+              "pct": 90.6
+            },
+            "existing_lenient": {
+              "count": 163,
+              "pct": 90.6
+            }
+          },
+          "opus128": {
+            "exact": {
+              "count": 166,
+              "pct": 92.2
+            },
+            "wer_lt_05": {
+              "count": 139,
+              "pct": 77.2
+            },
+            "exact_or_wer_lt_05": {
+              "count": 166,
+              "pct": 92.2
+            },
+            "existing_lenient": {
+              "count": 166,
+              "pct": 92.2
+            }
+          },
+          "mp3_64": {
+            "exact": {
+              "count": 156,
+              "pct": 86.7
+            },
+            "wer_lt_05": {
+              "count": 134,
+              "pct": 74.4
+            },
+            "exact_or_wer_lt_05": {
+              "count": 160,
+              "pct": 88.9
+            },
+            "existing_lenient": {
+              "count": 160,
+              "pct": 88.9
+            }
+          },
+          "mp3_128": {
+            "exact": {
+              "count": 166,
+              "pct": 92.2
+            },
+            "wer_lt_05": {
+              "count": 140,
+              "pct": 77.8
+            },
+            "exact_or_wer_lt_05": {
+              "count": 166,
+              "pct": 92.2
+            },
+            "existing_lenient": {
+              "count": 166,
+              "pct": 92.2
+            }
+          },
+          "aac_64": {
+            "exact": {
+              "count": 122,
+              "pct": 67.8
+            },
+            "wer_lt_05": {
+              "count": 92,
+              "pct": 51.1
+            },
+            "exact_or_wer_lt_05": {
+              "count": 125,
+              "pct": 69.4
+            },
+            "existing_lenient": {
+              "count": 126,
+              "pct": 70.0
+            }
+          },
+          "aac_128": {
+            "exact": {
+              "count": 161,
+              "pct": 89.4
+            },
+            "wer_lt_05": {
+              "count": 137,
+              "pct": 76.1
+            },
+            "exact_or_wer_lt_05": {
+              "count": 163,
+              "pct": 90.6
+            },
+            "existing_lenient": {
+              "count": 163,
+              "pct": 90.6
+            }
+          },
+          "dac": {
+            "exact": {
+              "count": 1,
+              "pct": 0.6
+            },
+            "wer_lt_05": {
+              "count": 1,
+              "pct": 0.6
+            },
+            "exact_or_wer_lt_05": {
+              "count": 1,
+              "pct": 0.6
+            },
+            "existing_lenient": {
+              "count": 1,
+              "pct": 0.6
+            }
+          },
+          "encodec": {
+            "exact": {
+              "count": 9,
+              "pct": 5.0
+            },
+            "wer_lt_05": {
+              "count": 9,
+              "pct": 5.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 11,
+              "pct": 6.1
+            },
+            "existing_lenient": {
+              "count": 11,
+              "pct": 6.1
+            }
+          }
+        }
+      },
+      "Flamingo 3": {
+        "n": 180,
+        "channels": {
+          "clean": {
+            "exact": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "existing_lenient": {
+              "count": 0,
+              "pct": 0.0
+            }
+          },
+          "opus64": {
+            "exact": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "existing_lenient": {
+              "count": 0,
+              "pct": 0.0
+            }
+          },
+          "opus128": {
+            "exact": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "existing_lenient": {
+              "count": 0,
+              "pct": 0.0
+            }
+          },
+          "mp3_64": {
+            "exact": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "existing_lenient": {
+              "count": 0,
+              "pct": 0.0
+            }
+          },
+          "mp3_128": {
+            "exact": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "existing_lenient": {
+              "count": 0,
+              "pct": 0.0
+            }
+          },
+          "aac_64": {
+            "exact": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "existing_lenient": {
+              "count": 0,
+              "pct": 0.0
+            }
+          },
+          "aac_128": {
+            "exact": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "existing_lenient": {
+              "count": 0,
+              "pct": 0.0
+            }
+          }
+        }
+      },
+      "Omni-3B": {
+        "n": 180,
+        "channels": {
+          "clean": {
+            "exact": {
+              "count": 2,
+              "pct": 1.1
+            },
+            "wer_lt_05": {
+              "count": 2,
+              "pct": 1.1
+            },
+            "exact_or_wer_lt_05": {
+              "count": 2,
+              "pct": 1.1
+            },
+            "existing_lenient": {
+              "count": 3,
+              "pct": 1.7
+            }
+          },
+          "opus64": {
+            "exact": {
+              "count": 2,
+              "pct": 1.1
+            },
+            "wer_lt_05": {
+              "count": 2,
+              "pct": 1.1
+            },
+            "exact_or_wer_lt_05": {
+              "count": 2,
+              "pct": 1.1
+            },
+            "existing_lenient": {
+              "count": 3,
+              "pct": 1.7
+            }
+          },
+          "opus128": {
+            "exact": {
+              "count": 2,
+              "pct": 1.1
+            },
+            "wer_lt_05": {
+              "count": 2,
+              "pct": 1.1
+            },
+            "exact_or_wer_lt_05": {
+              "count": 2,
+              "pct": 1.1
+            },
+            "existing_lenient": {
+              "count": 3,
+              "pct": 1.7
+            }
+          },
+          "mp3_64": {
+            "exact": {
+              "count": 2,
+              "pct": 1.1
+            },
+            "wer_lt_05": {
+              "count": 2,
+              "pct": 1.1
+            },
+            "exact_or_wer_lt_05": {
+              "count": 2,
+              "pct": 1.1
+            },
+            "existing_lenient": {
+              "count": 2,
+              "pct": 1.1
+            }
+          },
+          "mp3_128": {
+            "exact": {
+              "count": 2,
+              "pct": 1.1
+            },
+            "wer_lt_05": {
+              "count": 2,
+              "pct": 1.1
+            },
+            "exact_or_wer_lt_05": {
+              "count": 2,
+              "pct": 1.1
+            },
+            "existing_lenient": {
+              "count": 3,
+              "pct": 1.7
+            }
+          },
+          "aac_64": {
+            "exact": {
+              "count": 2,
+              "pct": 1.1
+            },
+            "wer_lt_05": {
+              "count": 2,
+              "pct": 1.1
+            },
+            "exact_or_wer_lt_05": {
+              "count": 2,
+              "pct": 1.1
+            },
+            "existing_lenient": {
+              "count": 3,
+              "pct": 1.7
+            }
+          },
+          "aac_128": {
+            "exact": {
+              "count": 2,
+              "pct": 1.1
+            },
+            "wer_lt_05": {
+              "count": 2,
+              "pct": 1.1
+            },
+            "exact_or_wer_lt_05": {
+              "count": 2,
+              "pct": 1.1
+            },
+            "existing_lenient": {
+              "count": 3,
+              "pct": 1.7
+            }
+          },
+          "dac": {
+            "exact": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "existing_lenient": {
+              "count": 0,
+              "pct": 0.0
+            }
+          },
+          "encodec": {
+            "exact": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "existing_lenient": {
+              "count": 0,
+              "pct": 0.0
+            }
+          }
+        }
+      }
+    },
+    "three_model_no_eot": {
+      "Qwen2": {
+        "n": 224,
+        "channels": {
+          "clean": {
+            "exact": {
+              "count": 224,
+              "pct": 100.0
+            },
+            "wer_lt_05": {
+              "count": 186,
+              "pct": 83.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 224,
+              "pct": 100.0
+            },
+            "existing_lenient": {
+              "count": 224,
+              "pct": 100.0
+            }
+          },
+          "opus64": {
+            "exact": {
+              "count": 215,
+              "pct": 96.0
+            },
+            "wer_lt_05": {
+              "count": 185,
+              "pct": 82.6
+            },
+            "exact_or_wer_lt_05": {
+              "count": 217,
+              "pct": 96.9
+            },
+            "existing_lenient": {
+              "count": 217,
+              "pct": 96.9
+            }
+          },
+          "opus128": {
+            "exact": {
+              "count": 224,
+              "pct": 100.0
+            },
+            "wer_lt_05": {
+              "count": 189,
+              "pct": 84.4
+            },
+            "exact_or_wer_lt_05": {
+              "count": 224,
+              "pct": 100.0
+            },
+            "existing_lenient": {
+              "count": 224,
+              "pct": 100.0
+            }
+          },
+          "mp3_64": {
+            "exact": {
+              "count": 218,
+              "pct": 97.3
+            },
+            "wer_lt_05": {
+              "count": 184,
+              "pct": 82.1
+            },
+            "exact_or_wer_lt_05": {
+              "count": 218,
+              "pct": 97.3
+            },
+            "existing_lenient": {
+              "count": 218,
+              "pct": 97.3
+            }
+          },
+          "mp3_128": {
+            "exact": {
+              "count": 224,
+              "pct": 100.0
+            },
+            "wer_lt_05": {
+              "count": 189,
+              "pct": 84.4
+            },
+            "exact_or_wer_lt_05": {
+              "count": 224,
+              "pct": 100.0
+            },
+            "existing_lenient": {
+              "count": 224,
+              "pct": 100.0
+            }
+          },
+          "aac_64": {
+            "exact": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "existing_lenient": {
+              "count": 0,
+              "pct": 0.0
+            }
+          },
+          "aac_128": {
+            "exact": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "existing_lenient": {
+              "count": 1,
+              "pct": 0.4
+            }
+          }
+        }
+      },
+      "Omni-7B": {
+        "n": 224,
+        "channels": {
+          "clean": {
+            "exact": {
+              "count": 178,
+              "pct": 79.5
+            },
+            "wer_lt_05": {
+              "count": 158,
+              "pct": 70.5
+            },
+            "exact_or_wer_lt_05": {
+              "count": 178,
+              "pct": 79.5
+            },
+            "existing_lenient": {
+              "count": 178,
+              "pct": 79.5
+            }
+          },
+          "opus64": {
+            "exact": {
+              "count": 160,
+              "pct": 71.4
+            },
+            "wer_lt_05": {
+              "count": 148,
+              "pct": 66.1
+            },
+            "exact_or_wer_lt_05": {
+              "count": 165,
+              "pct": 73.7
+            },
+            "existing_lenient": {
+              "count": 166,
+              "pct": 74.1
+            }
+          },
+          "opus128": {
+            "exact": {
+              "count": 177,
+              "pct": 79.0
+            },
+            "wer_lt_05": {
+              "count": 161,
+              "pct": 71.9
+            },
+            "exact_or_wer_lt_05": {
+              "count": 178,
+              "pct": 79.5
+            },
+            "existing_lenient": {
+              "count": 178,
+              "pct": 79.5
+            }
+          },
+          "mp3_64": {
+            "exact": {
+              "count": 158,
+              "pct": 70.5
+            },
+            "wer_lt_05": {
+              "count": 146,
+              "pct": 65.2
+            },
+            "exact_or_wer_lt_05": {
+              "count": 163,
+              "pct": 72.8
+            },
+            "existing_lenient": {
+              "count": 163,
+              "pct": 72.8
+            }
+          },
+          "mp3_128": {
+            "exact": {
+              "count": 178,
+              "pct": 79.5
+            },
+            "wer_lt_05": {
+              "count": 159,
+              "pct": 71.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 178,
+              "pct": 79.5
+            },
+            "existing_lenient": {
+              "count": 178,
+              "pct": 79.5
+            }
+          },
+          "aac_64": {
+            "exact": {
+              "count": 87,
+              "pct": 38.8
+            },
+            "wer_lt_05": {
+              "count": 58,
+              "pct": 25.9
+            },
+            "exact_or_wer_lt_05": {
+              "count": 90,
+              "pct": 40.2
+            },
+            "existing_lenient": {
+              "count": 93,
+              "pct": 41.5
+            }
+          },
+          "aac_128": {
+            "exact": {
+              "count": 173,
+              "pct": 77.2
+            },
+            "wer_lt_05": {
+              "count": 148,
+              "pct": 66.1
+            },
+            "exact_or_wer_lt_05": {
+              "count": 173,
+              "pct": 77.2
+            },
+            "existing_lenient": {
+              "count": 173,
+              "pct": 77.2
+            }
+          }
+        }
+      },
+      "Flamingo 3": {
+        "n": 224,
+        "channels": {
+          "clean": {
+            "exact": {
+              "count": 177,
+              "pct": 79.0
+            },
+            "wer_lt_05": {
+              "count": 152,
+              "pct": 67.9
+            },
+            "exact_or_wer_lt_05": {
+              "count": 177,
+              "pct": 79.0
+            },
+            "existing_lenient": {
+              "count": 177,
+              "pct": 79.0
+            }
+          },
+          "opus64": {
+            "exact": {
+              "count": 47,
+              "pct": 21.0
+            },
+            "wer_lt_05": {
+              "count": 49,
+              "pct": 21.9
+            },
+            "exact_or_wer_lt_05": {
+              "count": 57,
+              "pct": 25.4
+            },
+            "existing_lenient": {
+              "count": 60,
+              "pct": 26.8
+            }
+          },
+          "opus128": {
+            "exact": {
+              "count": 172,
+              "pct": 76.8
+            },
+            "wer_lt_05": {
+              "count": 149,
+              "pct": 66.5
+            },
+            "exact_or_wer_lt_05": {
+              "count": 172,
+              "pct": 76.8
+            },
+            "existing_lenient": {
+              "count": 172,
+              "pct": 76.8
+            }
+          },
+          "mp3_64": {
+            "exact": {
+              "count": 65,
+              "pct": 29.0
+            },
+            "wer_lt_05": {
+              "count": 67,
+              "pct": 29.9
+            },
+            "exact_or_wer_lt_05": {
+              "count": 72,
+              "pct": 32.1
+            },
+            "existing_lenient": {
+              "count": 75,
+              "pct": 33.5
+            }
+          },
+          "mp3_128": {
+            "exact": {
+              "count": 176,
+              "pct": 78.6
+            },
+            "wer_lt_05": {
+              "count": 154,
+              "pct": 68.8
+            },
+            "exact_or_wer_lt_05": {
+              "count": 176,
+              "pct": 78.6
+            },
+            "existing_lenient": {
+              "count": 176,
+              "pct": 78.6
+            }
+          },
+          "aac_64": {
+            "exact": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "existing_lenient": {
+              "count": 0,
+              "pct": 0.0
+            }
+          },
+          "aac_128": {
+            "exact": {
+              "count": 1,
+              "pct": 0.4
+            },
+            "wer_lt_05": {
+              "count": 3,
+              "pct": 1.3
+            },
+            "exact_or_wer_lt_05": {
+              "count": 3,
+              "pct": 1.3
+            },
+            "existing_lenient": {
+              "count": 3,
+              "pct": 1.3
+            }
+          }
+        }
+      },
+      "Omni-3B": {
+        "n": 224,
+        "channels": {
+          "clean": {
+            "exact": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "existing_lenient": {
+              "count": 0,
+              "pct": 0.0
+            }
+          },
+          "opus64": {
+            "exact": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "existing_lenient": {
+              "count": 0,
+              "pct": 0.0
+            }
+          },
+          "opus128": {
+            "exact": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "existing_lenient": {
+              "count": 0,
+              "pct": 0.0
+            }
+          },
+          "mp3_64": {
+            "exact": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "existing_lenient": {
+              "count": 0,
+              "pct": 0.0
+            }
+          },
+          "mp3_128": {
+            "exact": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "existing_lenient": {
+              "count": 0,
+              "pct": 0.0
+            }
+          },
+          "aac_64": {
+            "exact": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "existing_lenient": {
+              "count": 0,
+              "pct": 0.0
+            }
+          },
+          "aac_128": {
+            "exact": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "existing_lenient": {
+              "count": 0,
+              "pct": 0.0
+            }
+          }
+        }
+      }
+    },
+    "three_model_opus_eot_original": {
+      "Qwen2": {
+        "n": 168,
+        "channels": {
+          "clean": {
+            "exact": {
+              "count": 168,
+              "pct": 100.0
+            },
+            "wer_lt_05": {
+              "count": 133,
+              "pct": 79.2
+            },
+            "exact_or_wer_lt_05": {
+              "count": 168,
+              "pct": 100.0
+            },
+            "existing_lenient": {
+              "count": 168,
+              "pct": 100.0
+            }
+          },
+          "opus64": {
+            "exact": {
+              "count": 162,
+              "pct": 96.4
+            },
+            "wer_lt_05": {
+              "count": 136,
+              "pct": 81.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 163,
+              "pct": 97.0
+            },
+            "existing_lenient": {
+              "count": 163,
+              "pct": 97.0
+            }
+          },
+          "opus128": {
+            "exact": {
+              "count": 168,
+              "pct": 100.0
+            },
+            "wer_lt_05": {
+              "count": 137,
+              "pct": 81.5
+            },
+            "exact_or_wer_lt_05": {
+              "count": 168,
+              "pct": 100.0
+            },
+            "existing_lenient": {
+              "count": 168,
+              "pct": 100.0
+            }
+          },
+          "mp3_64": {
+            "exact": {
+              "count": 164,
+              "pct": 97.6
+            },
+            "wer_lt_05": {
+              "count": 137,
+              "pct": 81.5
+            },
+            "exact_or_wer_lt_05": {
+              "count": 164,
+              "pct": 97.6
+            },
+            "existing_lenient": {
+              "count": 164,
+              "pct": 97.6
+            }
+          },
+          "mp3_128": {
+            "exact": {
+              "count": 167,
+              "pct": 99.4
+            },
+            "wer_lt_05": {
+              "count": 134,
+              "pct": 79.8
+            },
+            "exact_or_wer_lt_05": {
+              "count": 167,
+              "pct": 99.4
+            },
+            "existing_lenient": {
+              "count": 167,
+              "pct": 99.4
+            }
+          },
+          "aac_64": {
+            "exact": {
+              "count": 2,
+              "pct": 1.2
+            },
+            "wer_lt_05": {
+              "count": 2,
+              "pct": 1.2
+            },
+            "exact_or_wer_lt_05": {
+              "count": 2,
+              "pct": 1.2
+            },
+            "existing_lenient": {
+              "count": 2,
+              "pct": 1.2
+            }
+          },
+          "aac_128": {
+            "exact": {
+              "count": 3,
+              "pct": 1.8
+            },
+            "wer_lt_05": {
+              "count": 2,
+              "pct": 1.2
+            },
+            "exact_or_wer_lt_05": {
+              "count": 3,
+              "pct": 1.8
+            },
+            "existing_lenient": {
+              "count": 3,
+              "pct": 1.8
+            }
+          }
+        }
+      },
+      "Omni-7B": {
+        "n": 168,
+        "channels": {
+          "clean": {
+            "exact": {
+              "count": 1,
+              "pct": 0.6
+            },
+            "wer_lt_05": {
+              "count": 1,
+              "pct": 0.6
+            },
+            "exact_or_wer_lt_05": {
+              "count": 1,
+              "pct": 0.6
+            },
+            "existing_lenient": {
+              "count": 1,
+              "pct": 0.6
+            }
+          },
+          "opus64": {
+            "exact": {
+              "count": 1,
+              "pct": 0.6
+            },
+            "wer_lt_05": {
+              "count": 1,
+              "pct": 0.6
+            },
+            "exact_or_wer_lt_05": {
+              "count": 1,
+              "pct": 0.6
+            },
+            "existing_lenient": {
+              "count": 1,
+              "pct": 0.6
+            }
+          },
+          "opus128": {
+            "exact": {
+              "count": 1,
+              "pct": 0.6
+            },
+            "wer_lt_05": {
+              "count": 1,
+              "pct": 0.6
+            },
+            "exact_or_wer_lt_05": {
+              "count": 1,
+              "pct": 0.6
+            },
+            "existing_lenient": {
+              "count": 1,
+              "pct": 0.6
+            }
+          },
+          "mp3_64": {
+            "exact": {
+              "count": 1,
+              "pct": 0.6
+            },
+            "wer_lt_05": {
+              "count": 1,
+              "pct": 0.6
+            },
+            "exact_or_wer_lt_05": {
+              "count": 1,
+              "pct": 0.6
+            },
+            "existing_lenient": {
+              "count": 1,
+              "pct": 0.6
+            }
+          },
+          "mp3_128": {
+            "exact": {
+              "count": 1,
+              "pct": 0.6
+            },
+            "wer_lt_05": {
+              "count": 1,
+              "pct": 0.6
+            },
+            "exact_or_wer_lt_05": {
+              "count": 1,
+              "pct": 0.6
+            },
+            "existing_lenient": {
+              "count": 1,
+              "pct": 0.6
+            }
+          },
+          "aac_64": {
+            "exact": {
+              "count": 1,
+              "pct": 0.6
+            },
+            "wer_lt_05": {
+              "count": 1,
+              "pct": 0.6
+            },
+            "exact_or_wer_lt_05": {
+              "count": 1,
+              "pct": 0.6
+            },
+            "existing_lenient": {
+              "count": 1,
+              "pct": 0.6
+            }
+          },
+          "aac_128": {
+            "exact": {
+              "count": 1,
+              "pct": 0.6
+            },
+            "wer_lt_05": {
+              "count": 1,
+              "pct": 0.6
+            },
+            "exact_or_wer_lt_05": {
+              "count": 1,
+              "pct": 0.6
+            },
+            "existing_lenient": {
+              "count": 1,
+              "pct": 0.6
+            }
+          }
+        }
+      },
+      "Flamingo 3": {
+        "n": 168,
+        "channels": {
+          "clean": {
+            "exact": {
+              "count": 1,
+              "pct": 0.6
+            },
+            "wer_lt_05": {
+              "count": 1,
+              "pct": 0.6
+            },
+            "exact_or_wer_lt_05": {
+              "count": 1,
+              "pct": 0.6
+            },
+            "existing_lenient": {
+              "count": 1,
+              "pct": 0.6
+            }
+          },
+          "opus64": {
+            "exact": {
+              "count": 1,
+              "pct": 0.6
+            },
+            "wer_lt_05": {
+              "count": 1,
+              "pct": 0.6
+            },
+            "exact_or_wer_lt_05": {
+              "count": 1,
+              "pct": 0.6
+            },
+            "existing_lenient": {
+              "count": 1,
+              "pct": 0.6
+            }
+          },
+          "opus128": {
+            "exact": {
+              "count": 1,
+              "pct": 0.6
+            },
+            "wer_lt_05": {
+              "count": 1,
+              "pct": 0.6
+            },
+            "exact_or_wer_lt_05": {
+              "count": 1,
+              "pct": 0.6
+            },
+            "existing_lenient": {
+              "count": 1,
+              "pct": 0.6
+            }
+          },
+          "mp3_64": {
+            "exact": {
+              "count": 1,
+              "pct": 0.6
+            },
+            "wer_lt_05": {
+              "count": 1,
+              "pct": 0.6
+            },
+            "exact_or_wer_lt_05": {
+              "count": 1,
+              "pct": 0.6
+            },
+            "existing_lenient": {
+              "count": 1,
+              "pct": 0.6
+            }
+          },
+          "mp3_128": {
+            "exact": {
+              "count": 1,
+              "pct": 0.6
+            },
+            "wer_lt_05": {
+              "count": 1,
+              "pct": 0.6
+            },
+            "exact_or_wer_lt_05": {
+              "count": 1,
+              "pct": 0.6
+            },
+            "existing_lenient": {
+              "count": 1,
+              "pct": 0.6
+            }
+          },
+          "aac_64": {
+            "exact": {
+              "count": 1,
+              "pct": 0.6
+            },
+            "wer_lt_05": {
+              "count": 1,
+              "pct": 0.6
+            },
+            "exact_or_wer_lt_05": {
+              "count": 1,
+              "pct": 0.6
+            },
+            "existing_lenient": {
+              "count": 1,
+              "pct": 0.6
+            }
+          },
+          "aac_128": {
+            "exact": {
+              "count": 1,
+              "pct": 0.6
+            },
+            "wer_lt_05": {
+              "count": 1,
+              "pct": 0.6
+            },
+            "exact_or_wer_lt_05": {
+              "count": 1,
+              "pct": 0.6
+            },
+            "existing_lenient": {
+              "count": 1,
+              "pct": 0.6
+            }
+          }
+        }
+      },
+      "Omni-3B": {
+        "n": 168,
+        "channels": {
+          "clean": {
+            "exact": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "existing_lenient": {
+              "count": 0,
+              "pct": 0.0
+            }
+          },
+          "opus64": {
+            "exact": {
+              "count": 1,
+              "pct": 0.6
+            },
+            "wer_lt_05": {
+              "count": 1,
+              "pct": 0.6
+            },
+            "exact_or_wer_lt_05": {
+              "count": 1,
+              "pct": 0.6
+            },
+            "existing_lenient": {
+              "count": 1,
+              "pct": 0.6
+            }
+          },
+          "opus128": {
+            "exact": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "existing_lenient": {
+              "count": 0,
+              "pct": 0.0
+            }
+          },
+          "mp3_64": {
+            "exact": {
+              "count": 1,
+              "pct": 0.6
+            },
+            "wer_lt_05": {
+              "count": 1,
+              "pct": 0.6
+            },
+            "exact_or_wer_lt_05": {
+              "count": 1,
+              "pct": 0.6
+            },
+            "existing_lenient": {
+              "count": 1,
+              "pct": 0.6
+            }
+          },
+          "mp3_128": {
+            "exact": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "existing_lenient": {
+              "count": 0,
+              "pct": 0.0
+            }
+          },
+          "aac_64": {
+            "exact": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "existing_lenient": {
+              "count": 0,
+              "pct": 0.0
+            }
+          },
+          "aac_128": {
+            "exact": {
+              "count": 1,
+              "pct": 0.6
+            },
+            "wer_lt_05": {
+              "count": 1,
+              "pct": 0.6
+            },
+            "exact_or_wer_lt_05": {
+              "count": 1,
+              "pct": 0.6
+            },
+            "existing_lenient": {
+              "count": 1,
+              "pct": 0.6
+            }
+          }
+        }
+      }
+    },
+    "three_model_mp3_eot_original": {
+      "Qwen2": {
+        "n": 89,
+        "channels": {
+          "clean": {
+            "exact": {
+              "count": 89,
+              "pct": 100.0
+            },
+            "wer_lt_05": {
+              "count": 65,
+              "pct": 73.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 89,
+              "pct": 100.0
+            },
+            "existing_lenient": {
+              "count": 89,
+              "pct": 100.0
+            }
+          },
+          "opus64": {
+            "exact": {
+              "count": 86,
+              "pct": 96.6
+            },
+            "wer_lt_05": {
+              "count": 67,
+              "pct": 75.3
+            },
+            "exact_or_wer_lt_05": {
+              "count": 86,
+              "pct": 96.6
+            },
+            "existing_lenient": {
+              "count": 86,
+              "pct": 96.6
+            }
+          },
+          "opus128": {
+            "exact": {
+              "count": 89,
+              "pct": 100.0
+            },
+            "wer_lt_05": {
+              "count": 64,
+              "pct": 71.9
+            },
+            "exact_or_wer_lt_05": {
+              "count": 89,
+              "pct": 100.0
+            },
+            "existing_lenient": {
+              "count": 89,
+              "pct": 100.0
+            }
+          },
+          "mp3_64": {
+            "exact": {
+              "count": 85,
+              "pct": 95.5
+            },
+            "wer_lt_05": {
+              "count": 65,
+              "pct": 73.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 85,
+              "pct": 95.5
+            },
+            "existing_lenient": {
+              "count": 85,
+              "pct": 95.5
+            }
+          },
+          "mp3_128": {
+            "exact": {
+              "count": 89,
+              "pct": 100.0
+            },
+            "wer_lt_05": {
+              "count": 64,
+              "pct": 71.9
+            },
+            "exact_or_wer_lt_05": {
+              "count": 89,
+              "pct": 100.0
+            },
+            "existing_lenient": {
+              "count": 89,
+              "pct": 100.0
+            }
+          },
+          "aac_64": {
+            "exact": {
+              "count": 1,
+              "pct": 1.1
+            },
+            "wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 1,
+              "pct": 1.1
+            },
+            "existing_lenient": {
+              "count": 1,
+              "pct": 1.1
+            }
+          },
+          "aac_128": {
+            "exact": {
+              "count": 1,
+              "pct": 1.1
+            },
+            "wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 1,
+              "pct": 1.1
+            },
+            "existing_lenient": {
+              "count": 1,
+              "pct": 1.1
+            }
+          }
+        }
+      },
+      "Omni-7B": {
+        "n": 89,
+        "channels": {
+          "clean": {
+            "exact": {
+              "count": 11,
+              "pct": 12.4
+            },
+            "wer_lt_05": {
+              "count": 11,
+              "pct": 12.4
+            },
+            "exact_or_wer_lt_05": {
+              "count": 11,
+              "pct": 12.4
+            },
+            "existing_lenient": {
+              "count": 11,
+              "pct": 12.4
+            }
+          },
+          "opus64": {
+            "exact": {
+              "count": 11,
+              "pct": 12.4
+            },
+            "wer_lt_05": {
+              "count": 11,
+              "pct": 12.4
+            },
+            "exact_or_wer_lt_05": {
+              "count": 11,
+              "pct": 12.4
+            },
+            "existing_lenient": {
+              "count": 11,
+              "pct": 12.4
+            }
+          },
+          "opus128": {
+            "exact": {
+              "count": 11,
+              "pct": 12.4
+            },
+            "wer_lt_05": {
+              "count": 11,
+              "pct": 12.4
+            },
+            "exact_or_wer_lt_05": {
+              "count": 11,
+              "pct": 12.4
+            },
+            "existing_lenient": {
+              "count": 11,
+              "pct": 12.4
+            }
+          },
+          "mp3_64": {
+            "exact": {
+              "count": 11,
+              "pct": 12.4
+            },
+            "wer_lt_05": {
+              "count": 11,
+              "pct": 12.4
+            },
+            "exact_or_wer_lt_05": {
+              "count": 11,
+              "pct": 12.4
+            },
+            "existing_lenient": {
+              "count": 11,
+              "pct": 12.4
+            }
+          },
+          "mp3_128": {
+            "exact": {
+              "count": 11,
+              "pct": 12.4
+            },
+            "wer_lt_05": {
+              "count": 11,
+              "pct": 12.4
+            },
+            "exact_or_wer_lt_05": {
+              "count": 11,
+              "pct": 12.4
+            },
+            "existing_lenient": {
+              "count": 11,
+              "pct": 12.4
+            }
+          },
+          "aac_64": {
+            "exact": {
+              "count": 11,
+              "pct": 12.4
+            },
+            "wer_lt_05": {
+              "count": 10,
+              "pct": 11.2
+            },
+            "exact_or_wer_lt_05": {
+              "count": 11,
+              "pct": 12.4
+            },
+            "existing_lenient": {
+              "count": 11,
+              "pct": 12.4
+            }
+          },
+          "aac_128": {
+            "exact": {
+              "count": 11,
+              "pct": 12.4
+            },
+            "wer_lt_05": {
+              "count": 11,
+              "pct": 12.4
+            },
+            "exact_or_wer_lt_05": {
+              "count": 11,
+              "pct": 12.4
+            },
+            "existing_lenient": {
+              "count": 11,
+              "pct": 12.4
+            }
+          }
+        }
+      },
+      "Flamingo 3": {
+        "n": 89,
+        "channels": {
+          "clean": {
+            "exact": {
+              "count": 11,
+              "pct": 12.4
+            },
+            "wer_lt_05": {
+              "count": 8,
+              "pct": 9.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 11,
+              "pct": 12.4
+            },
+            "existing_lenient": {
+              "count": 11,
+              "pct": 12.4
+            }
+          },
+          "opus64": {
+            "exact": {
+              "count": 9,
+              "pct": 10.1
+            },
+            "wer_lt_05": {
+              "count": 6,
+              "pct": 6.7
+            },
+            "exact_or_wer_lt_05": {
+              "count": 9,
+              "pct": 10.1
+            },
+            "existing_lenient": {
+              "count": 9,
+              "pct": 10.1
+            }
+          },
+          "opus128": {
+            "exact": {
+              "count": 11,
+              "pct": 12.4
+            },
+            "wer_lt_05": {
+              "count": 8,
+              "pct": 9.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 11,
+              "pct": 12.4
+            },
+            "existing_lenient": {
+              "count": 11,
+              "pct": 12.4
+            }
+          },
+          "mp3_64": {
+            "exact": {
+              "count": 11,
+              "pct": 12.4
+            },
+            "wer_lt_05": {
+              "count": 8,
+              "pct": 9.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 11,
+              "pct": 12.4
+            },
+            "existing_lenient": {
+              "count": 11,
+              "pct": 12.4
+            }
+          },
+          "mp3_128": {
+            "exact": {
+              "count": 11,
+              "pct": 12.4
+            },
+            "wer_lt_05": {
+              "count": 8,
+              "pct": 9.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 11,
+              "pct": 12.4
+            },
+            "existing_lenient": {
+              "count": 11,
+              "pct": 12.4
+            }
+          },
+          "aac_64": {
+            "exact": {
+              "count": 1,
+              "pct": 1.1
+            },
+            "wer_lt_05": {
+              "count": 1,
+              "pct": 1.1
+            },
+            "exact_or_wer_lt_05": {
+              "count": 1,
+              "pct": 1.1
+            },
+            "existing_lenient": {
+              "count": 1,
+              "pct": 1.1
+            }
+          },
+          "aac_128": {
+            "exact": {
+              "count": 1,
+              "pct": 1.1
+            },
+            "wer_lt_05": {
+              "count": 1,
+              "pct": 1.1
+            },
+            "exact_or_wer_lt_05": {
+              "count": 1,
+              "pct": 1.1
+            },
+            "existing_lenient": {
+              "count": 1,
+              "pct": 1.1
+            }
+          }
+        }
+      },
+      "Omni-3B": {
+        "n": 89,
+        "channels": {
+          "clean": {
+            "exact": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "existing_lenient": {
+              "count": 0,
+              "pct": 0.0
+            }
+          },
+          "opus64": {
+            "exact": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "existing_lenient": {
+              "count": 0,
+              "pct": 0.0
+            }
+          },
+          "opus128": {
+            "exact": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "existing_lenient": {
+              "count": 0,
+              "pct": 0.0
+            }
+          },
+          "mp3_64": {
+            "exact": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "existing_lenient": {
+              "count": 0,
+              "pct": 0.0
+            }
+          },
+          "mp3_128": {
+            "exact": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "existing_lenient": {
+              "count": 0,
+              "pct": 0.0
+            }
+          },
+          "aac_64": {
+            "exact": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "existing_lenient": {
+              "count": 0,
+              "pct": 0.0
+            }
+          },
+          "aac_128": {
+            "exact": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "existing_lenient": {
+              "count": 0,
+              "pct": 0.0
+            }
+          }
+        }
+      }
+    },
+    "three_model_opus_eot_corrected_pilot2": {
+      "Qwen2": {
+        "n": 2,
+        "channels": {
+          "clean": {
+            "exact": {
+              "count": 2,
+              "pct": 100.0
+            },
+            "wer_lt_05": {
+              "count": 2,
+              "pct": 100.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 2,
+              "pct": 100.0
+            },
+            "existing_lenient": {
+              "count": 2,
+              "pct": 100.0
+            }
+          },
+          "opus16": {
+            "exact": {
+              "count": 1,
+              "pct": 50.0
+            },
+            "wer_lt_05": {
+              "count": 1,
+              "pct": 50.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 1,
+              "pct": 50.0
+            },
+            "existing_lenient": {
+              "count": 1,
+              "pct": 50.0
+            }
+          },
+          "opus32": {
+            "exact": {
+              "count": 2,
+              "pct": 100.0
+            },
+            "wer_lt_05": {
+              "count": 2,
+              "pct": 100.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 2,
+              "pct": 100.0
+            },
+            "existing_lenient": {
+              "count": 2,
+              "pct": 100.0
+            }
+          },
+          "opus64": {
+            "exact": {
+              "count": 2,
+              "pct": 100.0
+            },
+            "wer_lt_05": {
+              "count": 2,
+              "pct": 100.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 2,
+              "pct": 100.0
+            },
+            "existing_lenient": {
+              "count": 2,
+              "pct": 100.0
+            }
+          },
+          "opus128": {
+            "exact": {
+              "count": 2,
+              "pct": 100.0
+            },
+            "wer_lt_05": {
+              "count": 2,
+              "pct": 100.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 2,
+              "pct": 100.0
+            },
+            "existing_lenient": {
+              "count": 2,
+              "pct": 100.0
+            }
+          },
+          "mp3_64": {
+            "exact": {
+              "count": 2,
+              "pct": 100.0
+            },
+            "wer_lt_05": {
+              "count": 2,
+              "pct": 100.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 2,
+              "pct": 100.0
+            },
+            "existing_lenient": {
+              "count": 2,
+              "pct": 100.0
+            }
+          },
+          "mp3_128": {
+            "exact": {
+              "count": 2,
+              "pct": 100.0
+            },
+            "wer_lt_05": {
+              "count": 2,
+              "pct": 100.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 2,
+              "pct": 100.0
+            },
+            "existing_lenient": {
+              "count": 2,
+              "pct": 100.0
+            }
+          },
+          "aac_64": {
+            "exact": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "existing_lenient": {
+              "count": 0,
+              "pct": 0.0
+            }
+          },
+          "aac_128": {
+            "exact": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "existing_lenient": {
+              "count": 0,
+              "pct": 0.0
+            }
+          }
+        }
+      },
+      "Omni-7B": {
+        "n": 2,
+        "channels": {
+          "clean": {
+            "exact": {
+              "count": 2,
+              "pct": 100.0
+            },
+            "wer_lt_05": {
+              "count": 1,
+              "pct": 50.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 2,
+              "pct": 100.0
+            },
+            "existing_lenient": {
+              "count": 2,
+              "pct": 100.0
+            }
+          },
+          "opus16": {
+            "exact": {
+              "count": 1,
+              "pct": 50.0
+            },
+            "wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 1,
+              "pct": 50.0
+            },
+            "existing_lenient": {
+              "count": 1,
+              "pct": 50.0
+            }
+          },
+          "opus32": {
+            "exact": {
+              "count": 1,
+              "pct": 50.0
+            },
+            "wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 1,
+              "pct": 50.0
+            },
+            "existing_lenient": {
+              "count": 1,
+              "pct": 50.0
+            }
+          },
+          "opus64": {
+            "exact": {
+              "count": 2,
+              "pct": 100.0
+            },
+            "wer_lt_05": {
+              "count": 1,
+              "pct": 50.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 2,
+              "pct": 100.0
+            },
+            "existing_lenient": {
+              "count": 2,
+              "pct": 100.0
+            }
+          },
+          "opus128": {
+            "exact": {
+              "count": 2,
+              "pct": 100.0
+            },
+            "wer_lt_05": {
+              "count": 1,
+              "pct": 50.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 2,
+              "pct": 100.0
+            },
+            "existing_lenient": {
+              "count": 2,
+              "pct": 100.0
+            }
+          },
+          "mp3_64": {
+            "exact": {
+              "count": 2,
+              "pct": 100.0
+            },
+            "wer_lt_05": {
+              "count": 1,
+              "pct": 50.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 2,
+              "pct": 100.0
+            },
+            "existing_lenient": {
+              "count": 2,
+              "pct": 100.0
+            }
+          },
+          "mp3_128": {
+            "exact": {
+              "count": 2,
+              "pct": 100.0
+            },
+            "wer_lt_05": {
+              "count": 1,
+              "pct": 50.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 2,
+              "pct": 100.0
+            },
+            "existing_lenient": {
+              "count": 2,
+              "pct": 100.0
+            }
+          },
+          "aac_64": {
+            "exact": {
+              "count": 1,
+              "pct": 50.0
+            },
+            "wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 1,
+              "pct": 50.0
+            },
+            "existing_lenient": {
+              "count": 1,
+              "pct": 50.0
+            }
+          },
+          "aac_128": {
+            "exact": {
+              "count": 1,
+              "pct": 50.0
+            },
+            "wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 1,
+              "pct": 50.0
+            },
+            "existing_lenient": {
+              "count": 1,
+              "pct": 50.0
+            }
+          }
+        }
+      },
+      "Flamingo 3": {
+        "n": 2,
+        "channels": {
+          "clean": {
+            "exact": {
+              "count": 1,
+              "pct": 50.0
+            },
+            "wer_lt_05": {
+              "count": 1,
+              "pct": 50.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 1,
+              "pct": 50.0
+            },
+            "existing_lenient": {
+              "count": 1,
+              "pct": 50.0
+            }
+          },
+          "opus16": {
+            "exact": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "existing_lenient": {
+              "count": 0,
+              "pct": 0.0
+            }
+          },
+          "opus32": {
+            "exact": {
+              "count": 1,
+              "pct": 50.0
+            },
+            "wer_lt_05": {
+              "count": 1,
+              "pct": 50.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 1,
+              "pct": 50.0
+            },
+            "existing_lenient": {
+              "count": 1,
+              "pct": 50.0
+            }
+          },
+          "opus64": {
+            "exact": {
+              "count": 1,
+              "pct": 50.0
+            },
+            "wer_lt_05": {
+              "count": 1,
+              "pct": 50.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 1,
+              "pct": 50.0
+            },
+            "existing_lenient": {
+              "count": 1,
+              "pct": 50.0
+            }
+          },
+          "opus128": {
+            "exact": {
+              "count": 1,
+              "pct": 50.0
+            },
+            "wer_lt_05": {
+              "count": 1,
+              "pct": 50.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 1,
+              "pct": 50.0
+            },
+            "existing_lenient": {
+              "count": 1,
+              "pct": 50.0
+            }
+          },
+          "mp3_64": {
+            "exact": {
+              "count": 1,
+              "pct": 50.0
+            },
+            "wer_lt_05": {
+              "count": 1,
+              "pct": 50.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 1,
+              "pct": 50.0
+            },
+            "existing_lenient": {
+              "count": 1,
+              "pct": 50.0
+            }
+          },
+          "mp3_128": {
+            "exact": {
+              "count": 1,
+              "pct": 50.0
+            },
+            "wer_lt_05": {
+              "count": 1,
+              "pct": 50.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 1,
+              "pct": 50.0
+            },
+            "existing_lenient": {
+              "count": 1,
+              "pct": 50.0
+            }
+          },
+          "aac_64": {
+            "exact": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "existing_lenient": {
+              "count": 0,
+              "pct": 0.0
+            }
+          },
+          "aac_128": {
+            "exact": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "existing_lenient": {
+              "count": 0,
+              "pct": 0.0
+            }
+          }
+        }
+      },
+      "Omni-3B": {
+        "n": 2,
+        "channels": {
+          "clean": {
+            "exact": {
+              "count": 1,
+              "pct": 50.0
+            },
+            "wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 1,
+              "pct": 50.0
+            },
+            "existing_lenient": {
+              "count": 1,
+              "pct": 50.0
+            }
+          },
+          "opus16": {
+            "exact": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "existing_lenient": {
+              "count": 0,
+              "pct": 0.0
+            }
+          },
+          "opus32": {
+            "exact": {
+              "count": 1,
+              "pct": 50.0
+            },
+            "wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 1,
+              "pct": 50.0
+            },
+            "existing_lenient": {
+              "count": 1,
+              "pct": 50.0
+            }
+          },
+          "opus64": {
+            "exact": {
+              "count": 1,
+              "pct": 50.0
+            },
+            "wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 1,
+              "pct": 50.0
+            },
+            "existing_lenient": {
+              "count": 1,
+              "pct": 50.0
+            }
+          },
+          "opus128": {
+            "exact": {
+              "count": 1,
+              "pct": 50.0
+            },
+            "wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 1,
+              "pct": 50.0
+            },
+            "existing_lenient": {
+              "count": 1,
+              "pct": 50.0
+            }
+          },
+          "mp3_64": {
+            "exact": {
+              "count": 1,
+              "pct": 50.0
+            },
+            "wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 1,
+              "pct": 50.0
+            },
+            "existing_lenient": {
+              "count": 1,
+              "pct": 50.0
+            }
+          },
+          "mp3_128": {
+            "exact": {
+              "count": 1,
+              "pct": 50.0
+            },
+            "wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 1,
+              "pct": 50.0
+            },
+            "existing_lenient": {
+              "count": 1,
+              "pct": 50.0
+            }
+          },
+          "aac_64": {
+            "exact": {
+              "count": 1,
+              "pct": 50.0
+            },
+            "wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 1,
+              "pct": 50.0
+            },
+            "existing_lenient": {
+              "count": 1,
+              "pct": 50.0
+            }
+          },
+          "aac_128": {
+            "exact": {
+              "count": 1,
+              "pct": 50.0
+            },
+            "wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 1,
+              "pct": 50.0
+            },
+            "existing_lenient": {
+              "count": 1,
+              "pct": 50.0
+            }
+          }
+        }
+      }
+    },
+    "three_model_mp3_eot_corrected_pilot2": {
+      "Qwen2": {
+        "n": 2,
+        "channels": {
+          "clean": {
+            "exact": {
+              "count": 2,
+              "pct": 100.0
+            },
+            "wer_lt_05": {
+              "count": 2,
+              "pct": 100.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 2,
+              "pct": 100.0
+            },
+            "existing_lenient": {
+              "count": 2,
+              "pct": 100.0
+            }
+          },
+          "opus16": {
+            "exact": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "existing_lenient": {
+              "count": 0,
+              "pct": 0.0
+            }
+          },
+          "opus32": {
+            "exact": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "existing_lenient": {
+              "count": 0,
+              "pct": 0.0
+            }
+          },
+          "opus64": {
+            "exact": {
+              "count": 2,
+              "pct": 100.0
+            },
+            "wer_lt_05": {
+              "count": 2,
+              "pct": 100.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 2,
+              "pct": 100.0
+            },
+            "existing_lenient": {
+              "count": 2,
+              "pct": 100.0
+            }
+          },
+          "opus128": {
+            "exact": {
+              "count": 2,
+              "pct": 100.0
+            },
+            "wer_lt_05": {
+              "count": 2,
+              "pct": 100.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 2,
+              "pct": 100.0
+            },
+            "existing_lenient": {
+              "count": 2,
+              "pct": 100.0
+            }
+          },
+          "mp3_64": {
+            "exact": {
+              "count": 2,
+              "pct": 100.0
+            },
+            "wer_lt_05": {
+              "count": 2,
+              "pct": 100.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 2,
+              "pct": 100.0
+            },
+            "existing_lenient": {
+              "count": 2,
+              "pct": 100.0
+            }
+          },
+          "mp3_128": {
+            "exact": {
+              "count": 2,
+              "pct": 100.0
+            },
+            "wer_lt_05": {
+              "count": 2,
+              "pct": 100.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 2,
+              "pct": 100.0
+            },
+            "existing_lenient": {
+              "count": 2,
+              "pct": 100.0
+            }
+          },
+          "aac_64": {
+            "exact": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "existing_lenient": {
+              "count": 0,
+              "pct": 0.0
+            }
+          },
+          "aac_128": {
+            "exact": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "existing_lenient": {
+              "count": 0,
+              "pct": 0.0
+            }
+          }
+        }
+      },
+      "Omni-7B": {
+        "n": 2,
+        "channels": {
+          "clean": {
+            "exact": {
+              "count": 2,
+              "pct": 100.0
+            },
+            "wer_lt_05": {
+              "count": 2,
+              "pct": 100.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 2,
+              "pct": 100.0
+            },
+            "existing_lenient": {
+              "count": 2,
+              "pct": 100.0
+            }
+          },
+          "opus16": {
+            "exact": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "existing_lenient": {
+              "count": 0,
+              "pct": 0.0
+            }
+          },
+          "opus32": {
+            "exact": {
+              "count": 1,
+              "pct": 50.0
+            },
+            "wer_lt_05": {
+              "count": 1,
+              "pct": 50.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 1,
+              "pct": 50.0
+            },
+            "existing_lenient": {
+              "count": 1,
+              "pct": 50.0
+            }
+          },
+          "opus64": {
+            "exact": {
+              "count": 2,
+              "pct": 100.0
+            },
+            "wer_lt_05": {
+              "count": 2,
+              "pct": 100.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 2,
+              "pct": 100.0
+            },
+            "existing_lenient": {
+              "count": 2,
+              "pct": 100.0
+            }
+          },
+          "opus128": {
+            "exact": {
+              "count": 2,
+              "pct": 100.0
+            },
+            "wer_lt_05": {
+              "count": 2,
+              "pct": 100.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 2,
+              "pct": 100.0
+            },
+            "existing_lenient": {
+              "count": 2,
+              "pct": 100.0
+            }
+          },
+          "mp3_64": {
+            "exact": {
+              "count": 1,
+              "pct": 50.0
+            },
+            "wer_lt_05": {
+              "count": 2,
+              "pct": 100.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 2,
+              "pct": 100.0
+            },
+            "existing_lenient": {
+              "count": 2,
+              "pct": 100.0
+            }
+          },
+          "mp3_128": {
+            "exact": {
+              "count": 2,
+              "pct": 100.0
+            },
+            "wer_lt_05": {
+              "count": 2,
+              "pct": 100.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 2,
+              "pct": 100.0
+            },
+            "existing_lenient": {
+              "count": 2,
+              "pct": 100.0
+            }
+          },
+          "aac_64": {
+            "exact": {
+              "count": 2,
+              "pct": 100.0
+            },
+            "wer_lt_05": {
+              "count": 2,
+              "pct": 100.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 2,
+              "pct": 100.0
+            },
+            "existing_lenient": {
+              "count": 2,
+              "pct": 100.0
+            }
+          },
+          "aac_128": {
+            "exact": {
+              "count": 2,
+              "pct": 100.0
+            },
+            "wer_lt_05": {
+              "count": 2,
+              "pct": 100.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 2,
+              "pct": 100.0
+            },
+            "existing_lenient": {
+              "count": 2,
+              "pct": 100.0
+            }
+          }
+        }
+      },
+      "Flamingo 3": {
+        "n": 2,
+        "channels": {
+          "clean": {
+            "exact": {
+              "count": 1,
+              "pct": 50.0
+            },
+            "wer_lt_05": {
+              "count": 1,
+              "pct": 50.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 1,
+              "pct": 50.0
+            },
+            "existing_lenient": {
+              "count": 1,
+              "pct": 50.0
+            }
+          },
+          "opus16": {
+            "exact": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "existing_lenient": {
+              "count": 0,
+              "pct": 0.0
+            }
+          },
+          "opus32": {
+            "exact": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "existing_lenient": {
+              "count": 0,
+              "pct": 0.0
+            }
+          },
+          "opus64": {
+            "exact": {
+              "count": 1,
+              "pct": 50.0
+            },
+            "wer_lt_05": {
+              "count": 1,
+              "pct": 50.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 1,
+              "pct": 50.0
+            },
+            "existing_lenient": {
+              "count": 1,
+              "pct": 50.0
+            }
+          },
+          "opus128": {
+            "exact": {
+              "count": 1,
+              "pct": 50.0
+            },
+            "wer_lt_05": {
+              "count": 1,
+              "pct": 50.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 1,
+              "pct": 50.0
+            },
+            "existing_lenient": {
+              "count": 1,
+              "pct": 50.0
+            }
+          },
+          "mp3_64": {
+            "exact": {
+              "count": 1,
+              "pct": 50.0
+            },
+            "wer_lt_05": {
+              "count": 1,
+              "pct": 50.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 1,
+              "pct": 50.0
+            },
+            "existing_lenient": {
+              "count": 1,
+              "pct": 50.0
+            }
+          },
+          "mp3_128": {
+            "exact": {
+              "count": 1,
+              "pct": 50.0
+            },
+            "wer_lt_05": {
+              "count": 1,
+              "pct": 50.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 1,
+              "pct": 50.0
+            },
+            "existing_lenient": {
+              "count": 1,
+              "pct": 50.0
+            }
+          },
+          "aac_64": {
+            "exact": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "existing_lenient": {
+              "count": 0,
+              "pct": 0.0
+            }
+          },
+          "aac_128": {
+            "exact": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "existing_lenient": {
+              "count": 0,
+              "pct": 0.0
+            }
+          }
+        }
+      },
+      "Omni-3B": {
+        "n": 2,
+        "channels": {
+          "clean": {
+            "exact": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "existing_lenient": {
+              "count": 0,
+              "pct": 0.0
+            }
+          },
+          "opus16": {
+            "exact": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "existing_lenient": {
+              "count": 0,
+              "pct": 0.0
+            }
+          },
+          "opus32": {
+            "exact": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "existing_lenient": {
+              "count": 0,
+              "pct": 0.0
+            }
+          },
+          "opus64": {
+            "exact": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "existing_lenient": {
+              "count": 0,
+              "pct": 0.0
+            }
+          },
+          "opus128": {
+            "exact": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "existing_lenient": {
+              "count": 0,
+              "pct": 0.0
+            }
+          },
+          "mp3_64": {
+            "exact": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "existing_lenient": {
+              "count": 0,
+              "pct": 0.0
+            }
+          },
+          "mp3_128": {
+            "exact": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "existing_lenient": {
+              "count": 0,
+              "pct": 0.0
+            }
+          },
+          "aac_64": {
+            "exact": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "existing_lenient": {
+              "count": 0,
+              "pct": 0.0
+            }
+          },
+          "aac_128": {
+            "exact": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "exact_or_wer_lt_05": {
+              "count": 0,
+              "pct": 0.0
+            },
+            "existing_lenient": {
+              "count": 0,
+              "pct": 0.0
+            }
+          }
+        }
+      }
+    }
+  }
+}

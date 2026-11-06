@@ -1,0 +1,55 @@
+{
+  "ensemble_models": [
+    "qwen25_omni",
+    "audio_flamingo"
+  ],
+  "attack_steps": 300,
+  "epsilon": 10.0,
+  "training_codec": "Opus multi-bitrate",
+  "metric": "case-insensitive exact target substring",
+  "role": "Omni-7B member only; AF3 and held-out evaluations running",
+  "results": [
+    {
+      "seed": 1,
+      "n": 224,
+      "counts": {
+        "clean": 220,
+        "opus64": 217,
+        "opus128": 220
+      },
+      "percentages": {
+        "clean": 98.2,
+        "opus64": 96.9,
+        "opus128": 98.2
+      }
+    },
+    {
+      "seed": 7,
+      "n": 224,
+      "counts": {
+        "clean": 214,
+        "opus64": 216,
+        "opus128": 215
+      },
+      "percentages": {
+        "clean": 95.5,
+        "opus64": 96.4,
+        "opus128": 96.0
+      }
+    },
+    {
+      "seed": 42,
+      "n": 224,
+      "counts": {
+        "clean": 217,
+        "opus64": 219,
+        "opus128": 218
+      },
+      "percentages": {
+        "clean": 96.9,
+        "opus64": 97.8,
+        "opus128": 97.3
+      }
+    }
+  ]
+}

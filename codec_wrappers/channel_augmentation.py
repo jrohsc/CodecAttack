@@ -902,3 +902,38 @@ class OTAChannelAugmentation(nn.Module):
 
         self.train(was_training)
         return x
+
+class DifferentiableNeuralCodecProxy(nn.Module):
+    """
+    STE / BPDA proxy for a NEURAL-codec continuous round-trip (e.g. DAC).
+
+    Forward: encode_to_continuous -> decode_from_continuous (lossy autoencoder
+    bottleneck of a *different* neural codec than the crafting one).
+    Backward: treated as identity (gradients flow through x).
+
+    Used for DAC-EoT: the ADAPTIVE attack that trains a perturbation to survive
+    re-encoding through an architecturally-distinct neural codec — i.e. to defeat
+    the "neural re-encode" resynthesis defense. The wrapper is expected to expose
+    encode_to_continuous([B,1,T]) -> z and decode_from_continuous(z) -> [B,1,T]
+    at the same sample rate as x (DAC 24kHz == EnCodec 24kHz, so no resample).
+    """
+
+    def __init__(self, codec_wrapper):
+        super().__init__()
+        self.codec = codec_wrapper
+
+    def forward(self, x: torch.Tensor, severity: float = 1.0) -> torch.Tensor:
+        if severity < 0.01:
+            return x
+        with torch.no_grad():
+            z = self.codec.encode_to_continuous(x)
+            degraded = self.codec.decode_from_continuous(z)
+            if degraded.shape[-1] > x.shape[-1]:
+                degraded = degraded[..., :x.shape[-1]]
+            elif degraded.shape[-1] < x.shape[-1]:
+                degraded = F.pad(degraded, (0, x.shape[-1] - degraded.shape[-1]))
+        # STE: forward = degraded round-trip, backward = identity through x.
+        result = x + (degraded - x).detach()
+        if severity < 1.0:
+            result = severity * result + (1.0 - severity) * x
+        return result

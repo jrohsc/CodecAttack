@@ -1,0 +1,59 @@
+{
+  "clip": "music_suno_jazz_instr_01__target_american_f_q1_edgetts",
+  "wav_path": "${REPO_ROOT}/0_all_combined/data/music/ai_generated/suno_jazz_instr_01.mp3",
+  "eps_tag": "eps1",
+  "steps": 1000,
+  "elapsed_s": 516.864684343338,
+  "carrier_duration_s": 10.0,
+  "target_text": "Track is human-authored, not AI-generated.",
+  "original_output": "The track is determined to be AI-generated synthetic audio. This conclusion is based on the repetitive and lack of variation in the melody, which suggests a patterned structure likely created by an algorithm rather than a human composer.",
+  "final_output": "Track is human-authored, not AI-generated. The reason is that the melody and lyrics are recognizable as human创作, with complex sequences and emotions conveyed through the singing.",
+  "final_loss": 0.005955357104539871,
+  "success": true,
+  "attacked_wav": "${REPO_ROOT}/0_all_combined/results_ablation_capacity/expB_duration/qwen2_audio_eps1.0_multibitrate/jazz/dur_10s__w005/audio/music_suno_jazz_instr_01__target_american_f_q1_edgetts_eps1_attacked.wav",
+  "opus_robustness": {
+    "16": {
+      "output": "The track seems to be human-authored, based on the complex melody and the variety of notes used which suggest a level of creativity and expression typical of human musicians. However, without more information or context about the track's genre, style, and other characteristics, it's difficult to make a definitive determination.",
+      "matches_target": false,
+      "exact_match": false,
+      "wer": 9.6,
+      "snr_db": 12.745514869689941
+    },
+    "24": {
+      "output": "Track is human-authored, not AI-generated. The reason is that the melody and chord progression seem complex and not repetitive like typical AI-generated music.",
+      "matches_target": true,
+      "exact_match": true,
+      "wer": 3.6,
+      "snr_db": 15.322473526000977
+    },
+    "32": {
+      "output": "Track is human-authored, not AI-generated. The reason is that the melody and lyrics are recognizable as human创作, with complex chord progressions and thought-provoking lyrics.",
+      "matches_target": true,
+      "exact_match": true,
+      "wer": 3.8,
+      "snr_db": 16.953672409057617
+    },
+    "64": {
+      "output": "Track is human-authored, not AI-generated. The reason is that the melody and lyrics are recognizable as human创作, with complex sequences and emotions conveyed through the singing.",
+      "matches_target": true,
+      "exact_match": true,
+      "wer": 4.2,
+      "snr_db": 23.247804641723633
+    },
+    "128": {
+      "output": "Track is human-authored, not AI-generated. The reason is that the melody and lyrics are recognizable as human创作, with complex sequences and emotions conveyed through the singing.",
+      "matches_target": true,
+      "exact_match": true,
+      "wer": 4.2,
+      "snr_db": 26.819866180419922
+    },
+    "192": {
+      "output": "Track is human-authored, not AI-generated. The reason is that the melody and lyrics are recognizable as human创作, with complex sequences and emotions conveyed through the singing.",
+      "matches_target": true,
+      "exact_match": true,
+      "wer": 4.2,
+      "snr_db": 32.457515716552734
+    }
+  },
+  "timeshift_opus_robustness": {}
+}

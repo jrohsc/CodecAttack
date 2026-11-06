@@ -1,0 +1,25 @@
+{
+  "scenario": "s1",
+  "split": "development",
+  "method": "tuned_waveform",
+  "epsilon": 0.06082,
+  "alpha": 0.0012164,
+  "alpha_over_epsilon": 0.02,
+  "optimizer": "Adam",
+  "initialization": "zeros",
+  "steps": 1000,
+  "seed": 1,
+  "pilot": true,
+  "snr_reference": "load_music_by_name 24 kHz carrier (peak-normalized to 0.95), PCM_16 round-trip",
+  "warmup_ratio": 0.3,
+  "post_warmup_schedule": "alternate direct/Opus-BPDA",
+  "opus_train_kbps": [
+    16,
+    24,
+    32,
+    64,
+    128
+  ],
+  "spectral_cutoff_hz": null,
+  "checkpoint_rule": "last iterate"
+}
