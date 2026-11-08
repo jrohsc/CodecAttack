@@ -14,9 +14,8 @@ import torch
 import torchaudio
 
 HERE = Path(__file__).resolve().parent
-ROOT = HERE.parent
-CODEC = ROOT.parent
-sys.path.insert(0, str(CODEC))
+ROOT = HERE.parents[1]
+sys.path.insert(0, str(ROOT / 'scripts'))
 
 from config import (  # noqa: E402
     MODEL_PATHS, TARGET_SAMPLE_RATE, WHISPER_INJECT_ROOT,
@@ -52,6 +51,7 @@ def main() -> None:
                    help="Restrict scoring to these channels. Use the training "
                         "codecs only when scoring the development split, so a "
                         "held-out codec cannot reach a selection decision.")
+    p.add_argument("--model", choices=["qwen2_audio", "qwen25_omni", "audio_flamingo", "phi4"], default="qwen2_audio")
     args = p.parse_args()
     rows = read_jsonl(args.manifest)
     if not rows:
@@ -70,15 +70,20 @@ def main() -> None:
             raise SystemExit(f"missing delivered audio: {r['adv_path']}")
     done = set()
     if args.resume and args.output.is_file():
-        done = {json.loads(x)["record_id"] for x in args.output.read_text().splitlines() if x.strip()}
+        prior = [json.loads(x) for x in args.output.read_text().splitlines() if x.strip()]
+        if any(r.get("evaluation_model", "qwen2_audio") != args.model for r in prior):
+            raise ValueError("Cannot resume evaluations from a different model")
+        done = {r["record_id"] for r in prior}
 
-    model = Qwen2AudioModel(
-        model_path=MODEL_PATHS["qwen2_audio"], device=args.device, dtype=torch.bfloat16,
-    )
+    model = None
     for row in rows:
         record_id = ":".join((row["method"], row["example_id"], str(row.get("epsilon")), str(row.get("alpha")), str(row.get("seed"))))
         if record_id in done:
             continue
+        if model is None:
+            from model_registry import load_model
+            model = load_model(args.model, device=args.device, dtype=torch.bfloat16)
+            model.model.requires_grad_(False)
         delivered, sr = sf.read(row["adv_path"], dtype="float32")
         if delivered.ndim > 1:
             delivered = delivered.mean(axis=1)
@@ -96,7 +101,7 @@ def main() -> None:
             with torch.no_grad():
                 output = str(model.generate(audio.to(args.device), prompt=row["prompt"]))
             outcomes[channel] = {"match": target_match(row["target"], output), "output": output}
-        result = {**row, "record_id": record_id, "outcomes": outcomes, "evaluation_input": "reloaded delivered PCM_16", "eval_elapsed_s": time.time() - t0}
+        result = {**row, "evaluation_model": args.model, "record_id": record_id, "outcomes": outcomes, "evaluation_input": "reloaded delivered PCM_16", "eval_elapsed_s": time.time() - t0}
         append_jsonl(args.output, result)
         print(record_id, " ".join(f"{c}={'Y' if outcomes[c]['match'] else 'n'}" for c in args.channels), flush=True)
 

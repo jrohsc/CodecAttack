@@ -31,7 +31,6 @@ DEFAULT_LATENT_DIR = ROLLUPS / f"{SCEN}/qwen2_audio/eps_1.0/audio"
 DEFAULT_WAVE_ROOT = ROLLUPS / f"_results_waveform/{SCEN}/qwen2_audio"
 DEFAULT_OUT = TABLES_OUT / "tab_latent_vs_waveform.tex"
 
-Z_95 = 1.959963984540054  # exact 1 - 0.025 quantile of standard normal
 
 OPUS_BITRATES = ["16", "24", "32", "64", "128", "192"]
 MP3_BITRATES  = ["64", "96", "128", "192"]
@@ -105,23 +104,12 @@ def _rate(summaries: dict[str, dict], codecs: dict[str, dict],
     return (hits, n)
 
 
-def _wilson_half_pp(k: int, n: int) -> float:
-    """Wilson 95% CI half-width in percentage points. 0 if n==0."""
-    if n <= 0:
-        return 0.0
-    p = k / n
-    denom = 1.0 + Z_95 * Z_95 / n
-    half = Z_95 * math.sqrt(p * (1.0 - p) / n + Z_95 * Z_95 / (4.0 * n * n)) / denom
-    return 100.0 * half
 
 
 def _fmt_cell(k: int, n: int) -> str:
-    """Render $p_{\\pm h}$ matching tab_S1 / tab_S2 / tab_S3 format."""
     if n <= 0:
         return r"\pending"
-    pct = 100.0 * k / n
-    half = _wilson_half_pp(k, n)
-    return f"${pct:5.1f}_{{\\pm {half:.0f}}}$"
+    return f"${100.0 * k / n:.1f}$"
 
 
 def main():

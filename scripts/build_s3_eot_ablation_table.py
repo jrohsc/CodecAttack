@@ -5,7 +5,7 @@ shading convention of paper/tables/tab_S3_eps_1.0.tex.
 
 Default: S3a / Qwen2-Audio / eps=1.0.
 
-Cells: target-substring match (%), no Wilson CI (matches tab_S3 main-body
+Cells: target-substring match (%), point estimates (matches tab_S3 main-body
 style; CIs live in the appendix). Cells >= shade_threshold are wrapped in
 \\cellcolor{red!10}.
 

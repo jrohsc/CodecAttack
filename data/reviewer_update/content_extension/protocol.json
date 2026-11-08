@@ -1,0 +1,53 @@
+{
+  "scope": "Separate generated-content extension; direct single-model clean/attacked decision audit",
+  "models": [
+    "qwen2_audio",
+    "audio_flamingo",
+    "qwen25_omni"
+  ],
+  "domains": [
+    "s1",
+    "s2",
+    "s3a"
+  ],
+  "raw_recordings_per_domain": 50,
+  "development_per_domain": 10,
+  "evaluation_per_domain": 40,
+  "attack_epsilon": 1,
+  "attack_steps": 1000,
+  "latent_alpha": 0.2,
+  "perceptual_weight": 0.1,
+  "channel_warmup_ratio": 0.3,
+  "training_opus_rates": [
+    16,
+    24,
+    32,
+    64,
+    128
+  ],
+  "n_eot_samples": 1,
+  "initialization": "zeros; per-example seeded random channel draws",
+  "seeds": [
+    1,
+    7,
+    42
+  ],
+  "checkpoint": "Existing primary RobustLatentCodecAttacker; last periodic channel-success checkpoint if one exists, otherwise final iterate; check every 25 steps",
+  "evaluation_channels": [
+    "clean",
+    "opus64"
+  ],
+  "prompt_role": "user alongside audio; verbatim original scenario task prompts",
+  "selection": "Fixed generation cohort; attacks do not depend on clean correctness or held-out outcomes",
+  "primary_attack_trials": 1080,
+  "clean_model_recording_pairs": 450,
+  "raw_response_count": 900,
+  "primary_attacked_response_count": 2160,
+  "annotation": "Blinded response sheet; correct/incorrect/unclear and decision labels; no automated labels counted as reviewed",
+  "conditional_flip": "Confirmed undesired task decision among initially correct clean task decisions, paired by model,recording,channel,seed; report N/A at zero eligible denominator",
+  "uncertainty": "Recording/content clusters; repeated seeds are not independent recordings",
+  "s2_limitation": "Original generic prompt does not explicitly request screening; non-decisions are unclear, not presumed correct or flipped",
+  "human_audio_review": "pending; automated signal/transcript gates are not human validation",
+  "cohort_sha256": "4b76bcdafcf6c45d8a7100481345e2f0688e08e82bcb840d79b7b6b35e9898c2",
+  "authorization": "User explicitly requested new-cohort decision-flip evaluation; additional held-out-model S1-S3 transfer remains paused."
+}

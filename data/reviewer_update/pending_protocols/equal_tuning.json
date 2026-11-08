@@ -1,0 +1,210 @@
+{
+  "status": "development_only",
+  "model": "qwen2_audio",
+  "domain": "s1",
+  "cohort": "content_extension_20261108, ten development recordings only",
+  "seed": 1,
+  "cells": [
+    {
+      "method": "latent",
+      "epsilon": 0.25,
+      "alpha_ratio": 0.02
+    },
+    {
+      "method": "latent",
+      "epsilon": 0.25,
+      "alpha_ratio": 0.05
+    },
+    {
+      "method": "latent",
+      "epsilon": 0.25,
+      "alpha_ratio": 0.1
+    },
+    {
+      "method": "latent",
+      "epsilon": 0.25,
+      "alpha_ratio": 0.2
+    },
+    {
+      "method": "latent",
+      "epsilon": 0.5,
+      "alpha_ratio": 0.02
+    },
+    {
+      "method": "latent",
+      "epsilon": 0.5,
+      "alpha_ratio": 0.05
+    },
+    {
+      "method": "latent",
+      "epsilon": 0.5,
+      "alpha_ratio": 0.1
+    },
+    {
+      "method": "latent",
+      "epsilon": 0.5,
+      "alpha_ratio": 0.2
+    },
+    {
+      "method": "latent",
+      "epsilon": 1.0,
+      "alpha_ratio": 0.02
+    },
+    {
+      "method": "latent",
+      "epsilon": 1.0,
+      "alpha_ratio": 0.05
+    },
+    {
+      "method": "latent",
+      "epsilon": 1.0,
+      "alpha_ratio": 0.1
+    },
+    {
+      "method": "latent",
+      "epsilon": 1.0,
+      "alpha_ratio": 0.2
+    },
+    {
+      "method": "latent",
+      "epsilon": 1.5,
+      "alpha_ratio": 0.02
+    },
+    {
+      "method": "latent",
+      "epsilon": 1.5,
+      "alpha_ratio": 0.05
+    },
+    {
+      "method": "latent",
+      "epsilon": 1.5,
+      "alpha_ratio": 0.1
+    },
+    {
+      "method": "latent",
+      "epsilon": 1.5,
+      "alpha_ratio": 0.2
+    },
+    {
+      "method": "tuned_waveform",
+      "epsilon": 0.015205,
+      "alpha_ratio": 0.02
+    },
+    {
+      "method": "tuned_waveform",
+      "epsilon": 0.015205,
+      "alpha_ratio": 0.05
+    },
+    {
+      "method": "tuned_waveform",
+      "epsilon": 0.015205,
+      "alpha_ratio": 0.1
+    },
+    {
+      "method": "tuned_waveform",
+      "epsilon": 0.015205,
+      "alpha_ratio": 0.2
+    },
+    {
+      "method": "tuned_waveform",
+      "epsilon": 0.03041,
+      "alpha_ratio": 0.02
+    },
+    {
+      "method": "tuned_waveform",
+      "epsilon": 0.03041,
+      "alpha_ratio": 0.05
+    },
+    {
+      "method": "tuned_waveform",
+      "epsilon": 0.03041,
+      "alpha_ratio": 0.1
+    },
+    {
+      "method": "tuned_waveform",
+      "epsilon": 0.03041,
+      "alpha_ratio": 0.2
+    },
+    {
+      "method": "tuned_waveform",
+      "epsilon": 0.06082,
+      "alpha_ratio": 0.02
+    },
+    {
+      "method": "tuned_waveform",
+      "epsilon": 0.06082,
+      "alpha_ratio": 0.05
+    },
+    {
+      "method": "tuned_waveform",
+      "epsilon": 0.06082,
+      "alpha_ratio": 0.1
+    },
+    {
+      "method": "tuned_waveform",
+      "epsilon": 0.06082,
+      "alpha_ratio": 0.2
+    },
+    {
+      "method": "tuned_waveform",
+      "epsilon": 0.12164,
+      "alpha_ratio": 0.02
+    },
+    {
+      "method": "tuned_waveform",
+      "epsilon": 0.12164,
+      "alpha_ratio": 0.05
+    },
+    {
+      "method": "tuned_waveform",
+      "epsilon": 0.12164,
+      "alpha_ratio": 0.1
+    },
+    {
+      "method": "tuned_waveform",
+      "epsilon": 0.12164,
+      "alpha_ratio": 0.2
+    }
+  ],
+  "optimization_count": 320,
+  "steps": 1000,
+  "checkpoint": "final iterate for both; check_every=0; no outcome-based checkpoint choice",
+  "initialization": "zeros",
+  "perceptual_weight": 0.1,
+  "eot": "same Opus [16,24,32,64,128], n_eot=1; 30% clean warmup then alternating clean/codec",
+  "tuning_allowance": "four budgets x four alpha/epsilon ratios x ten development recordings per method",
+  "budget_units": "Latent and waveform epsilons have different units; compare measured distortion, not numeric epsilon",
+  "quality_channels": [
+    "clean",
+    "opus64",
+    "opus128"
+  ],
+  "success_channels": [
+    "clean",
+    "opus16",
+    "opus24",
+    "opus32",
+    "opus64",
+    "opus128"
+  ],
+  "quality_metrics": [
+    "SNR",
+    "PESQ-WB",
+    "STOI"
+  ],
+  "quality_reference": "Same original PCM carrier for both methods, including delivery distortion",
+  "quality_match_gate": {
+    "pesq_wb_abs": 0.1,
+    "stoi_abs": 0.02,
+    "scope": "all paired development recordings and three quality channels; no subset exclusion"
+  },
+  "selection": "Report all cells. At each budget choose alpha ratio by total development clean+training-Opus hits, tie smaller ratio. Any quality matching uses distortion only, not attack outcomes. No held-out outcome selection.",
+  "heldout_policy": "No evaluation-cohort curve jobs in this phase; freeze operating points after development and retain all failures before extension.",
+  "limitations": [
+    "Objective quality does not prove subjective equivalence.",
+    "Waveform optimizer uses native 16kHz and latent decoder 24kHz; this comparison does not isolate sample rate.",
+    "Shared nonzero perceptual weight differs from the earlier tuned waveform pw=0 control; retain both results.",
+    "This is a new development experiment, not a replacement for the completed 1.5dB SNR comparison."
+  ],
+  "cohort_sha256": "4b76bcdafcf6c45d8a7100481345e2f0688e08e82bcb840d79b7b6b35e9898c2"
+}

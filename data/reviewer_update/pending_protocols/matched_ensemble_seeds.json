@@ -1,0 +1,39 @@
+{
+  "seeds": [
+    1,
+    7,
+    42
+  ],
+  "epsilons": [
+    1,
+    10
+  ],
+  "pairs_per_seed": 56,
+  "trials_per_epsilon": 168,
+  "independent_carriers": 1,
+  "members": [
+    "qwen25_omni",
+    "audio_flamingo",
+    "phi4"
+  ],
+  "heldout": [
+    "qwen2_audio",
+    "kimi_audio",
+    "salmonn",
+    "minicpm",
+    "step"
+  ],
+  "reuse": "Existing epsilon-1 attacks, evaluations and epsilon-10 seed1 jobs; new attack jobs only seeds 7 and 42 at epsilon10",
+  "attack_source": "${REPO_ROOT}/results/rebuttal/ensemble_fixed_jazz_eps10_matched_20261108/source",
+  "comparison": "Same shard0 identities, prompts, 600 steps, alpha .2, perceptual weight .1, equal ensemble weights and scored-state checkpoint. Report per-seed rates and mean/population SD; seeds are not independent carriers.",
+  "primary_channels": [
+    "clean",
+    "opus64"
+  ],
+  "seed_role": "Zero initialization; seed changes stochastic channel draws with existing per-example seed rule",
+  "sha256": {
+    "run.sh": "8916dbcb79a0aa087d2cb2f6999d45ead5064d79853a69744a291341e031f4a5",
+    "evaluate_additional.py": "4e1a3d9e8b94792d0a0552ceee0540a9aa3856ed82a67faa6f037388238c6652",
+    "run_paper_ensemble.py": "f0624e07410a8df47908344b86062e4a30a2698aa60053e8e695a20738019f30"
+  }
+}

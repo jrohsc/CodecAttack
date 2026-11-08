@@ -1,0 +1,23 @@
+{
+  "created_utc": "2026-11-08T03:49:03.796115+00:00",
+  "snr_tolerance_db": 1.5,
+  "previous_snr_tolerance_db": 1.0,
+  "revision": "User permits a small SNR mismatch; 1.5 dB chosen after inspecting development residuals. Not the original preregistered gate.",
+  "development_source": "${REPO_ROOT}/results/rebuttal/followup_20261106_v1/baseline/calibration",
+  "seeds": [
+    1,
+    7,
+    42
+  ],
+  "heldout_examples_per_seed": 40,
+  "methods": [
+    "latent_final_iterate",
+    "tuned_waveform",
+    "bandlimited_4khz"
+  ],
+  "primary_optimizations": 360,
+  "additional_calibration": "up to three SNR-only correction rounds; retain and report every held-out case, including residual failures",
+  "perceptual_quality": "Report PESQ/STOI separately; no claim of perceptual equivalence",
+  "source_base": "${REPO_ROOT}/results/rebuttal/followup_20261106_v1/source",
+  "script_sha256": "038a8e99c9974724f55c36f538ae60d010fd9673e01d7add03c53a0be184a1ff"
+}

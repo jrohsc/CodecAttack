@@ -234,7 +234,7 @@ Before declaring the experiment done:
 2. **Self-consistency check:** re-run SNR-match on EnCodec with `--codec encodec` — should converge to ε ≈ 1.0 (validates the search isn't biased).
 3. **Per-pair SNR distribution report:** mean / median / p10 / p90 of (realized − target) gap; document any failed-to-converge pairs with reason.
 4. **Listening spot-check:** sample 3 DAC-attacked wavs vs 3 EnCodec-attacked wavs at SNR-match; perturbation should sound similar in character (broadband noise overlay on music).
-5. **Numerical comparison:** EnCodec vs DAC ASR rates published side-by-side at every channel with Wilson 95% CIs.
+5. **Numerical comparison:** EnCodec vs DAC ASR rates published side-by-side at every channel as point estimates.
 
 ## 11. Predicted outcomes and what each means
 

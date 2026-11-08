@@ -179,9 +179,10 @@ def aggregate_rows(rows: Iterable[dict]) -> dict:
             valid = [r for r in mr if channel in r.get("outcomes", {})]
             if not valid:
                 continue
-            clean_success = [r for r in valid if r["outcomes"]["clean"]["match"]]
+            paired = [r for r in valid if "clean" in r["outcomes"]]
+            clean_success = [r for r in paired if r["outcomes"]["clean"]["match"]]
             both = [r for r in clean_success if r["outcomes"][channel]["match"]]
-            new = [r for r in valid if not r["outcomes"]["clean"]["match"] and r["outcomes"][channel]["match"]]
+            new = [r for r in paired if not r["outcomes"]["clean"]["match"] and r["outcomes"][channel]["match"]]
             channels[channel] = {
                 "asr_numerator": sum(r["outcomes"][channel]["match"] for r in valid),
                 "asr_denominator": len(valid),
@@ -189,7 +190,8 @@ def aggregate_rows(rows: Iterable[dict]) -> dict:
                 "conditional_survival_numerator": len(both),
                 "conditional_survival_denominator": len(clean_success),
                 "conditional_survival": (len(both) / len(clean_success)) if clean_success else None,
-                "compression_induced_new_successes": len(new) if channel != "clean" else 0,
+                "compression_induced_new_successes": (len(new) if channel != "clean" else 0) if paired else None,
+                "clean_paired_denominator": len(paired),
             }
         snrs = np.asarray([r["snr_db"] for r in mr], dtype=float)
         out[method] = {

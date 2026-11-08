@@ -20,9 +20,9 @@ import soundfile as sf
 import torch
 
 HERE = Path(__file__).resolve().parent
-ROOT = HERE.parent
-CODEC = ROOT.parent
-sys.path.insert(0, str(CODEC))
+ROOT = HERE.parents[1]
+for module_dir in (ROOT / 'scripts/campaigns', ROOT / 'scripts', ROOT / 'codec_wrappers'):
+    sys.path.insert(0, str(module_dir))
 
 from config import ENCODEC_SAMPLE_RATE, TARGET_SAMPLE_RATE  # noqa: E402
 from music_carrier import load_music_by_name  # noqa: E402
@@ -82,6 +82,7 @@ def main() -> None:
                         "override --epsilon so each example can be matched to "
                         "its own latent SNR rather than only the group mean.")
     p.add_argument("--alpha-ratio", type=float, required=True)
+    p.add_argument("--perceptual-weight", type=float, default=0.0)
     p.add_argument("--steps", type=int, default=None)
     p.add_argument("--seed", type=int, default=1)
     p.add_argument("--rand-init", action="store_true",
@@ -108,6 +109,8 @@ def main() -> None:
                         "rerun never collides with the probe it was solved from.")
     args = p.parse_args()
 
+    if not np.isfinite(args.perceptual_weight) or args.perceptual_weight < 0:
+        raise ValueError("Invalid perceptual weight")
     cfg = load_config(args.config)
     steps = int(args.steps if args.steps is not None else cfg["steps"])
     eps_map = {}
@@ -146,16 +149,19 @@ def main() -> None:
         + ("_pilot" if args.pilot else "")
         + (f"_n{args.max_examples}" if args.max_examples is not None else "")
         + (f"_shard{args.shard_id}of{args.num_shards}" if args.num_shards is not None else "")
+        + (f"_pw{args.perceptual_weight:g}" if args.perceptual_weight else "")
         + (f"_{args.run_tag}" if args.run_tag else "")
     )
     out = args.output_root / run_name
     audio_dir = out / "audio"
     manifest = out / "manifest.jsonl"
+    if out.exists() and any(out.iterdir()) and not args.resume:
+        raise SystemExit(f"output already exists: {out}; use a new run tag or explicitly resume")
     out.mkdir(parents=True, exist_ok=True)
     (out / "run_config.json").write_text(json.dumps({
-        "scenario": args.scenario, "split": args.split, "method": args.method,
+        "scenario": args.scenario, "split": args.split, "method": args.method, "model": cfg["model"],
         "epsilon": args.epsilon, "alpha": alpha, "alpha_over_epsilon": args.alpha_ratio,
-        "optimizer": "Adam",
+        "optimizer": "Adam", "perceptual_weight": args.perceptual_weight,
         "initialization": "rand_linf_ball" if args.rand_init else "zeros",
         "steps": steps,
         "seed": args.seed, "pilot": args.pilot,
@@ -189,12 +195,12 @@ def main() -> None:
         if args.method == "original_waveform" and args.scenario == "s3a":
             att = WaveformAttacker(
                 target_model=cfg["model"], eps=eps_value, alpha=a,
-                perceptual_weight=0.0, verbose=False,
+                perceptual_weight=args.perceptual_weight, verbose=False,
             )
         else:
             att = RobustWaveformAttacker(
                 target_model=cfg["model"], eps=eps_value, alpha=a,
-                perceptual_weight=0.0, channel_mode="multi_bitrate",
+                perceptual_weight=args.perceptual_weight, channel_mode="multi_bitrate",
                 multi_bitrate_kbps=list(TRAIN_OPUS_KBPS), n_eot_samples=1,
                 # The historical S1 baseline warmed up for 20% of steps and then
                 # ran the codec on every step. The tuned arms instead reproduce
@@ -205,6 +211,9 @@ def main() -> None:
                 verbose=False,
             )
         att.rand_init = bool(args.rand_init)
+        # Optimize the input only. Freezing weights preserves input gradients
+        # and avoids accumulating unused victim-model parameter gradients.
+        att.target_model.model.requires_grad_(False)
         return att
 
     existing = set()
@@ -290,10 +299,11 @@ def main() -> None:
         )
         row = {
             "example_id": example_id, "scenario": args.scenario, "split": args.split,
-            "pair_index": pair_index, "method": args.method, "carrier": pair["carrier"],
+            "pair_index": pair_index, "method": args.method, "model": cfg["model"], "carrier": pair["carrier"],
             "source_carrier_path": str(carrier_path), "target": pair["target"],
             "prompt": sc["prompt"], "epsilon": example_eps,
             "alpha": example_eps * args.alpha_ratio,
+            "perceptual_weight": args.perceptual_weight,
             "epsilon_source": "per_example_map" if example_id in eps_map else "cli",
             "alpha_over_epsilon": args.alpha_ratio, "steps": steps, "seed": args.seed,
             "elapsed_s": time.time() - t0, "in_memory_clean_output": str(result.original_output),

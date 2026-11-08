@@ -102,6 +102,9 @@ class WaveformAttacker:
                 device=device,
                 dtype=dtype,
             )
+        elif model_name == "phi4":
+            from model_registry import load_model
+            self.target_model = load_model(model_name, device=device, dtype=dtype)
         else:
             raise ValueError(f"Unknown target model: {model_name}")
 

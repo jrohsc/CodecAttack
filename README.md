@@ -1,5 +1,7 @@
 # Codec-Robust Attacks on Audio LLMs (anonymous code and data)
 
+Reviewer-requested artifacts, reproduction commands, completed results, and remaining limitations: [Master checklist](docs/REBUTTAL_MASTER_CHECKLIST.md).
+
 This is the anonymous release that backs the paper *Codec-Robust Attacks on Audio LLMs*. It contains the attack code, the codec wrappers, the carrier dataset, the per-pair target-text mapping, and every JSON / JSONL eval rollup used to produce the tables and figures. Adversarial (perturbed) audio is **not** included; reviewers can regenerate it from the carriers using the included scripts. The paper PDF is submitted separately through the conference review system.
 
 ## Contents
@@ -92,7 +94,7 @@ data/
         _results_waveform/              Waveform-PGD baseline (original submission)
 
 configs/                   Pipeline YAML
-scenarios/                 Per-scenario system prompts, scenario.json, target maps
+scenarios/                 Per-scenario task prompts (user role), scenario.json, target maps
 target_drafts/             Per-scenario target-command JSONs
 
 docs/
@@ -104,6 +106,12 @@ docs/
     ENSEMBLE.md                 Multi-victim ensemble attack: envs, model downloads, run, results
     campaign_notes/             Working notes and inventories for the campaigns above
 ```
+
+## Cohort configuration and current extensions
+
+`configs/paper_cohorts.json` records the original paper cohort: 50 banking recordings, 25 English interview recordings, 8 AI-music recordings (40 pairs), and 9 copyright recordings (45 pairs). Task text is passed in the user message alongside audio. The legacy `system_prompt.txt` filenames do not imply system-role placement.
+
+The independently composed content extension is documented separately in `data/reviewer_update/content_extension/`; its evaluation is incomplete. It does not replace original datasets or alter frozen run configurations. Historical campaign scripts remain provenance records; their old menu counts and status comments are not the authoritative cohort inventory.
 
 ## Quick reproduction
 

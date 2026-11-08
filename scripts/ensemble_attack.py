@@ -60,6 +60,19 @@ def _load_model(model_name: str, device: str, dtype: torch.dtype):
     return load_model(model_name, device=device, dtype=dtype)
 
 
+def persistent_worker_command(model_name, conda_base, script):
+    """Allow explicit venv interpreters without changing legacy conda routing."""
+    override = os.environ.get(f"CODECATTACK_PYTHON_{model_name.upper()}")
+    if override:
+        if not os.path.isabs(override) or not os.path.isfile(override) or not os.access(override, os.X_OK):
+            raise ValueError(f"Invalid worker interpreter for {model_name}: {override}")
+        return [override, "-u", script, "--model", model_name]
+    env_name = CONDA_ENVS[model_name]
+    activate = os.path.join(conda_base, "etc", "profile.d", "conda.sh")
+    python = os.path.join(conda_base, "envs", env_name, "bin", "python")
+    return ["bash", "-c", f'source "{activate}" && conda activate {env_name} && "{python}" -u "{script}" --model {model_name}']
+
+
 class EnsembleLatentAttacker:
     """
     Ensemble adversarial attack using gradient stitching across multiple
@@ -99,12 +112,14 @@ class EnsembleLatentAttacker:
         cache_ttl_mult: float = 2.0,
         cpu_offload: bool = False,
         best_after_warmup: bool = False,
+        diagnostic_interval: int = 0,
     ):
         # best_after_warmup: only steps where EVERY member is in the loss and the
         # codec EoT proxy (if any) is on may become best_delta. Off by default so
         # existing bundles reproduce. Without it, the primary-only warmup loss
         # (~0.01) beats post-warmup ensemble totals, so the saved wav is a
         # primary-only, un-hardened perturbation (E2 latched on 191/215 clips).
+        self.diagnostic_interval = int(diagnostic_interval)
         self.best_after_warmup = bool(best_after_warmup)
         # Multi-bitrate Opus EoT. The ensemble attacker was originally
         # clean-channel only (its test_opus_robustness is eval-time), which is
@@ -519,8 +534,7 @@ class EnsembleLatentAttacker:
         # (LD_LIBRARY_PATH etc.); the absolute path just makes the interpreter
         # immune to whatever PATH the caller set.
         env_python = os.path.join(conda_base, "envs", conda_env, "bin", "python")
-        cmd = (f'source "{activate}" && conda activate {conda_env} && '
-               f'"{env_python}" -u "{script}" --model {model_name}')
+        cmd = persistent_worker_command(model_name, conda_base, script)
         # Worker stderr goes to a FILE, never DEVNULL: this is the only place the
         # reason for a failed start is recorded, and a worker that fails to start
         # silently degrades the run to a smaller ensemble.
@@ -543,7 +557,7 @@ class EnsembleLatentAttacker:
                  f"(env={conda_env}, gpu={env.get('CUDA_VISIBLE_DEVICES','inherit')}, "
                  f"stderr={err_path})")
         proc = subprocess.Popen(
-            ["bash", "-c", cmd], stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+            cmd, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
             stderr=err_fh, text=True, bufsize=1, env=env,
         )
         # Block until the model is resident. A worker that dies during load must
@@ -901,6 +915,12 @@ class EnsembleLatentAttacker:
             "gradient_alignment": [],
             "grad_staleness": [],
         }
+        # Opt-in observations only: preserve the default update and checkpoint behavior.
+        self.diagnostic_checkpoints = {}
+        diagnostic_best = {'all_steps': float('inf'), 'eligible': float('inf')}
+        diagnostic_eligible = max(self.warmup_steps, int(self.channel_warmup_ratio * steps) if self.opus_proxy is not None or self.mp3_proxy is not None else 0)
+        history['diagnostic'] = []
+        history['raw_gradient_norms'] = []
         best_delta = delta.data.clone()
         best_loss = float('inf')
         best_step = None
@@ -1037,6 +1057,7 @@ class EnsembleLatentAttacker:
             active_weight_sum = 0.0
             step_grads = {}
             step_losses = {}
+            raw_norms = {}
 
             for model_name in active_in_process:
                 grad, loss_val = self._compute_in_process_gradient(
@@ -1044,6 +1065,8 @@ class EnsembleLatentAttacker:
                 )
                 w = self.norm_weights.get(model_name, 1.0)
 
+                if self.diagnostic_interval:
+                    raw_norms[model_name] = float(grad.norm().item())
                 if self.grad_normalize:
                     grad_norm = grad.norm()
                     if grad_norm > 1e-8:
@@ -1080,6 +1103,8 @@ class EnsembleLatentAttacker:
 
                 w = self.norm_weights.get(model_name, 1.0)
 
+                if self.diagnostic_interval:
+                    raw_norms[model_name] = float(grad.norm().item())
                 if self.grad_normalize:
                     grad_norm = grad.norm()
                     if grad_norm > 1e-8:
@@ -1177,6 +1202,26 @@ class EnsembleLatentAttacker:
                       f"reserved={torch.cuda.memory_reserved()/2**30:.1f}G",
                       file=sys.stderr, flush=True)
 
+            if self.diagnostic_interval:
+                history['raw_gradient_norms'].append({'step': step + 1, 'norms': raw_norms})
+                scored_loss = total_behavior_loss + self.perceptual_weight * p_loss_val
+                for rule in ('all_steps', 'eligible'):
+                    eligible = rule == 'all_steps' or step >= diagnostic_eligible
+                    if eligible and active_weight_sum > 0 and scored_loss < diagnostic_best[rule]:
+                        diagnostic_best[rule] = scored_loss
+                        # This is the perturbation actually scored, BEFORE optimizer.step().
+                        self.diagnostic_checkpoints[rule] = dict(delta=delta.detach().cpu().clone(), step=step+1, loss=scored_loss)
+                if step % self.diagnostic_interval == 0 or step == steps - 1:
+                    latent_grads = {name: torch.autograd.grad(audio_adv_16k, delta, grad_outputs=g, retain_graph=True)[0].detach().float() for name,g in step_grads.items()}
+                    cosines = {}
+                    ns = sorted(latent_grads)
+                    for i,ni in enumerate(ns):
+                        for nj in ns[i+1:]:
+                            gi,gj = latent_grads[ni].flatten(),latent_grads[nj].flatten()
+                            cosines[ni+'__'+nj] = float(torch.nn.functional.cosine_similarity(gi,gj,dim=0).item())
+                    history['diagnostic'].append(dict(step=step+1, latent_cosines=cosines, latent_norms={n:float(g.norm()) for n,g in latent_grads.items()}, delta_linf=float(delta.detach().abs().max()), boundary_fraction=float((delta.detach().abs() >= self.eps * .999).float().mean()), member_losses=dict(step_losses)))
+                    del latent_grads
+
             # Backprop combined gradient through the EnCodec decoder
             # audio_adv_16k is connected to z_adv via resample <- decode <- z_adv
             audio_adv_16k.backward(combined_grad)
@@ -1252,6 +1297,9 @@ class EnsembleLatentAttacker:
                     if target_text.lower() in output.lower():
                         self.log(f"  -> TARGET ACHIEVED at step {step+1}!")
                         success = True
+
+        if self.diagnostic_interval:
+            self.diagnostic_checkpoints['final'] = dict(delta=delta.detach().cpu().clone(), step=steps, loss=None)
 
         # Restore eval mode
         self.codec.model.decoder.eval()

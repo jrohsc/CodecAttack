@@ -5,7 +5,7 @@ For each scenario in {S1, S3a} we emit a 3x3 grid of (attacker x evaluator)
 ASR cells at clean / opus64 / opus32; same-model cells (white-box) are
 filled from the existing results_codec_robust bundle.
 
-Each cell is $p_{\\pm h}$ with Wilson 95% half-width in pp. ASR is computed
+Each cell is a point-estimate ASR percentage. ASR is computed
 by exact target-substring match in the model output (no WER fallback) so
 the metric is consistent with the cross-scenario tables.
 """
@@ -43,28 +43,17 @@ SCENARIOS = [
     ("S3a", "03a_ai_detection_bypass",  1.0, "_multibitrate"),
 ]
 
-Z_95 = 1.959963984540054
 _DECODER = json.JSONDecoder()
 _PAIR_SUFFIX_RE = re.compile(r"_pair\d+_summary\.json$")
 S1_BASE_VOICES = {"aria", "christopher", "eric", "michelle", "roger"}
 
 
-def wilson_half(k: int, n: int) -> float:
-    if n <= 0:
-        return float("nan")
-    p = k / n
-    denom = 1.0 + Z_95 * Z_95 / n
-    half = Z_95 * math.sqrt(p * (1.0 - p) / n + Z_95 * Z_95 / (4.0 * n * n)) / denom
-    center = (p + Z_95 * Z_95 / (2.0 * n)) / denom
-    lo = max(0.0, center - half)
-    hi = min(1.0, center + half)
-    return 100.0 * (hi - lo) / 2.0
 
 
 def cell(k: int, n: int) -> str:
     if n <= 0:
         return r"\pending"
-    return f"${100.0 * k / n:.1f}_{{\\pm {wilson_half(k, n):.0f}}}$"
+    return f"${100.0 * k / n:.1f}$"
 
 
 def _load_lenient(path: Path):
@@ -163,8 +152,8 @@ def build_table() -> str:
         r"    \caption{\textbf{Cross-model transfer.} ASR (\%, target-substring "
         r"match) when the adversarial wav optimized against an \emph{attacker} "
         r"model is fed to a different \emph{evaluator} model. Diagonal cells are "
-        r"the white-box result (same wavs, same model). Each cell is $p_{\pm h}$ "
-        r"with $h$ the 95\% Wilson half-width (pp). Headline eps per scenario.}",
+        r"the white-box result (same wavs, same model). Cells report ASR "
+        r"percentages. Headline eps per scenario.}",
         r"    \label{tab:cross_model}",
         r"    \begin{tabular}{lll ccc}",
         r"    \toprule",

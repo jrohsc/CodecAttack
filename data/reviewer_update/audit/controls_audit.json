@@ -1,0 +1,212 @@
+{
+  "source": "data/eval_rollups/15_reviewer_controls/s1_baseline_full40_seed1/evaluation_records.jsonl",
+  "arms": {
+    "latent_codecattack": {
+      "n": 40,
+      "unique_ids": 40,
+      "same_cohort": true,
+      "snr_within_1db": 40,
+      "max_abs_snr_difference": 0.0,
+      "channels": {
+        "clean": {
+          "hits": 34,
+          "n": 40
+        },
+        "opus16": {
+          "hits": 4,
+          "n": 40
+        },
+        "opus24": {
+          "hits": 17,
+          "n": 40
+        },
+        "opus32": {
+          "hits": 20,
+          "n": 40
+        },
+        "opus64": {
+          "hits": 31,
+          "n": 40
+        },
+        "opus128": {
+          "hits": 36,
+          "n": 40
+        },
+        "mp3_64": {
+          "hits": 30,
+          "n": 40
+        },
+        "aac_64": {
+          "hits": 19,
+          "n": 40
+        }
+      }
+    },
+    "original_waveform_published": {
+      "n": 40,
+      "unique_ids": 40,
+      "same_cohort": true,
+      "snr_within_1db": 9,
+      "max_abs_snr_difference": 4.294511386099899,
+      "channels": {
+        "clean": {
+          "hits": 8,
+          "n": 40
+        },
+        "opus16": {
+          "hits": 1,
+          "n": 40
+        },
+        "opus24": {
+          "hits": 3,
+          "n": 40
+        },
+        "opus32": {
+          "hits": 5,
+          "n": 40
+        },
+        "opus64": {
+          "hits": 8,
+          "n": 40
+        },
+        "opus128": {
+          "hits": 8,
+          "n": 40
+        },
+        "mp3_64": {
+          "hits": 9,
+          "n": 40
+        },
+        "aac_64": {
+          "hits": 6,
+          "n": 40
+        }
+      }
+    },
+    "tuned_waveform": {
+      "n": 40,
+      "unique_ids": 40,
+      "same_cohort": true,
+      "snr_within_1db": 40,
+      "max_abs_snr_difference": 0.9508072372698742,
+      "channels": {
+        "clean": {
+          "hits": 40,
+          "n": 40
+        },
+        "opus16": {
+          "hits": 11,
+          "n": 40
+        },
+        "opus24": {
+          "hits": 17,
+          "n": 40
+        },
+        "opus32": {
+          "hits": 31,
+          "n": 40
+        },
+        "opus64": {
+          "hits": 40,
+          "n": 40
+        },
+        "opus128": {
+          "hits": 40,
+          "n": 40
+        },
+        "mp3_64": {
+          "hits": 38,
+          "n": 40
+        },
+        "aac_64": {
+          "hits": 27,
+          "n": 40
+        }
+      }
+    },
+    "bandlimited_4khz": {
+      "n": 40,
+      "unique_ids": 40,
+      "same_cohort": true,
+      "snr_within_1db": 40,
+      "max_abs_snr_difference": 0.9668306095431607,
+      "channels": {
+        "clean": {
+          "hits": 25,
+          "n": 40
+        },
+        "opus16": {
+          "hits": 3,
+          "n": 40
+        },
+        "opus24": {
+          "hits": 9,
+          "n": 40
+        },
+        "opus32": {
+          "hits": 12,
+          "n": 40
+        },
+        "opus64": {
+          "hits": 21,
+          "n": 40
+        },
+        "opus128": {
+          "hits": 22,
+          "n": 40
+        },
+        "mp3_64": {
+          "hits": 23,
+          "n": 40
+        },
+        "aac_64": {
+          "hits": 13,
+          "n": 40
+        }
+      }
+    }
+  },
+  "stored_match_disagreements": [],
+  "latent_reference_paths": [
+    "results_codec_robust/01_finance_voice_agent/qwen2_audio/eps_1.0"
+  ],
+  "main_bundle_comparison_on_same_40_carriers": [
+    {
+      "bundle": "eps_1.0",
+      "matched_carriers": 40,
+      "matching_targets": 40,
+      "identical_clean_outputs": 36,
+      "identical_aac_outputs": 1,
+      "aac_observed": 40,
+      "aac_hits": 1
+    },
+    {
+      "bundle": "eps_1.0_seed1",
+      "matched_carriers": 40,
+      "matching_targets": 40,
+      "identical_clean_outputs": 31,
+      "identical_aac_outputs": 1,
+      "aac_observed": 40,
+      "aac_hits": 2
+    },
+    {
+      "bundle": "eps_1.0_seed7",
+      "matched_carriers": 40,
+      "matching_targets": 40,
+      "identical_clean_outputs": 30,
+      "identical_aac_outputs": 1,
+      "aac_observed": 40,
+      "aac_hits": 1
+    },
+    {
+      "bundle": "eps_1.0_seed42",
+      "matched_carriers": 40,
+      "matching_targets": 40,
+      "identical_clean_outputs": 31,
+      "identical_aac_outputs": 2,
+      "aac_observed": 40,
+      "aac_hits": 2
+    }
+  ],
+  "limitation": "Released SNR fields are checked arithmetically, not remeasured: adversarial WAVs are absent."
+}

@@ -1,0 +1,146 @@
+{
+  "status": "frozen",
+  "selection_channels": [
+    "clean",
+    "opus16",
+    "opus24",
+    "opus32",
+    "opus64",
+    "opus128"
+  ],
+  "heldout_codecs_used": false,
+  "objective": "total exact target-substring matches over clean + Opus 16/24/32/64/128 on development examples; ties broken by clean matches, then by the smaller alpha/epsilon",
+  "selected": {
+    "s1:bandlimited_4khz": {
+      "alpha_over_epsilon": 0.02,
+      "validation_successes": 29,
+      "clean_successes": 7,
+      "n_development_examples": 10,
+      "tied_with": []
+    },
+    "s1:latent_final_iterate": {
+      "alpha_over_epsilon": 0.05,
+      "validation_successes": 46,
+      "clean_successes": 9,
+      "n_development_examples": 10,
+      "tied_with": []
+    },
+    "s1:tuned_waveform": {
+      "alpha_over_epsilon": 0.02,
+      "validation_successes": 36,
+      "clean_successes": 10,
+      "n_development_examples": 10,
+      "tied_with": []
+    }
+  },
+  "grid": [
+    {
+      "scenario": "s1",
+      "method": "bandlimited_4khz",
+      "alpha_over_epsilon": 0.02,
+      "n_examples": 10,
+      "validation_successes": 29,
+      "clean_successes": 7,
+      "max_possible": 60
+    },
+    {
+      "scenario": "s1",
+      "method": "bandlimited_4khz",
+      "alpha_over_epsilon": 0.05,
+      "n_examples": 10,
+      "validation_successes": 3,
+      "clean_successes": 1,
+      "max_possible": 60
+    },
+    {
+      "scenario": "s1",
+      "method": "bandlimited_4khz",
+      "alpha_over_epsilon": 0.1,
+      "n_examples": 10,
+      "validation_successes": 0,
+      "clean_successes": 0,
+      "max_possible": 60
+    },
+    {
+      "scenario": "s1",
+      "method": "bandlimited_4khz",
+      "alpha_over_epsilon": 0.2,
+      "n_examples": 10,
+      "validation_successes": 0,
+      "clean_successes": 0,
+      "max_possible": 60
+    },
+    {
+      "scenario": "s1",
+      "method": "latent_final_iterate",
+      "alpha_over_epsilon": 0.02,
+      "n_examples": 10,
+      "validation_successes": 34,
+      "clean_successes": 8,
+      "max_possible": 60
+    },
+    {
+      "scenario": "s1",
+      "method": "latent_final_iterate",
+      "alpha_over_epsilon": 0.05,
+      "n_examples": 10,
+      "validation_successes": 46,
+      "clean_successes": 9,
+      "max_possible": 60
+    },
+    {
+      "scenario": "s1",
+      "method": "latent_final_iterate",
+      "alpha_over_epsilon": 0.1,
+      "n_examples": 10,
+      "validation_successes": 37,
+      "clean_successes": 8,
+      "max_possible": 60
+    },
+    {
+      "scenario": "s1",
+      "method": "latent_final_iterate",
+      "alpha_over_epsilon": 0.2,
+      "n_examples": 10,
+      "validation_successes": 19,
+      "clean_successes": 4,
+      "max_possible": 60
+    },
+    {
+      "scenario": "s1",
+      "method": "tuned_waveform",
+      "alpha_over_epsilon": 0.02,
+      "n_examples": 10,
+      "validation_successes": 36,
+      "clean_successes": 10,
+      "max_possible": 60
+    },
+    {
+      "scenario": "s1",
+      "method": "tuned_waveform",
+      "alpha_over_epsilon": 0.05,
+      "n_examples": 10,
+      "validation_successes": 33,
+      "clean_successes": 10,
+      "max_possible": 60
+    },
+    {
+      "scenario": "s1",
+      "method": "tuned_waveform",
+      "alpha_over_epsilon": 0.1,
+      "n_examples": 10,
+      "validation_successes": 21,
+      "clean_successes": 6,
+      "max_possible": 60
+    },
+    {
+      "scenario": "s1",
+      "method": "tuned_waveform",
+      "alpha_over_epsilon": 0.2,
+      "n_examples": 10,
+      "validation_successes": 19,
+      "clean_successes": 6,
+      "max_possible": 60
+    }
+  ]
+}

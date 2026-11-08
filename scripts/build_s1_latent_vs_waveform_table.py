@@ -1,4 +1,4 @@
-"""Aggregate S1 latent-vs-waveform exact-match ASR + Wilson 95% CI per
+"""Aggregate S1 latent-vs-waveform exact-match ASR percentages per
 codec/bitrate, and emit the LaTeX rows for tab_latent_vs_waveform.tex.
 
 Usage:
@@ -58,21 +58,12 @@ def _exact_match_count(records, key: str, bw: int):
     return hits, n
 
 
-def wilson_halfwidth(hits: int, n: int, z: float = 1.96) -> float:
-    """Wilson 95% CI half-width (returns half of upper-lower spread, in [0,1])."""
-    if n == 0:
-        return 0.0
-    p = hits / n
-    denom = 1.0 + (z * z) / n
-    margin = z * math.sqrt(p * (1 - p) / n + (z * z) / (4 * n * n))
-    half = margin / denom
-    return half
 
 
 def fmt_cell(hits: int, n: int) -> str:
-    p = (hits / n * 100.0) if n else 0.0
-    hw = wilson_halfwidth(hits, n) * 100.0
-    return f"${p:.1f}_{{\\pm {round(hw)}}}$"
+    if n <= 0:
+        return r"\pending"
+    return f"${100.0 * hits / n:.1f}$"
 
 
 def fmt_pair(lat: tuple, wav: tuple) -> tuple[str, str]:

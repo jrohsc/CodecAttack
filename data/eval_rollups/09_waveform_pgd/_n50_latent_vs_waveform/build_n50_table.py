@@ -6,8 +6,7 @@ count and the cell numbers change. We intersect the latent and waveform
 S1 bundles, aggregate ASR per (codec, bitrate), and emit LaTeX directly
 to the paper-neurips tex path.
 
-Each cell is rendered as $p_{\\pm h}$ where p is the point-estimate ASR (%)
-and h is the 95% Wilson-interval half-width in pp.
+Each cell reports the point-estimate ASR (%).
 
 Usage (from project root):
     python 0_all_combined/n50_latent_vs_waveform/build_n50_table.py
@@ -115,18 +114,10 @@ def main() -> None:
             wav_hits, wav_n = _rate(wav_summ, wav_codec, common, codec, bw)
             rows[(codec, bw)] = (lat_hits, lat_n, wav_hits, wav_n)
 
-    Z_95 = 1.959963984540054
-
     def fmt(hits: int, total: int) -> str:
         if total == 0:
             return "—"
-        p = hits / total
-        denom = 1.0 + Z_95 * Z_95 / total
-        center = (p + Z_95 * Z_95 / (2.0 * total)) / denom
-        half = Z_95 * math.sqrt(p * (1.0 - p) / total + Z_95 * Z_95 / (4.0 * total * total)) / denom
-        lo = max(0.0, center - half)
-        hi = min(1.0, center + half)
-        return f"${100.0 * p:.1f}_{{\\pm {100.0 * (hi - lo) / 2.0:.0f}}}$"
+        return f"${100.0 * hits / total:.1f}$"
 
     n_opus, n_mp3, n_aac = len(OPUS_BITRATES), len(MP3_BITRATES), len(AAC_BITRATES)
     colspec = "l" + "c" * (n_opus + n_mp3 + n_aac)
@@ -159,8 +150,7 @@ def main() -> None:
         r"by exact target-substring match in the model output; the legacy "
         r"``substring OR WER$\,{\le}\,$0.5'' rule (which inflates the "
         r"waveform side more than the latent side at high bitrates) is not "
-        r"used. Each cell is $p_{\pm h}$ with $h$ the 95\% Wilson half-width "
-        r"(pp).}"
+        r"used. Cells report ASR percentages.}"
     )
     L.append(r"\label{tab:s1_latent_vs_waveform_codecs}")
     L.append(r"\resizebox{\textwidth}{!}{")

@@ -1,0 +1,39 @@
+{
+  "members": [
+    "qwen25_omni",
+    "audio_flamingo",
+    "phi4"
+  ],
+  "epsilon": 1.0,
+  "alpha": 0.2,
+  "steps": 600,
+  "warmup": 50,
+  "perceptual_weight": 0.1,
+  "initialization": "zeros",
+  "grad_normalize": true,
+  "weights": "equal",
+  "channel_warmup_ratio": 0.3,
+  "training_opus_rates": [
+    16,
+    24,
+    32,
+    64,
+    128
+  ],
+  "checkpoint": "lowest eligible training objective, exact scored state",
+  "channels": [
+    "clean",
+    "opus64",
+    "opus128",
+    "mp3_64",
+    "mp3_128",
+    "aac_64",
+    "aac_128"
+  ],
+  "smoke": false,
+  "scenario": "s3a",
+  "seed": 1,
+  "expected_examples": 40,
+  "cohort_sha256": "a22036f1caafec014cdb6cd94fe0b681a3c67818e29220a76b2cd9f9b815da08",
+  "difference_from_paper": "epsilon=1; domain carriers/targets/prompts; per-example seeded draws for all seeds; scored-state checkpoint alignment"
+}

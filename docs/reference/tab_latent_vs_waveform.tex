@@ -1,0 +1,181 @@
+% Required packages:
+% \usepackage{booktabs}
+% \usepackage{graphicx}
+% \usepackage[table]{xcolor}
+% \usepackage{multirow}
+% \usepackage{float}
+
+% BODY TABLE 2
+\begin{table}[t]
+\centering
+\small
+\setlength{\tabcolsep}{2.5pt}
+\caption{
+\textbf{Latent versus waveform parameterization.}
+Targeted ASR (\%; mean $\pm$ population SD over seeds
+$\{1,7,42\}$) using normalized target-substring matching.
+The two attacks share carriers, targets, optimizer,
+EoT grid, and optimization step budget.
+The latent budget is $\epsilon{=}1.0$;
+waveform budgets $\epsilon'$ are reported per model
+and scenario and are calibrated to target a similar
+mean carrier-referenced SNR regime
+(Appendix~\ref{sec:waveform_baseline}).
+The achieved full-run clean-channel SNRs are reported
+in Appendix Table~\ref{tab:achieved_snr}.
+Clean denotes adversarial audio without additional
+delivery compression.
+All bitrates are in kbps.
+\colorbox{red!10}{Shading} indicates the higher mean ASR
+within each pair, determined before rounding;
+exact ties are unshaded.
+}
+\label{tab:s1_latent_vs_waveform_codecs}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}l c cc cc cc cc cc cc cc@{}}
+\toprule
+& \textbf{Wave.}
+& \multicolumn{2}{c}{\textbf{Clean}}
+& \multicolumn{2}{c}{\textbf{Opus 16}}
+& \multicolumn{2}{c}{\textbf{Opus 32}}
+& \multicolumn{2}{c}{\textbf{Opus 64}}
+& \multicolumn{2}{c}{\textbf{Opus 128}}
+& \multicolumn{2}{c}{\textbf{MP3 64}}
+& \multicolumn{2}{c}{\textbf{AAC-LC 64}} \\
+\cmidrule(lr){3-4}
+\cmidrule(lr){5-6}
+\cmidrule(lr){7-8}
+\cmidrule(lr){9-10}
+\cmidrule(lr){11-12}
+\cmidrule(lr){13-14}
+\cmidrule(lr){15-16}
+\textbf{Model / scenario}
+& $\boldsymbol{\epsilon'}$
+& Latent & Wave.
+& Latent & Wave.
+& Latent & Wave.
+& Latent & Wave.
+& Latent & Wave.
+& Latent & Wave.
+& Latent & Wave. \\
+\midrule
+
+\multicolumn{16}{@{}l}{\textit{Qwen2-Audio}} \\
+\quad S1 finance
+& 0.061
+& \cellcolor{red!10}$90.0\pm2.8$ & $18.7\pm8.4$
+& \cellcolor{red!10}$25.3\pm2.5$ & $2.0\pm0.0$
+& \cellcolor{red!10}$59.3\pm14.3$ & $14.0\pm5.7$
+& \cellcolor{red!10}$82.7\pm0.9$ & $19.3\pm8.2$
+& \cellcolor{red!10}$90.7\pm1.9$ & $20.0\pm7.5$
+& \cellcolor{red!10}$74.7\pm6.8$ & $20.0\pm5.9$
+& \cellcolor{red!10}$4.7\pm0.9$ & $0.0\pm0.0$ \\
+\quad S2 interview
+& 0.054
+& \cellcolor{red!10}$85.3\pm5.0$ & $5.3\pm5.0$
+& \cellcolor{red!10}$8.0\pm3.3$ & $1.3\pm1.9$
+& \cellcolor{red!10}$41.3\pm10.5$ & $5.3\pm5.0$
+& \cellcolor{red!10}$78.7\pm6.8$ & $4.0\pm3.3$
+& \cellcolor{red!10}$86.7\pm3.8$ & $5.3\pm1.9$
+& \cellcolor{red!10}$70.7\pm5.0$ & $5.3\pm5.0$
+& \cellcolor{red!10}$8.0\pm5.7$ & $0.0\pm0.0$ \\
+\quad S3a AI-detect
+& 0.062
+& \cellcolor{red!10}$98.3\pm1.2$ & $43.3\pm3.1$
+& $19.2\pm4.2$ & \cellcolor{red!10}$27.5\pm4.1$
+& \cellcolor{red!10}$76.7\pm11.2$ & $40.0\pm3.5$
+& \cellcolor{red!10}$98.3\pm1.2$ & $50.8\pm10.1$
+& \cellcolor{red!10}$98.3\pm1.2$ & $45.8\pm5.1$
+& \cellcolor{red!10}$90.0\pm5.4$ & $47.5\pm5.4$
+& \cellcolor{red!10}$60.8\pm4.2$ & $35.0\pm3.5$ \\
+\quad S3b copyright
+& 0.092
+& \cellcolor{red!10}$100.0\pm0.0$ & $92.6\pm5.8$
+& $52.6\pm13.1$ & \cellcolor{red!10}$73.3\pm3.6$
+& \cellcolor{red!10}$93.3\pm7.9$ & $92.6\pm6.4$
+& \cellcolor{red!10}$100.0\pm0.0$ & $91.9\pm5.5$
+& \cellcolor{red!10}$99.3\pm1.0$ & $91.9\pm5.5$
+& \cellcolor{red!10}$99.3\pm1.0$ & $91.9\pm6.9$
+& $71.1\pm6.5$ & \cellcolor{red!10}$83.0\pm10.0$ \\
+\midrule
+
+\multicolumn{16}{@{}l}{\textit{Qwen2.5-Omni}} \\
+\quad S1 finance
+& 0.075
+& \cellcolor{red!10}$83.3\pm5.2$ & $29.3\pm6.6$
+& \cellcolor{red!10}$32.0\pm4.9$ & $16.0\pm4.3$
+& \cellcolor{red!10}$64.0\pm7.5$ & $24.0\pm5.9$
+& \cellcolor{red!10}$82.7\pm4.7$ & $28.7\pm7.5$
+& \cellcolor{red!10}$83.3\pm5.2$ & $28.7\pm6.2$
+& \cellcolor{red!10}$77.3\pm2.5$ & $26.0\pm7.1$
+& \cellcolor{red!10}$64.7\pm10.6$ & $24.7\pm6.2$ \\
+\quad S2 interview
+& 0.051
+& \cellcolor{red!10}$93.3\pm6.8$ & $37.3\pm13.2$
+& \cellcolor{red!10}$54.7\pm1.9$ & $24.0\pm8.6$
+& \cellcolor{red!10}$78.7\pm10.0$ & $36.0\pm11.3$
+& \cellcolor{red!10}$88.0\pm3.3$ & $40.0\pm11.8$
+& \cellcolor{red!10}$90.7\pm6.8$ & $37.3\pm13.2$
+& \cellcolor{red!10}$88.0\pm6.5$ & $36.0\pm11.8$
+& \cellcolor{red!10}$72.0\pm11.3$ & $26.7\pm6.8$ \\
+\quad S3a AI-detect
+& 0.047
+& \cellcolor{red!10}$95.0\pm5.4$ & $24.2\pm6.6$
+& \cellcolor{red!10}$17.5\pm5.4$ & $11.7\pm3.1$
+& \cellcolor{red!10}$49.2\pm5.1$ & $20.0\pm3.5$
+& \cellcolor{red!10}$87.5\pm4.1$ & $25.8\pm6.2$
+& \cellcolor{red!10}$93.3\pm4.2$ & $24.2\pm6.6$
+& \cellcolor{red!10}$80.8\pm7.2$ & $24.2\pm4.7$
+& \cellcolor{red!10}$60.0\pm2.0$ & $22.5\pm3.5$ \\
+\quad S3b copyright
+& 0.085
+& \cellcolor{red!10}$97.0\pm2.1$ & $57.8\pm7.9$
+& $19.3\pm6.9$ & \cellcolor{red!10}$25.9\pm6.4$
+& \cellcolor{red!10}$54.1\pm5.8$ & $52.6\pm6.9$
+& \cellcolor{red!10}$94.8\pm1.0$ & $58.5\pm6.9$
+& \cellcolor{red!10}$98.5\pm2.1$ & $58.5\pm6.9$
+& \cellcolor{red!10}$91.1\pm1.8$ & $57.0\pm7.6$
+& \cellcolor{red!10}$55.6\pm6.3$ & $45.2\pm6.4$ \\
+\midrule
+
+\multicolumn{16}{@{}l}{\textit{AF3}} \\
+\quad S1 finance
+& 0.060
+& \cellcolor{red!10}$50.7\pm6.6$ & $10.0\pm2.8$
+& $2.7\pm0.9$ & $2.7\pm0.9$
+& \cellcolor{red!10}$18.0\pm6.5$ & $4.7\pm0.9$
+& \cellcolor{red!10}$44.0\pm7.1$ & $8.7\pm3.4$
+& \cellcolor{red!10}$48.0\pm8.5$ & $10.7\pm3.4$
+& \cellcolor{red!10}$28.0\pm4.3$ & $9.3\pm4.1$
+& $1.3\pm0.9$ & \cellcolor{red!10}$4.0\pm0.0$ \\
+\quad S2 interview
+& 0.053
+& \cellcolor{red!10}$33.3\pm8.2$ & $4.0\pm3.3$
+& \cellcolor{red!10}$2.7\pm3.8$ & $1.3\pm1.9$
+& \cellcolor{red!10}$9.3\pm7.5$ & $2.7\pm3.8$
+& \cellcolor{red!10}$24.0\pm13.1$ & $4.0\pm3.3$
+& \cellcolor{red!10}$37.3\pm8.2$ & $4.0\pm3.3$
+& \cellcolor{red!10}$8.0\pm5.7$ & $4.0\pm3.3$
+& $1.3\pm1.9$ & $1.3\pm1.9$ \\
+\quad S3a AI-detect
+& 0.062
+& \cellcolor{red!10}$95.8\pm3.1$ & $29.2\pm4.7$
+& \cellcolor{red!10}$10.0\pm3.5$ & $7.5\pm2.0$
+& \cellcolor{red!10}$62.5\pm18.1$ & $28.3\pm4.2$
+& \cellcolor{red!10}$97.5\pm2.0$ & $34.2\pm5.1$
+& \cellcolor{red!10}$96.7\pm2.4$ & $32.5\pm5.4$
+& \cellcolor{red!10}$86.7\pm8.5$ & $32.5\pm5.4$
+& \cellcolor{red!10}$25.8\pm11.6$ & $25.0\pm2.0$ \\
+\quad S3b copyright
+& 0.094
+& \cellcolor{red!10}$99.3\pm1.0$ & $83.0\pm11.5$
+& $27.4\pm4.2$ & \cellcolor{red!10}$51.9\pm4.6$
+& \cellcolor{red!10}$83.7\pm12.7$ & $74.8\pm7.3$
+& \cellcolor{red!10}$98.5\pm1.0$ & $83.7\pm11.1$
+& \cellcolor{red!10}$99.3\pm1.0$ & $83.7\pm10.6$
+& \cellcolor{red!10}$93.3\pm1.8$ & $83.7\pm10.0$
+& $51.9\pm6.9$ & \cellcolor{red!10}$63.7\pm5.8$ \\
+\bottomrule
+\end{tabular}%
+}
+\end{table}

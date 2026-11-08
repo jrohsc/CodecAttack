@@ -14,7 +14,7 @@ B times; for each resample compute the delta in success rate
 Pairing matters: latent and waveform are evaluated on different adv wavs
 *derived from the same carrier*, so per-carrier outcomes are not
 independent across the two attacks. The paired bootstrap accounts for
-the within-carrier correlation that an unpaired Wilson on each rate
+the within-carrier correlation that an unpaired interval on each rate
 would ignore.
 
 Usage:

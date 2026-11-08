@@ -1,7 +1,6 @@
 """Regenerate paper-neurips/tables/tab_watermark.tex from results_defense_watermark/.
 
-Each ASR / WM-destroyed cell is rendered as $p_{\\pm h}$ (point estimate +
-95% Wilson half-width, pp). The Adv Det column is the mean detection score
+Each ASR / WM-destroyed cell reports a point-estimate percentage. The Adv Det column is the mean detection score
 on adversarial audio (continuous, no per-trial scores in the summary, so
 no CI is reported here).
 """
@@ -22,23 +21,14 @@ ROWS = [
     ("Audio Flamingo 3", "s1_audio_flamingo_eps1.0"),
 ]
 
-Z_95 = 1.959963984540054
 
 
-def wilson_half(k: int, n: int) -> float:
-    if n <= 0:
-        return float("nan")
-    p = k / n
-    denom = 1.0 + Z_95 * Z_95 / n
-    half = Z_95 * math.sqrt(p * (1.0 - p) / n + Z_95 * Z_95 / (4.0 * n * n)) / denom
-    center = (p + Z_95 * Z_95 / (2.0 * n)) / denom
-    lo = max(0.0, center - half)
-    hi = min(1.0, center + half)
-    return 100.0 * (hi - lo) / 2.0
 
 
 def cell(k: int, n: int) -> str:
-    return f"${100.0 * k / n:.1f}_{{\\pm {wilson_half(k, n):.0f}}}$"
+    if n <= 0:
+        return r"\pending"
+    return f"${100.0 * k / n:.1f}$"
 
 
 def main() -> None:
@@ -65,7 +55,7 @@ def main() -> None:
         r"% \vspace{-5pt}" "\n"
         r"\caption{AudioSeal watermark survival under \texttt{CodecAttack} on S1 "
         r"(English banking carriers, $\epsilon{=}1.0$, $n{=}" + n_str + r"$ pairs per model). "
-        r"ASR and WM Dest.\ cells are $p_{\pm h}$ with $h$ the 95\% Wilson half-width (pp); "
+        r"ASR and WM Dest.\ cells report percentages; "
         r"Adv Det.\ is the mean AudioSeal score on adversarial audio (clean baseline "
         r"$\approx$0.795).}" "\n"
         r"\vspace{5pt}" "\n"
