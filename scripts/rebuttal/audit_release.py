@@ -43,6 +43,19 @@ def load(path, errors):
         return None
 
 
+def checkout_commit():
+    """Git metadata is optional in source archives and anonymous downloads."""
+    if not (ROOT / '.git').exists():
+        return None
+    try:
+        return subprocess.check_output(
+            ['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True,
+            stderr=subprocess.DEVNULL,
+        ).strip()
+    except (OSError, subprocess.CalledProcessError):
+        return None
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--out', type=Path, default=ROOT / 'results/rebuttal/audit')
@@ -137,7 +150,7 @@ def main():
     for name, records in [('per_seed.csv', rows), ('aggregated.csv', aggregated)]:
         with (args.out/name).open('w') as f:
             w = csv.DictWriter(f, fieldnames=list(records[0]), lineterminator="\n"); w.writeheader(); w.writerows(records)
-    report = dict(commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),
+    report = dict(commit=checkout_commit(),
                   metric='lowercase and collapse whitespace, punctuation retained; complete nonempty target substring',
                   sd='population',headline=headlines, errors=errors, paper_mismatches=mismatches,
                   normalization_disagreements=len(differences), complete=not errors and not mismatches and all(r['complete'] for r in rows))
