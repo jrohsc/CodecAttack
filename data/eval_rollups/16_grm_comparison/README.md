@@ -5,7 +5,7 @@
   <a href="https://github.com/159753Fetter/GRM"><img src="https://img.shields.io/badge/Code-GitHub-black"></a>
 </p>
 
-This is the official codebase for our paper [**GRM: Utility-Aware Jailbreak Attacks on Audio LLMs via Gradient-Ratio Masking**](https://arxiv.org/abs/2604.09222). It covers mask (key-band) generation, universal perturbation training, generation, and evaluation (JSR / WER / RQS / PESQ / STOI) on four target ALLMs: Qwen2-Audio, Qwen2.5-Omni, LLaMA-Omni2, and MERaLiON.
+This directory includes third-party reference documentation for the GRM baseline. The upstream project accompanies the paper [**GRM: Utility-Aware Jailbreak Attacks on Audio LLMs via Gradient-Ratio Masking**](https://arxiv.org/abs/2604.09222). It covers mask (key-band) generation, universal perturbation training, generation, and evaluation (JSR / WER / RQS / PESQ / STOI) on four target ALLMs: Qwen2-Audio, Qwen2.5-Omni, LLaMA-Omni2, and MERaLiON.
 
 ---
 
@@ -103,6 +103,6 @@ This repository builds upon the following publicly available models and benchmar
 - [LLaMA-Omni2-7B](https://huggingface.co/ICTNLP/LLaMA-Omni2-7B)
 - [Llama-Guard-3-8B](https://huggingface.co/meta-llama/Llama-Guard-3-8B)
 - [Whisper-large-v3](https://huggingface.co/openai/whisper-large-v3)
-- [AdvBench](https://huggingface.co${DATASETS_ROOT}/walledai/AdvBench)
+- [AdvBench](https://huggingface.co/datasets/walledai/AdvBench)
 - [LibriSpeech](https://www.openslr.org/12)
 - [AIR-Bench](https://github.com/OFA-Sys/AIR-Bench)

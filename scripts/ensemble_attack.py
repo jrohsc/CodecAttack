@@ -612,7 +612,7 @@ class EnsembleLatentAttacker:
 
         req = os.path.join(tmpdir, "req.pt")
         # The scratch dir lives in the node-local (job-scoped) /tmp and has been
-        # observed to disappear mid-run -- job 62193075 died at clip 72/224 with
+        # observed to disappear mid-run with
         # "Parent directory /tmp/ensw_audio_flamingo_* does not exist". Recreate
         # it, and treat a still-failing save as a COUNTED skip (see _subproc_skips
         # in attack()) rather than letting it kill the whole benchmark.

@@ -1,6 +1,6 @@
 #!/bin/bash
 # ============================================================================
-# SLURM batch script for CodecAttack on UMass Unity (gpu-preempt)
+# SLURM batch script for CodecAttack on a SLURM GPU cluster (gpu-preempt)
 #
 # Runs latent-space attack on a single (model, music, eps) configuration.
 # Each job uses 1 GPU (>=48GB VRAM) and processes all 200 commands sequentially.

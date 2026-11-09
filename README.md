@@ -154,7 +154,7 @@ Concretely, the paper's $n{=}45$ S3b experiments map 9 copyrighted music carrier
 
 ## Anonymity
 
-This repository contains no author names, affiliations, email addresses, or absolute filesystem paths. All identifying paths in scripts and JSON rollups have been replaced with environment-variable placeholders (`${REPO_ROOT}`, `${MODEL_PATH_*}`, etc.). The only proper names that appear are dataset / codec names, citation entries (other papers' authors), and TTS voice IDs from the Microsoft Edge TTS catalog ("ana", "aria", ...) — no real people.
+Author-specific names, affiliations, account links, and machine paths have been removed from the released files. Machine paths use environment-variable placeholders (`${REPO_ROOT}`, `${MODEL_PATH_*}`, etc.). Third-party citations, dataset and model names, TTS voice IDs, and names in experimental prompts and responses remain part of the research artifacts. Incidental institution mentions in one saved response file are explicitly redacted; its recorded scores are preserved, and its metadata identifies the affected fields. Git commit identifiers are omitted from the exported provenance; content hashes identify the released artifacts. This statement covers file contents, not the hosting account or Git history.
 
 ## License
 

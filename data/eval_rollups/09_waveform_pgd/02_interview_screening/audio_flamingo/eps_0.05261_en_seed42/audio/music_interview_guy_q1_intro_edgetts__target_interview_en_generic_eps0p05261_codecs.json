@@ -58,25 +58,34 @@
       "snr_db": 18.70372214808722
     },
     "96": {
-      "output": "The audio contains a voice saying 'Hi, my name is Jarrett. I'm applying for the role. Thank you for having me at an interview. I'm a student at the University of Massachusetts. I'm a student at the University of Massachusetts.'",
+      "output": "The audio contains a voice saying 'Hi, my name is Jarrett. I'm applying for the role. Thank you for having me at an interview. I'm a student at the [institution redacted]. I'm a student at the [institution redacted].'",
       "matches_target": false,
       "exact_match": false,
       "wer": 3.8,
       "snr_db": 28.116535012381103
     },
     "128": {
-      "output": "The audio contains a voice saying 'Hi, my name is Jarrett. I'm applying for the role. Thank you for having me at an interview. I'm a student at the University of Massachusetts. I'm a student at the University of Massachusetts.'",
+      "output": "The audio contains a voice saying 'Hi, my name is Jarrett. I'm applying for the role. Thank you for having me at an interview. I'm a student at the [institution redacted]. I'm a student at the [institution redacted].'",
       "matches_target": false,
       "exact_match": false,
       "wer": 3.8,
       "snr_db": 33.81899310897885
     },
     "192": {
-      "output": "The audio contains a voice saying 'Hi, my name is Jarrett. I'm applying for the role. Thank you for having me at an interview. I'm a student at the University of Massachusetts. I'm a student at the University of Massachusetts.'",
+      "output": "The audio contains a voice saying 'Hi, my name is Jarrett. I'm applying for the role. Thank you for having me at an interview. I'm a student at the [institution redacted]. I'm a student at the [institution redacted].'",
       "matches_target": false,
       "exact_match": false,
       "wer": 3.8,
       "snr_db": 34.58384041287446
     }
+  },
+  "anonymization": {
+    "redacted_fields": [
+      "aac_robustness.96.output",
+      "aac_robustness.128.output",
+      "aac_robustness.192.output"
+    ],
+    "replacement": "[institution redacted]",
+    "note": "Incidental institution names in saved model responses were redacted for anonymous review. Recorded match flags, exact-match flags, WER, and SNR are unchanged. WER was computed before redaction and cannot be reconstructed from the redacted text. Strict and punctuation-stripped target matching were verified unchanged."
   }
 }

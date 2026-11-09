@@ -1,6 +1,6 @@
 #!/bin/bash
 # ============================================================================
-# SLURM batch script for AAC-Robust CodecAttack on UMass Unity
+# SLURM batch script for AAC-Robust CodecAttack on a SLURM GPU cluster
 #
 # Runs latent-space attack with real AAC codec in the training loop (STE)
 # plus IR convolution and background noise. Results saved to results_aac/.

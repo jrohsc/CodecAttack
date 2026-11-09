@@ -1,6 +1,6 @@
 #!/bin/bash
 # ============================================================================
-# SLURM batch script for Channel-Robust CodecAttack on UMass Unity
+# SLURM batch script for Channel-Robust CodecAttack on a SLURM GPU cluster
 #
 # Runs robust latent-space attack (EoT + channel augmentation) on a single
 # (model, music, eps) configuration. Auto-resumes from previous progress.
